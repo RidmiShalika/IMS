@@ -17,5 +17,6 @@ public class AttenAction extends ActionSupport{
     public String execute(){
         return SUCCESS;
         ///test001-Malinda
+         ///test002-ridmi
     }
 }
