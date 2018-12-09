@@ -16,5 +16,6 @@ public class AttenAction extends ActionSupport{
     @Override
     public String execute(){
         return SUCCESS;
+        ///test001-Malinda
     }
 }
