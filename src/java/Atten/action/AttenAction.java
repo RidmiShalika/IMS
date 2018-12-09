@@ -18,5 +18,6 @@ public class AttenAction extends ActionSupport{
         return SUCCESS;
         ///test001-Malinda
          ///test002-ridmi
+        ///test002-Malinda
     }
 }
