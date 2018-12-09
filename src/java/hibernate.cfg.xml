@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/institute_management?zeroDateTimeBehavior=convertToNull</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password"></property>
+    
+    
+        <!-- add classes to map from here -->
+        <mapping class="mapping.AdvancePayments" />
+        <mapping class="mapping.Attendence" />
+        <mapping class="mapping.Course" />
+        <mapping class="mapping.CoursesDates" />
+        <mapping class="mapping.Extraclasses" />
+        <mapping class="mapping.ExtraclassesPK" />
+        <mapping class="mapping.Lecturer" />
+        <mapping class="mapping.LecturerPayments" />
+        <mapping class="mapping.PageDetails" />
+        <mapping class="mapping.Payments" />
+        <mapping class="mapping.Privileges" />
+        <mapping class="mapping.School" />
+        <mapping class="mapping.Student" />
+        <mapping class="mapping.StudentCourse" />
+        <mapping class="mapping.StudentCoursePK" />
+        <mapping class="mapping.Subject" />
+        <mapping class="mapping.SysUsers" />
+        <mapping class="mapping.UserRole" />
+    </session-factory>
+  
+</hibernate-configuration>

@@ -1,0 +1,208 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="pglobal" namespace="/" extends="struts-default,json-default,jasperreports-default">
+  
+   
+        <global-results>
+            <result name="noaccessPage" type="chain" >logOut</result>
+            <result name="multiaccess">/pages/login/login.jsp</result>
+                
+        </global-results> 
+    </package>
+    
+    <package name="Zeogyn_Login" extends="pglobal" namespace="/" >
+
+        <default-action-ref name="init"/>
+        <!--   login action   -->
+        <action name="loginCheckloginCall" class="login.action.LoginAction" method="loginCheck">
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="success">/pages/login/home.jsp</result>
+            <result name="login">/pages/login/login.jsp</result>
+           
+        
+        </action>
+       
+     
+        <action name="init" class="login.action.LoginAction" method="execute">
+            <result name="success">/pages/login/login.jsp</result>
+        </action>
+        
+        
+    </package>
+
+    <package name="Student" extends="pglobal" namespace="/">
+        <action name="student" class="student.action.StudentRegister" method="execute"> 
+            <result name="success">/pages/student/student.jsp</result>
+        </action>  
+        <action name="*student" class="student.action.StudentRegister" method="list" >
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="success">/pages/student/student.jsp</result>
+            <result name="list" type="json"></result>
+        </action>
+        <action name="Addstudent" class="student.action.StudentRegister" method="Add" > 
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="add">/pages/msgFrag.jsp</result>
+        </action>
+        <action name="findStudent" class="student.action.StudentRegister" method="find" > 
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="find" type="json"></result>
+            <result name="success">/pages/student/student.jsp</result>
+        </action>
+        <action name="updatestudent" class="student.action.StudentRegister" method="update" > 
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="update">/pages/msgFrag.jsp</result>
+        </action>
+    </package>
+    
+    <package name="Subject" extends="pglobal" namespace="/">
+        <action name="subject" class="subject.action.SubjectRegister" method="execute"> 
+            <result name="success">/pages/subject/subject.jsp</result>
+        </action> 
+        <action name="listsubject" class="subject.action.SubjectRegister" method="list" >
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="list" type="json"></result>
+        </action>
+        <action name="Addsubject" class="subject.action.SubjectRegister" method="Add">
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="add">/pages/msgFrag.jsp</result>
+        </action>
+        <action name="findSubject" class="subject.action.SubjectRegister" method="find">
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="find" type="json"></result>
+        </action>
+        <action name="updatesubject" class="subject.action.SubjectRegister" method="update" > 
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="update">/pages/msgFrag.jsp</result>
+        </action>
+        <action name="deletestudent" class="subject.action.SubjectRegister" method="delete" > 
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="delete" type="json"></result>
+          
+        </action>
+        
+    </package>
+    
+    <package name="Lecturer" extends="pglobal" namespace="/">
+        <action name="lecturer" class="lecturer.action.RegisterLecturer" method="execute"> 
+            <result name="success">/pages/lecturer/lecturer.jsp</result>
+        </action> 
+        <action name="listlecturer" class="lecturer.action.RegisterLecturer" method="list" >
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="list" type="json"></result>
+        </action>
+        <action name="AddLecturer" class="lecturer.action.RegisterLecturer" method="Add">
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="add">/pages/msgFrag.jsp</result>
+        </action>
+        <action name="findLecturer" class="lecturer.action.RegisterLecturer" method="find">
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="find" type="json"></result>
+        </action>
+        <action name="updatelecturer" class="lecturer.action.RegisterLecturer" method="update" > 
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="update">/pages/msgFrag.jsp</result>
+        </action>
+    </package>
+    
+    <package name="Courses" extends="pglobal" namespace="/">
+        <action name="course" class="course.action.CourseAction" method="execute"> 
+            <result name="success">/pages/course/course.jsp</result>
+        </action> 
+        <action name="listcourses" class="course.action.CourseAction" method="list" >
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="list" type="json"></result>
+        </action>
+        <action name="AddCourse" class="course.action.CourseAction" method="Add">
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="add">/pages/msgFrag.jsp</result>
+        </action>
+        
+    </package>
+    
+    <package name="Privilege" extends="pglobal" namespace="/">
+        <action name="privileges" class="privileges.action.PrivilegeAction" method="execute"> 
+            <result name="success">/pages/privileges/privileges.jsp</result>
+        </action> 
+         <action name="listpriviles" class="privileges.action.PrivilegeAction" method="list" >
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="list" type="json"></result>
+        </action>
+          <action name="Findprivileges" class="privileges.action.PrivilegeAction" method="Find" >
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="find" type="json"></result>
+        </action>
+      <action name="Addprivileges" class="privileges.action.PrivilegeAction" method="AddPrivilage">
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="addPriviles">/pages/msgFrag.jsp</result>
+        </action>
+        <action name="Adduser" class="privileges.action.PrivilegeAction" method="Add">
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="add">/pages/msgFrag.jsp</result>
+        </action>
+    </package>
+    
+    <package name="Report" extends="pglobal" namespace="/">
+           <action name="report" class="report.action.ReportDetails" method="execute"> 
+            <result name="success">/pages/report/report.jsp</result>
+        </action> 
+         <action name="Genreport1" class="report.action.ReportDetails" method="Genreport1">
+           <result name="gen1">/pages/report/report1.jsp</result>
+        </action>
+        <action name="Genreport2" class="report.action.ReportDetails" method="Genreport2">
+           <result name="gen2">/pages/report/report2.jsp</result>
+        </action>
+        <action name="Genreport3" class="report.action.ReportDetails" method="Genreport3">
+           <result name="gen3">/pages/report/report3.jsp</result>
+        </action>
+        <action name="Genreport4" class="report.action.ReportDetails" method="Genreport4">
+           <result name="gen4">/pages/report/report4.jsp</result>
+        </action>
+        <action name="Genreport5" class="report.action.ReportDetails" method="Genreport5">
+           <result name="gen5">/pages/report/report5.jsp</result>
+        </action>
+        
+        <action name="Genreport6" class="report.action.ReportDetails" method="Genreport6">
+           <result name="gen6">/pages/report/report6.jsp</result>
+        </action>
+        <action name="Genreport7" class="report.action.ReportDetails" method="Genreport7">
+           <result name="gen7">/pages/report/report7.jsp</result>
+        </action>
+        <action name="Genreport8" class="report.action.ReportDetails" method="Genreport8">
+           <result name="gen8">/pages/report/report8.jsp</result>
+        </action>
+        <action name="Genreport9" class="report.action.ReportDetails" method="Genreport9">
+           <result name="gen9">/pages/report/report9.jsp</result>
+        </action>
+        <action name="Genreport10" class="report.action.ReportDetails" method="Genreport10">
+           <result name="gen10">/pages/report/report10.jsp</result>
+        </action>
+        <action name="Genreport11" class="report.action.ReportDetails" method="Genreport11">
+           <result name="gen11">/pages/report/report11.jsp</result>
+        </action>
+        
+        
+        <action name="GenCoursePayment" class="report.action.ReportDetails" method="Report1">
+			<result name="rep1" type="jasper">            
+                <param name="location">/iReport/CoursePaymentStatus.jasper</param>
+                <param name="dataSource">reportdatalist</param>
+                <param name="format">PDF</param>
+                <param name="reportParameters">parameterMap</param>
+                <param name="contentDisposition">attachment;filename=BatchReport.pdf</param>
+            </result>
+	</action>
+    </package>
+    <package name="EmailSMS" extends="pglobal" namespace="/">
+        <action name="emailSMS" class="EmailSMS.action.EmailSms" method="execute"> 
+            <result name="success">/pages/EmailSMS/emailSms.jsp</result>
+        </action> 
+    </package>
+    
+    <package name="Attendence" extends="pglobal" namespace="/">
+        <action name="attendance" class="Atten.action.AttenAction" method="execute"> 
+            <result name="success">/pages/atten/attendence.jsp</result>
+        </action> 
+    </package>
+</struts>

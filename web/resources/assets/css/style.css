@@ -1,0 +1,288 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Oct 17, 2016, 10:07:56 AM
+    Author     : kasun_k
+*/
+
+body{
+    overflow: hidden;
+}
+.text {
+    padding: 25px 25px 30px 25px;
+    color: #fff;
+    text-align: center;
+    font-size: 44px;
+}
+strong { font-weight: 500; }
+
+.text h1 { color: #fff; }
+
+h1, h2 {
+    margin-top: 10px;
+    font-size: 38px;
+    font-weight: 100;
+    color: #555;
+    line-height: 50px;
+}
+
+.inner-bg {
+    padding: 100px 0 170px 0;
+
+}
+
+.form-top {
+    overflow: hidden;
+    padding: 0 25px 15px 25px;
+    background: #444;
+    background: rgba(0, 0, 0, 0.3);
+    -moz-border-radius: 4px 4px 0 0; -webkit-border-radius: 4px 4px 0 0; border-radius: 4px 4px 0 0;
+    text-align: left;
+}
+.form-top-left {
+    float: left;
+    width: 75%;
+    padding-top: 25px;
+}
+
+.form-top-left h3 { margin-top: 0; color: #fff; font-size: 14px;}
+
+.form-top-left p { opacity: 0.8; color: #fff; }
+
+.form-top-right {
+    float: left;
+    width: 25%;
+    padding-top: 5px;
+    font-size: 66px;
+    color: #fff;
+    line-height: 100px;
+    text-align: right;
+    opacity: 0.3;
+}
+.form-bottom {
+    padding: 25px 25px 30px 25px;
+    background: #444;
+    background: rgba(0, 0, 0, 0.3);
+    -moz-border-radius: 0 0 4px 4px; -webkit-border-radimodal-headerus: 0 0 4px 4px; border-radius: 0 0 4px 4px;
+    text-align: left;
+}
+
+.submit1{
+    padding-top: 25px;   
+}
+
+.well {
+    min-height: 30px;
+    padding: 0px;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+    opacity: 0.6;
+    filter: alpha(opacity=30); /* For IE8 and earlier */
+    border: 0px solid #fff;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.form-box{
+    margin-top: 35px;
+    border-style: inset;
+}
+
+.modal{
+    margin-top: 150px;
+}
+
+modal-dialog {
+    border: 1px inset #e5e5e5;
+    position: relative;
+    width: auto;
+    margin: 10px;
+    background: #444;
+    background: rgba(0, 0, 0, 0.3);
+    vertical-align: bottom;
+}
+
+.modal-content{
+    background-color: rgba(100,100,100,0.2);
+    color: rgba(255,255,255,1);
+    border-top: rgba(0,0,0,0.2) 1px solid;
+    border-right: rgba(0,0,0,0.2) 1px solid;
+    border-bottom: rgba(0,0,0,0.2) 1px solid;
+    border-left: rgba(0,0,0,0.2) 1px solid;
+    width: 65%;
+    vertical-align: central;
+    margin: auto;
+}
+.modal-header{
+    font-family: Museo100;
+    padding: 0px;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+input[type=text],input[type=password]{
+    background-color: rgba(50,50,50,0.2);
+    color: white;
+    border: inset;
+    border-top:rgba(255,255,255,0.2) 1px inset;
+    border-right: rgba(255,255,255,0.2) 1px inset;
+    border-bottom: rgba(255,255,255,0.2) 1px inset;
+    border-left: rgba(255,255,255,0.2) 1px inset;
+    margin-bottom: 18px;
+    font-family: Museo100;
+}
+input[type=text]:focus{
+    border: solid;
+    border-color: rgba(25,25,25,0.6);
+    background-position: 0 -15px;
+}
+
+input[type=password]:focus{
+    border: solid;
+    border-color: rgba(25,25,25,0.6);
+    background-position: 0 -15px;
+}
+
+input[type=submit]{
+    font-family: Museo100;
+    margin-top:25px;
+}
+.form-control::-webkit-input-placeholder { color: white;  font-family: "Times New Roman", Times, serif; }
+.form-control:-moz-placeholder { color: white;  font-family: "Times New Roman", Times, serif;}
+.form-control::-moz-placeholder { color: white; font-family: "Times New Roman", Times, serif; }
+.form-control:-ms-input-placeholder { color: white;  font-family: "Times New Roman", Times, serif;}
+
+
+.btn-primary{   
+    background-color: rgba(50,50,50,0.2);
+    border-color: rgba(50,50,50,0.2);
+    border-radius: 6px;
+    font-family: "Museo100";
+}
+.btn-primary:hover{
+    background-color: rgba(25,25,25,0.6);
+    background-position: 0 -15px;
+    border-color: rgba(25,25,25,0.6);
+}
+.btn-primary:focus {
+    background-color: rgba(25,25,25,0.6);
+    background-position: 0 -15px;
+}
+
+
+.inner-addon { 
+    position: relative; 
+}
+
+/* style icon */
+.inner-addon .fa {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none;
+}
+
+/* align icon */
+.left-addon .fa  { left:  0px;}
+.right-addon .fa { right: 0px;}
+
+/* add padding  */
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+
+.inner-addon .fa {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none;
+}
+
+/* align icon */
+.left-addon .fa  { left:  0px;}
+.right-addon .fa { right: 0px;}
+
+/* add padding  */
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+
+.error_msg{
+    font-family: "Times New Roman";
+    padding: 0px;
+    font-size: 13px;
+}
+
+.login_background{
+    background-image: url(../images/education.jpg);
+    background-repeat: no-repeat;
+   background-size: cover;
+}
+
+.error_msg{
+    font-family: Museo100;
+    padding: 0px;
+    /*font-size: 13px;*/
+    color: #b72525;
+    font-size:16px;
+}
+i{
+    font-style: normal !important;
+}
+
+
+@font-face {
+    font-family: Museo100;
+    src: url(Museo/Museo900-Regular.otf);
+    font-weight:bold;
+    font-size: 100px;
+}
+
+/*Change the name to AutomaticBillSettlement*/
+h3, .h3 {
+    font-size: 18px;
+}
+
+.title{
+    text-align: left;
+    padding-left: 35px;
+    padding-right: 0px;
+    font-family: Museo100;
+
+}
+
+.logo{
+
+/*    padding-right: 90px;*/
+     padding-top: 8px;
+     
+     padding-bottom: 2px;
+     margin-left:-19px;
+     padding-right:3px;
+    
+}
+
+.logo .img {
+   width: 100%;
+}
+
+.fill {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden
+}
+.fill img {
+    flex-shrink: 0;
+    min-width: 100%;
+    min-height: 100%
+}
+
+.col-sm-5{
+    padding-left:0px;
+}
+
+@font-face {
+    font-family: Museo100;
+    src: url('Museo/Museo700-Regular.otf00-Regular.otf');
+    font-size:14px;
+}
