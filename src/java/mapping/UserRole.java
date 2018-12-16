@@ -23,16 +23,13 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author ridmi_g
+ * @author Ridmi Shalika
  */
 @Entity
 @Table(name = "user_role", catalog = "institute_management", schema = "")
 @NamedQueries({
     @NamedQuery(name = "UserRole.findAll", query = "SELECT u FROM UserRole u")})
 public class UserRole implements Serializable {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
-    private Set<SysUsers> sysUsersSet;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,6 +44,8 @@ public class UserRole implements Serializable {
     private String description;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
     private Set<Privileges> privilegesSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
+    private Set<SysUsers> sysUsersSet;
 
     public UserRole() {
     }
@@ -84,6 +83,14 @@ public class UserRole implements Serializable {
         this.privilegesSet = privilegesSet;
     }
 
+    public Set<SysUsers> getSysUsersSet() {
+        return sysUsersSet;
+    }
+
+    public void setSysUsersSet(Set<SysUsers> sysUsersSet) {
+        this.sysUsersSet = sysUsersSet;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -107,14 +114,6 @@ public class UserRole implements Serializable {
     @Override
     public String toString() {
         return "mapping.UserRole[ userRoleId=" + userRoleId + " ]";
-    }
-
-    public Set<SysUsers> getSysUsersSet() {
-        return sysUsersSet;
-    }
-
-    public void setSysUsersSet(Set<SysUsers> sysUsersSet) {
-        this.sysUsersSet = sysUsersSet;
     }
     
 }

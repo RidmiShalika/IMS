@@ -6,7 +6,6 @@
 package mapping;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,8 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -26,10 +23,10 @@ import javax.validation.constraints.Size;
  * @author Ridmi Shalika
  */
 @Entity
-@Table(name = "student_course", catalog = "institute_management", schema = "")
+@Table(name = "class_conduct_details", catalog = "institute_management", schema = "")
 @NamedQueries({
-    @NamedQuery(name = "StudentCourse.findAll", query = "SELECT s FROM StudentCourse s")})
-public class StudentCourse implements Serializable {
+    @NamedQuery(name = "ClassConductDetails.findAll", query = "SELECT c FROM ClassConductDetails c")})
+public class ClassConductDetails implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -37,25 +34,23 @@ public class StudentCourse implements Serializable {
     @NotNull
     @Column(name = "id")
     private Integer id;
-    @Column(name = "registration_date")
-    @Temporal(TemporalType.DATE)
-    private Date registrationDate;
-    @Column(name = "card_type")
-    private Integer cardType;
-    @Size(max = 10)
-    @Column(name = "status")
-    private String status;
-    @JoinColumn(name = "student_id", referencedColumnName = "S_ID")
-    @ManyToOne(optional = false)
-    private Student studentId;
+    @Size(max = 50)
+    @Column(name = "start_date")
+    private String startDate;
+    @Size(max = 50)
+    @Column(name = "end_date")
+    private String endDate;
+    @Size(max = 50)
+    @Column(name = "date")
+    private String date;
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Course courseId;
 
-    public StudentCourse() {
+    public ClassConductDetails() {
     }
 
-    public StudentCourse(Integer id) {
+    public ClassConductDetails(Integer id) {
         this.id = id;
     }
 
@@ -67,36 +62,28 @@ public class StudentCourse implements Serializable {
         this.id = id;
     }
 
-    public Date getRegistrationDate() {
-        return registrationDate;
+    public String getStartDate() {
+        return startDate;
     }
 
-    public void setRegistrationDate(Date registrationDate) {
-        this.registrationDate = registrationDate;
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 
-    public Integer getCardType() {
-        return cardType;
+    public String getEndDate() {
+        return endDate;
     }
 
-    public void setCardType(Integer cardType) {
-        this.cardType = cardType;
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 
-    public String getStatus() {
-        return status;
+    public String getDate() {
+        return date;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Student getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Student studentId) {
-        this.studentId = studentId;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public Course getCourseId() {
@@ -117,10 +104,10 @@ public class StudentCourse implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof StudentCourse)) {
+        if (!(object instanceof ClassConductDetails)) {
             return false;
         }
-        StudentCourse other = (StudentCourse) object;
+        ClassConductDetails other = (ClassConductDetails) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -129,7 +116,7 @@ public class StudentCourse implements Serializable {
 
     @Override
     public String toString() {
-        return "mapping.StudentCourse[ id=" + id + " ]";
+        return "mapping.ClassConductDetails[ id=" + id + " ]";
     }
     
 }

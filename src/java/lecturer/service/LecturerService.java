@@ -96,13 +96,13 @@ public class LecturerService {
                         databean.setFirstname("--");
                     }
                     try {
-                        databean.setGender(objBean.getGender());
+                        databean.setGender(objBean.getGender()+"");
                     } catch (NullPointerException e) {
                         databean.setGender("--");
                     }
                  
                     try {
-                        databean.setTitle(objBean.getTitle());
+                        databean.setTitle(objBean.getTitle()+"");
                     } catch (NullPointerException e) {
                         databean.setTitle("--");
                     }
@@ -142,43 +142,19 @@ public class LecturerService {
             session = HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
 
-            String sql1 = "from Subject sc where sc.subjectId =:subjectId";
-            Query query1 = session.createQuery(sql1);
-            query1.setString("subjectId", bean.getAddsubject());
-            sub = query1.list();
-            if (0 < sub.size()) {
-                subCode = sub.get(0).getSubjectCode();
-            }
+            
 
             lec = new Lecturer();
 
-            System.out.println("------------ " + bean.getAddsubject() + ", " + bean.getAddtitle());
-            System.out.println("------------ " + subCode);
-
-            if (bean.getAddgender().equals("1")) {
-                bean.setAddgender("Male");
-            } else if (bean.getAddgender().equals("2")) {
-                bean.setAddgender("Female");
-            }
-
-            if (bean.getAddtitle().equals("1")) {
-                bean.setAddtitle("Mr");
-            } else if (bean.getAddtitle().equals("2")) {
-                bean.setAddtitle("Mrs");
-            } else if (bean.getAddtitle().equals("3")) {
-                bean.setAddtitle("Miss");
-            } else if (bean.getAddtitle().equals("4")) {
-                bean.setAddtitle("Rev");
-            }
-
+        
             lec.setAddress(bean.getAddaddress());
             lec.setContact(bean.getAddcontact());
             lec.setEmail(bean.getAddemail());
             lec.setFirstName(bean.getAddfirstname());
-            lec.setGender(bean.getAddgender());
+            lec.setGender(Integer.parseInt(bean.getAddgender()));
             lec.setName(bean.getAddfullname());
             lec.setNic(bean.getAddnic());
-            lec.setTitle(bean.getAddtitle());
+            lec.setTitle(Integer.parseInt(bean.getAddtitle()) );
             lec.setRegDate(new Date());
 
             session.save(lec);
@@ -220,34 +196,20 @@ public class LecturerService {
 
             if (0 < lecturerlist.size()) {
 
-                if (lecturerlist.get(0).getGender().equals("Male")) {
-                    lecturerlist.get(0).setGender("1");
-                } else if (lecturerlist.get(0).getGender().equals("Female")) {
-                    lecturerlist.get(0).setGender("2");
-                }
-
-                
-                if (lecturerlist.get(0).getTitle().equals("Mr")) {
-                    lecturerlist.get(0).setTitle("1");
-                } else if (lecturerlist.get(0).getTitle().equals("Mrs")) {
-                    lecturerlist.get(0).setTitle("2");
-                } else if (lecturerlist.get(0).getTitle().equals("Miss")) {
-                    lecturerlist.get(0).setTitle("3");
-                } else if (lecturerlist.get(0).getTitle().equals("Rev")) {
-                    lecturerlist.get(0).setTitle("4");
-                }
+              
 
                 inputBean.setUplecid(lecturerlist.get(0).getId().toString());
-                inputBean.setUpname(lecturerlist.get(0).getName());
+                inputBean.setUpname(lecturerlist.get(0).getFirstName());
                 inputBean.setUpaddress(lecturerlist.get(0).getAddress());
                 inputBean.setUpcontact(lecturerlist.get(0).getContact());
                 inputBean.setUpemail(lecturerlist.get(0).getEmail());
-                inputBean.setUpgender(lecturerlist.get(0).getGender());
+                inputBean.setUpgender(lecturerlist.get(0).getGender()+"");
                 inputBean.setUpnic(lecturerlist.get(0).getNic());
-                inputBean.setUptitle(lecturerlist.get(0).getTitle());
+                inputBean.setUptitle(lecturerlist.get(0).getTitle()+"");
+                inputBean.setUpfullname(lecturerlist.get(0).getName());
 
             }
-            System.out.println("444444444444444444444 " + inputBean.getUplecid());
+            System.out.println("444444444444444444444 " + inputBean.getUpfullname());
 
         } catch (Exception e) {
             if (session != null) {
@@ -286,12 +248,13 @@ public class LecturerService {
                 lec.get(0).setAddress(inputBean.getUpaddress());
                 lec.get(0).setContact(inputBean.getUpcontact());
                 lec.get(0).setEmail(inputBean.getUpemail());
-                lec.get(0).setGender(inputBean.getUpgender());
-                lec.get(0).setName(inputBean.getUpname());
+                lec.get(0).setGender(Integer.parseInt(inputBean.getUpgender()));
+                lec.get(0).setFirstName(inputBean.getUpname());
                 lec.get(0).setNic(inputBean.getUpnic());
-                lec.get(0).setTitle(inputBean.getUptitle());
+                lec.get(0).setTitle(Integer.parseInt(inputBean.getUptitle()));
+                lec.get(0).setName(inputBean.getUpfullname());
 
-                session.save(lec.get(0));
+                session.update(lec.get(0));
 
                 isUpdated = true;
             }

@@ -9,43 +9,53 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
  * @author Ridmi Shalika
  */
 @Entity
-@Table(name = "privileges", catalog = "institute_management", schema = "")
+@Table(name = "admission", catalog = "institute_management", schema = "")
 @NamedQueries({
-    @NamedQuery(name = "Privileges.findAll", query = "SELECT p FROM Privileges p")})
-public class Privileges implements Serializable {
+    @NamedQuery(name = "Admission.findAll", query = "SELECT a FROM Admission a")})
+public class Admission implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ID")
+    @NotNull
+    @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "page_id", referencedColumnName = "page_id")
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "paymentDate")
+    private String paymentDate;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "PersonID")
+    private Double personID;
+    @JoinColumn(name = "s_id", referencedColumnName = "S_ID")
     @ManyToOne(optional = false)
-    private PageDetails pageId;
-    @JoinColumn(name = "role_id", referencedColumnName = "user_role_id")
-    @ManyToOne(optional = false)
-    private UserRole roleId;
+    private Student sId;
 
-    public Privileges() {
+    public Admission() {
     }
 
-    public Privileges(Integer id) {
+    public Admission(Integer id) {
         this.id = id;
+    }
+
+    public Admission(Integer id, String paymentDate) {
+        this.id = id;
+        this.paymentDate = paymentDate;
     }
 
     public Integer getId() {
@@ -56,20 +66,28 @@ public class Privileges implements Serializable {
         this.id = id;
     }
 
-    public PageDetails getPageId() {
-        return pageId;
+    public String getPaymentDate() {
+        return paymentDate;
     }
 
-    public void setPageId(PageDetails pageId) {
-        this.pageId = pageId;
+    public void setPaymentDate(String paymentDate) {
+        this.paymentDate = paymentDate;
     }
 
-    public UserRole getRoleId() {
-        return roleId;
+    public Double getPersonID() {
+        return personID;
     }
 
-    public void setRoleId(UserRole roleId) {
-        this.roleId = roleId;
+    public void setPersonID(Double personID) {
+        this.personID = personID;
+    }
+
+    public Student getSId() {
+        return sId;
+    }
+
+    public void setSId(Student sId) {
+        this.sId = sId;
     }
 
     @Override
@@ -82,10 +100,10 @@ public class Privileges implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Privileges)) {
+        if (!(object instanceof Admission)) {
             return false;
         }
-        Privileges other = (Privileges) object;
+        Admission other = (Admission) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -94,7 +112,7 @@ public class Privileges implements Serializable {
 
     @Override
     public String toString() {
-        return "mapping.Privileges[ id=" + id + " ]";
+        return "mapping.Admission[ id=" + id + " ]";
     }
     
 }

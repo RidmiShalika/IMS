@@ -147,17 +147,48 @@ public class CourseAction extends ActionSupport implements ModelDriven<CourseBea
      public String Add(){
          
          try {
-             if(service.addCourse(inputbean)){
+             if(doValidation(inputbean)){
+                 if(service.addCourse(inputbean)){
                  addActionMessage("Course addes successfull");
              }else{
                  addActionError("Course added fail");
              }
+             }
+             
              
          } catch (Exception e) {
              e.printStackTrace();
              addActionError("Course added fail");
          }
          return "add";
+     }
+     public boolean doValidation(CourseBean inputbean){
+         boolean ok;
+         
+         if(inputbean.getAddcourseDescription() == null || inputbean.getAddcourseDescription().isEmpty()){
+             addActionError("Description can not be empty");
+             ok = false;
+         }else if(inputbean.getAddlecturer().equals("-1")){
+             addActionError("Please select lecture");
+             ok = false;
+        }else if(inputbean.getAddconductingMedium().equals("-1")){
+             addActionError("Please select medium");
+             ok = false;
+        }else if(inputbean.getAddsubject().equals("-1")){
+             addActionError("Please select subject");
+             ok = false;
+        }else if(inputbean.getAddgrade().equals("-1")){
+             addActionError("Please select grade");
+             ok = false;
+        }else if(inputbean.getAddlecturerPayment() == null || inputbean.getAddlecturerPayment().isEmpty()){
+             addActionError("Lecture payment can not be empty");
+             ok = false;
+        }else{
+             ok = true;
+         }
+         
+         
+         return ok;
      }
 
 }

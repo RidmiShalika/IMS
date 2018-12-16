@@ -15,21 +15,26 @@
         <mapping class="mapping.AdvancePayments" />
         <mapping class="mapping.Attendence" />
         <mapping class="mapping.Course" />
-        <mapping class="mapping.CoursesDates" />
-        <mapping class="mapping.Extraclasses" />
-        <mapping class="mapping.ExtraclassesPK" />
+        <!--<mapping class="mapping.CoursesDates" />-->
+        <!--<mapping class="mapping.Extraclasses" />-->
+        <!--<mapping class="mapping.ExtraclassesPK" />-->
         <mapping class="mapping.Lecturer" />
-        <mapping class="mapping.LecturerPayments" />
+        <mapping class="mapping.LecturePayment" />
         <mapping class="mapping.PageDetails" />
         <mapping class="mapping.Payments" />
         <mapping class="mapping.Privileges" />
         <mapping class="mapping.School" />
         <mapping class="mapping.Student" />
         <mapping class="mapping.StudentCourse" />
-        <mapping class="mapping.StudentCoursePK" />
+        <!--<mapping class="mapping.StudentCoursePK" />-->
         <mapping class="mapping.Subject" />
         <mapping class="mapping.SysUsers" />
         <mapping class="mapping.UserRole" />
+        <mapping class="mapping.Admission" />
+        <mapping class="mapping.ClassConductDetails" />
+        <mapping class="mapping.CourseDates" />
+        <mapping class="mapping.ExtraClasses" />
+        <mapping class="mapping.PaymentBillDetails" />
     </session-factory>
   
 </hibernate-configuration>

@@ -73,7 +73,7 @@ public class StudentService {
                         databean.setsTelephone("--");
                     }
                     try {
-                        databean.setsSchool(objBean.getSSchool());
+                        databean.setsSchool(objBean.getSSchool().getSchool());
                     } catch (NullPointerException e) {
                         databean.setsSchool("--");
                     }
@@ -191,7 +191,7 @@ public class StudentService {
 //            student.setSGender(bean.getGender());
             student.setSName(bean.getName());
             student.setSParentContactNo(bean.getParentContactNo());
-            student.setSSchool(schoolName);
+//            student.setSSchool(schoolName);
             student.setSTelephone(bean.getTelephone());
             student.setSYor(bean.getYearOfRegistration());
 
@@ -241,7 +241,7 @@ public class StudentService {
                 inputBean.setUpfirstname(studentlist.get(0).getSFirstname());
                 inputBean.setUpgender(studentlist.get(0).getSGender());
                 inputBean.setUpparentContactNo(studentlist.get(0).getSParentContactNo());
-                inputBean.setUpschool(studentlist.get(0).getSSchool());
+//                inputBean.setUpschool(studentlist.get(0).getSSchool());
                 inputBean.setUptelephone(studentlist.get(0).getSTelephone());
                 inputBean.setUpyearOfRegistration(studentlist.get(0).getSYor());
 
@@ -298,7 +298,7 @@ public class StudentService {
                 student.get(0).setSGender(inputBean.getUpgender());
                 student.get(0).setSName(inputBean.getUpname());
                 student.get(0).setSParentContactNo(inputBean.getUpparentContactNo());
-                student.get(0).setSSchool(schoolName);
+//                student.get(0).setSSchool(schoolName);
                 student.get(0).setSTelephone(inputBean.getUptelephone());
                 student.get(0).setSYor(inputBean.getUpyearOfRegistration());
 

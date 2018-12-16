@@ -13,17 +13,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
  *
- * @author ridmi_g
+ * @author Ridmi Shalika
  */
 @Entity
 @Table(name = "payments", catalog = "institute_management", schema = "")
@@ -38,12 +39,6 @@ public class Payments implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Size(max = 110)
-    @Column(name = "s_id")
-    private String sId;
-    @Size(max = 110)
-    @Column(name = "course_id")
-    private String courseId;
-    @Size(max = 110)
     @Column(name = "year")
     private String year;
     @Size(max = 25)
@@ -55,12 +50,8 @@ public class Payments implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "amount")
     private Double amount;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "paid_to_lecture")
-    private boolean paidToLecture;
-    @Basic(optional = false)
-    @NotNull
+    private Boolean paidToLecture;
     @Column(name = "payment_issue_date")
     @Temporal(TemporalType.DATE)
     private Date paymentIssueDate;
@@ -70,6 +61,14 @@ public class Payments implements Serializable {
     @Size(max = 100)
     @Column(name = "payment_issue_year")
     private String paymentIssueYear;
+    @Column(name = "card_type")
+    private Integer cardType;
+    @JoinColumn(name = "student_id", referencedColumnName = "S_ID")
+    @ManyToOne(optional = false)
+    private Student studentId;
+    @JoinColumn(name = "course_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Course courseId;
 
     public Payments() {
     }
@@ -78,34 +77,12 @@ public class Payments implements Serializable {
         this.id = id;
     }
 
-    public Payments(Integer id, boolean paidToLecture, Date paymentIssueDate) {
-        this.id = id;
-        this.paidToLecture = paidToLecture;
-        this.paymentIssueDate = paymentIssueDate;
-    }
-
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getSId() {
-        return sId;
-    }
-
-    public void setSId(String sId) {
-        this.sId = sId;
-    }
-
-    public String getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(String courseId) {
-        this.courseId = courseId;
     }
 
     public String getYear() {
@@ -140,11 +117,11 @@ public class Payments implements Serializable {
         this.amount = amount;
     }
 
-    public boolean getPaidToLecture() {
+    public Boolean getPaidToLecture() {
         return paidToLecture;
     }
 
-    public void setPaidToLecture(boolean paidToLecture) {
+    public void setPaidToLecture(Boolean paidToLecture) {
         this.paidToLecture = paidToLecture;
     }
 
@@ -170,6 +147,30 @@ public class Payments implements Serializable {
 
     public void setPaymentIssueYear(String paymentIssueYear) {
         this.paymentIssueYear = paymentIssueYear;
+    }
+
+    public Integer getCardType() {
+        return cardType;
+    }
+
+    public void setCardType(Integer cardType) {
+        this.cardType = cardType;
+    }
+
+    public Student getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(Student studentId) {
+        this.studentId = studentId;
+    }
+
+    public Course getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Course courseId) {
+        this.courseId = courseId;
     }
 
     @Override

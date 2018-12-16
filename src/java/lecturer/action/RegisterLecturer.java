@@ -97,11 +97,14 @@ public class RegisterLecturer extends ActionSupport implements ModelDriven<Lectu
      public String Add(){
          
          try {
-             if(service.addStudent(inputbean)){
+             if(doValidation(inputbean)){
+                 if(service.addStudent(inputbean)){
                  addActionMessage("Lecturer added successfully");
              }else{
                  addActionError("Lecturer add fail");
              }
+             }
+             
          } catch (Exception e) {
               addActionError("Lecturer add fail");
               e.printStackTrace();;
@@ -136,6 +139,26 @@ public class RegisterLecturer extends ActionSupport implements ModelDriven<Lectu
              addActionError("Update fail2");
          }
          return "update";
+     }
+     public boolean doValidation(LecturerBean inputbean){
+         boolean ok ;
+         if(inputbean.getAddtitle().equals("-1")){
+             ok=false;
+             addActionError("Lecture title can not be empty");
+         }else if(inputbean.getAddfirstname() == null || inputbean.getAddfirstname().isEmpty()){
+             ok=false;
+             addActionError("Lecture first name can not be empty");
+         }else if(inputbean.getAddfullname() == null || inputbean.getAddfullname().isEmpty()){
+             ok=false;
+             addActionError("Lecture full name can not be empty");
+         }else if(inputbean.getAddgender().equals("-1")){
+             ok=false;
+             addActionError("Lecture gender can not be empty");
+         }else{
+             ok = true;
+         }
+         return ok;
+         
      }
     
 }

@@ -68,7 +68,17 @@ public class LecturerBean {
     private String upaddress;
     private String uplecid;
     private String uptitle;
+    private String upfullname;
 
+    public String getUpfullname() {
+        return upfullname;
+    }
+
+    public void setUpfullname(String upfullname) {
+        this.upfullname = upfullname;
+    }
+
+    
     public String getUptitle() {
         return uptitle;
     }

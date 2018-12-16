@@ -35,14 +35,14 @@ public class CourseService {
             session = (Session) HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
 
-            String sqlCount = "select count(courseId) from Course";
+            String sqlCount = "select count(id) from Course";
             Query queryCount = session.createQuery(sqlCount);
             Iterator itCount = queryCount.iterate();
             count = (Long) itCount.next();
             if (count > 0) {
-                String sqlSearch = "from Course cr where cr.courseDescription LIKE :courseDescription";
+                String sqlSearch = "from Course ";
                 Query querySearch = session.createQuery(sqlSearch);
-                querySearch.setParameter("courseDescription", "%" + inputBean.getSearchname() + "%");
+//                querySearch.setParameter("courseDescription", "%" + inputBean.getSearchname() + "%");
 
                 querySearch.setMaxResults(max);
                 querySearch.setFirstResult(first);
@@ -53,7 +53,7 @@ public class CourseService {
                     Course objBean = (Course) it.next();
 
                     try {
-                        databean.setCourseID(objBean.getCourseId());
+                        databean.setCourseID(objBean.getId().toString());
                     } catch (NullPointerException e) {
                         databean.setCourseID("--");
                     }
@@ -63,7 +63,7 @@ public class CourseService {
                         databean.setCourseDescription("--");
                     }
                     try {
-                        databean.setClassType(objBean.getClassType());
+                        databean.setClassType(objBean.getClassType()+"");
                     } catch (NullPointerException e) {
                         databean.setClassType("--");
                     }
@@ -78,7 +78,7 @@ public class CourseService {
                         databean.setSubject("--");
                     }
                    try {
-                        databean.setLecturer(""+objBean.getLecturerId());
+                        databean.setLecturer(objBean.getLectureId().getName());
                     } catch (NullPointerException e) {
                         databean.setSubject("--");
                     }
@@ -116,20 +116,34 @@ public class CourseService {
             session.beginTransaction();
             cor = new Course();
 
-            cor.setBatchNumber(Integer.parseInt(bean.getAddbatchNo()));
-            cor.setClassType(bean.getAddclassType());
+            cor.setBatchNo(Integer.parseInt(bean.getAddbatchNo()));
+            cor.setClassType(Integer.parseInt(bean.getAddclassType()));
             cor.setCourseDescription(bean.getAddcourseDescription());
-            cor.setCourseDuration(Integer.parseInt(bean.getAddcourseDuration()));
-            cor.setGrade(bean.getAddgrade());
-            cor.setMonthlyFee(Double.parseDouble(bean.getAddmonthlyFee()));
-            cor.setMedium(bean.getAddconductingMedium());
-//            cor.setTotalCourseFee(Integer.parseInt(bean.getAddtotalCoursefee()));
-//            cor.setLecturerId(Integer.parseInt(bean.getAddlecturer()));
-//            cor.setSubjectId(Integer.parseInt(bean.getAddsubject()));
-            cor.setLectureHoleId(Integer.parseInt(bean.getAddlectureHall()));
-            cor.setLecturerPaymentPrecentage(Double.parseDouble(bean.getAddlecturerPayment()));
+            cor.setGrade(Integer.parseInt(bean.getAddgrade()));
+            cor.setMedium(Integer.parseInt(bean.getAddconductingMedium()));
+            Lecturer l = new Lecturer();
+            l.setId(Integer.parseInt(bean.getAddlecturer()));
+            cor.setLectureId(l);
+            Subject s = new Subject();
+            s.setSubjectId(Integer.parseInt(bean.getAddsubject()));
+            cor.setSubjectId(s);
+            cor.setLecHallId(Integer.parseInt(bean.getAddlectureHall()));
+            cor.setLecPaymentPercentage(Double.parseDouble(bean.getAddlecturerPayment()));
             
-            cor.setCourseId(bean.getAddstartTime());
+            System.out.println("ff "+bean.getAddtotalCoursefee());
+            
+            
+            if(bean.getAddtotalCoursefee() != null | !bean.getAddtotalCoursefee().isEmpty()){
+                cor.setTotalCourseFee(Double.parseDouble(bean.getAddtotalCoursefee()));
+            }
+            if(bean.getAddcourseDuration()!= null || !bean.getAddcourseDuration().isEmpty()){
+                cor.setCourseDuration(bean.getAddcourseDuration());
+            }
+            if(bean.getAddmonthlyFee()!= null){
+                cor.setMonthlyFee(Double.parseDouble(bean.getAddmonthlyFee()));
+            }
+            
+//            
             
             
             session.save(cor);

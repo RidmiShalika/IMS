@@ -23,7 +23,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author ridmi_g
+ * @author Ridmi Shalika
  */
 @Entity
 @Table(name = "page_details", catalog = "institute_management", schema = "")
@@ -42,10 +42,13 @@ public class PageDetails implements Serializable {
     @Size(min = 1, max = 40)
     @Column(name = "page_description")
     private String pageDescription;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "url")
+    private String url;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pageId")
     private Set<Privileges> privilegesSet;
-     @Column(name = "url")
-    private String url;
 
     public PageDetails() {
     }
@@ -54,9 +57,10 @@ public class PageDetails implements Serializable {
         this.pageId = pageId;
     }
 
-    public PageDetails(Integer pageId, String pageDescription) {
+    public PageDetails(Integer pageId, String pageDescription, String url) {
         this.pageId = pageId;
         this.pageDescription = pageDescription;
+        this.url = url;
     }
 
     public Integer getPageId() {
@@ -73,6 +77,14 @@ public class PageDetails implements Serializable {
 
     public void setPageDescription(String pageDescription) {
         this.pageDescription = pageDescription;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public Set<Privileges> getPrivilegesSet() {
@@ -107,14 +119,5 @@ public class PageDetails implements Serializable {
     public String toString() {
         return "mapping.PageDetails[ pageId=" + pageId + " ]";
     }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-    
     
 }

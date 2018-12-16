@@ -7,9 +7,7 @@ package mapping;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -55,9 +52,10 @@ public class Lecturer implements Serializable {
     @Size(max = 11)
     @Column(name = "contact")
     private String contact;
-    @Size(max = 30)
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "gender")
-    private String gender;
+    private int gender;
     @Size(max = 100)
     @Column(name = "address")
     private String address;
@@ -71,11 +69,8 @@ public class Lecturer implements Serializable {
     private String firstName;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
     @Column(name = "title")
-    private String title;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lecturerId")
-    private Set<Course> courseSet;
+    private int title;
 
     public Lecturer() {
     }
@@ -84,9 +79,10 @@ public class Lecturer implements Serializable {
         this.id = id;
     }
 
-    public Lecturer(Integer id, String name, String firstName, String title) {
+    public Lecturer(Integer id, String name, int gender, String firstName, int title) {
         this.id = id;
         this.name = name;
+        this.gender = gender;
         this.firstName = firstName;
         this.title = title;
     }
@@ -131,11 +127,11 @@ public class Lecturer implements Serializable {
         this.contact = contact;
     }
 
-    public String getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 
@@ -163,20 +159,12 @@ public class Lecturer implements Serializable {
         this.firstName = firstName;
     }
 
-    public String getTitle() {
+    public int getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(int title) {
         this.title = title;
-    }
-
-    public Set<Course> getCourseSet() {
-        return courseSet;
-    }
-
-    public void setCourseSet(Set<Course> courseSet) {
-        this.courseSet = courseSet;
     }
 
     @Override

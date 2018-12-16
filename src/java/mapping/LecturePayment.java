@@ -13,23 +13,24 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
  *
- * @author ridmi_g
+ * @author Ridmi Shalika
  */
 @Entity
-@Table(name = "lecturer_payments", catalog = "institute_management", schema = "")
+@Table(name = "lecture_payment", catalog = "institute_management", schema = "")
 @NamedQueries({
-    @NamedQuery(name = "LecturerPayments.findAll", query = "SELECT l FROM LecturerPayments l")})
-public class LecturerPayments implements Serializable {
+    @NamedQuery(name = "LecturePayment.findAll", query = "SELECT l FROM LecturePayment l")})
+public class LecturePayment implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -37,49 +38,29 @@ public class LecturerPayments implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "lecturer_id")
-    private int lecturerId;
-    @Basic(optional = false)
-    @NotNull
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "amount")
-    private double amount;
-    @Basic(optional = false)
-    @NotNull
+    private Double amount;
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 30)
+    @Size(max = 30)
     @Column(name = "payment_month")
     private String paymentMonth;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "patment_year")
-    private int patmentYear;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "course_id")
-    private String courseId;
+    @Column(name = "payment_year")
+    private Integer paymentYear;
+    @JoinColumn(name = "lecture_id", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Lecturer lectureId;
+    @JoinColumn(name = "course_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Course courseId;
 
-    public LecturerPayments() {
+    public LecturePayment() {
     }
 
-    public LecturerPayments(Integer id) {
+    public LecturePayment(Integer id) {
         this.id = id;
-    }
-
-    public LecturerPayments(Integer id, int lecturerId, double amount, Date date, String paymentMonth, int patmentYear, String courseId) {
-        this.id = id;
-        this.lecturerId = lecturerId;
-        this.amount = amount;
-        this.date = date;
-        this.paymentMonth = paymentMonth;
-        this.patmentYear = patmentYear;
-        this.courseId = courseId;
     }
 
     public Integer getId() {
@@ -90,19 +71,11 @@ public class LecturerPayments implements Serializable {
         this.id = id;
     }
 
-    public int getLecturerId() {
-        return lecturerId;
-    }
-
-    public void setLecturerId(int lecturerId) {
-        this.lecturerId = lecturerId;
-    }
-
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
@@ -122,19 +95,27 @@ public class LecturerPayments implements Serializable {
         this.paymentMonth = paymentMonth;
     }
 
-    public int getPatmentYear() {
-        return patmentYear;
+    public Integer getPaymentYear() {
+        return paymentYear;
     }
 
-    public void setPatmentYear(int patmentYear) {
-        this.patmentYear = patmentYear;
+    public void setPaymentYear(Integer paymentYear) {
+        this.paymentYear = paymentYear;
     }
 
-    public String getCourseId() {
+    public Lecturer getLectureId() {
+        return lectureId;
+    }
+
+    public void setLectureId(Lecturer lectureId) {
+        this.lectureId = lectureId;
+    }
+
+    public Course getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(String courseId) {
+    public void setCourseId(Course courseId) {
         this.courseId = courseId;
     }
 
@@ -148,10 +129,10 @@ public class LecturerPayments implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof LecturerPayments)) {
+        if (!(object instanceof LecturePayment)) {
             return false;
         }
-        LecturerPayments other = (LecturerPayments) object;
+        LecturePayment other = (LecturePayment) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -160,7 +141,7 @@ public class LecturerPayments implements Serializable {
 
     @Override
     public String toString() {
-        return "mapping.LecturerPayments[ id=" + id + " ]";
+        return "mapping.LecturePayment[ id=" + id + " ]";
     }
     
 }

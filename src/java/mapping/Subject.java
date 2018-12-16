@@ -6,7 +6,9 @@
 package mapping;
 
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -44,6 +47,8 @@ public class Subject implements Serializable {
     @Size(min = 1, max = 200)
     @Column(name = "SUBJECT_NAME")
     private String subjectName;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subjectId")
+    private Set<Course> courseSet;
 
     public Subject() {
     }
@@ -80,6 +85,14 @@ public class Subject implements Serializable {
 
     public void setSubjectName(String subjectName) {
         this.subjectName = subjectName;
+    }
+
+    public Set<Course> getCourseSet() {
+        return courseSet;
+    }
+
+    public void setCourseSet(Set<Course> courseSet) {
+        this.courseSet = courseSet;
     }
 
     @Override

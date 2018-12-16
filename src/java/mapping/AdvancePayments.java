@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -23,7 +25,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author ridmi_g
+ * @author Ridmi Shalika
  */
 @Entity
 @Table(name = "advance_payments", catalog = "institute_management", schema = "")
@@ -37,10 +39,6 @@ public class AdvancePayments implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "lec_id")
-    private int lecId;
     @Basic(optional = false)
     @NotNull
     @Column(name = "amount")
@@ -63,6 +61,9 @@ public class AdvancePayments implements Serializable {
     private String settledPaymentMonth;
     @Column(name = "settled_payment_year")
     private Integer settledPaymentYear;
+    @JoinColumn(name = "lec_id", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Lecturer lecId;
 
     public AdvancePayments() {
     }
@@ -71,9 +72,8 @@ public class AdvancePayments implements Serializable {
         this.id = id;
     }
 
-    public AdvancePayments(Integer id, int lecId, double amount, Date date, String status) {
+    public AdvancePayments(Integer id, double amount, Date date, String status) {
         this.id = id;
-        this.lecId = lecId;
         this.amount = amount;
         this.date = date;
         this.status = status;
@@ -85,14 +85,6 @@ public class AdvancePayments implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public int getLecId() {
-        return lecId;
-    }
-
-    public void setLecId(int lecId) {
-        this.lecId = lecId;
     }
 
     public double getAmount() {
@@ -141,6 +133,14 @@ public class AdvancePayments implements Serializable {
 
     public void setSettledPaymentYear(Integer settledPaymentYear) {
         this.settledPaymentYear = settledPaymentYear;
+    }
+
+    public Lecturer getLecId() {
+        return lecId;
+    }
+
+    public void setLecId(Lecturer lecId) {
+        this.lecId = lecId;
     }
 
     @Override

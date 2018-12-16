@@ -6,16 +6,20 @@
 package mapping;
 
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -30,11 +34,13 @@ public class Course implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "course_id")
-    private String courseId;
+    @Column(name = "id")
+    private Integer id;
+    @Size(max = 100)
+    @Column(name = "course_unique_id")
+    private String courseUniqueId;
     @Size(max = 200)
     @Column(name = "course_description")
     private String courseDescription;
@@ -43,62 +49,68 @@ public class Course implements Serializable {
     private Double totalCourseFee;
     @Column(name = "monthly_fee")
     private Double monthlyFee;
+    @Size(max = 50)
     @Column(name = "course_duration")
-    private Integer courseDuration;
-    @Column(name = "lecture_hole_id")
-    private Integer lectureHoleId;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
+    private String courseDuration;
+    @Column(name = "lec_hall_id")
+    private Integer lecHallId;
     @Column(name = "grade")
-    private String grade;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "class_type")
-    private String classType;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
+    private Integer grade;
     @Column(name = "medium")
-    private String medium;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "batch_number")
-    private int batchNumber;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "lecturer_payment_precentage")
-    private double lecturerPaymentPrecentage;
-    @JoinColumn(name = "lecturer_id", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
-    private Lecturer lecturerId;
+    private Integer medium;
+    @Column(name = "class_type")
+    private Integer classType;
+    @Column(name = "batch_no")
+    private Integer batchNo;
+    @Column(name = "lec_payment_percentage")
+    private Double lecPaymentPercentage;
+    @Size(max = 10)
+    @Column(name = "status")
+    private String status;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseId")
+    private Set<ClassConductDetails> classConductDetailsSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseId")
+    private Set<LecturePayment> lecturePaymentSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseId")
+    private Set<Payments> paymentsSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseId")
+    private Set<PaymentBillDetails> paymentBillDetailsSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseId")
+    private Set<CourseDates> courseDatesSet;
     @JoinColumn(name = "subject_id", referencedColumnName = "SUBJECT_ID")
     @ManyToOne(optional = false)
     private Subject subjectId;
+    @JoinColumn(name = "lecture_id", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Lecturer lectureId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseId")
+    private Set<Attendence> attendenceSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseId")
+    private Set<ExtraClasses> extraClassesSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseId")
+    private Set<StudentCourse> studentCourseSet;
 
     public Course() {
     }
 
-    public Course(String courseId) {
-        this.courseId = courseId;
+    public Course(Integer id) {
+        this.id = id;
     }
 
-    public Course(String courseId, String grade, String classType, String medium, int batchNumber, double lecturerPaymentPrecentage) {
-        this.courseId = courseId;
-        this.grade = grade;
-        this.classType = classType;
-        this.medium = medium;
-        this.batchNumber = batchNumber;
-        this.lecturerPaymentPrecentage = lecturerPaymentPrecentage;
+    public Integer getId() {
+        return id;
     }
 
-    public String getCourseId() {
-        return courseId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setCourseId(String courseId) {
-        this.courseId = courseId;
+    public String getCourseUniqueId() {
+        return courseUniqueId;
+    }
+
+    public void setCourseUniqueId(String courseUniqueId) {
+        this.courseUniqueId = courseUniqueId;
     }
 
     public String getCourseDescription() {
@@ -125,68 +137,108 @@ public class Course implements Serializable {
         this.monthlyFee = monthlyFee;
     }
 
-    public Integer getCourseDuration() {
+    public String getCourseDuration() {
         return courseDuration;
     }
 
-    public void setCourseDuration(Integer courseDuration) {
+    public void setCourseDuration(String courseDuration) {
         this.courseDuration = courseDuration;
     }
 
-    public Integer getLectureHoleId() {
-        return lectureHoleId;
+    public Integer getLecHallId() {
+        return lecHallId;
     }
 
-    public void setLectureHoleId(Integer lectureHoleId) {
-        this.lectureHoleId = lectureHoleId;
+    public void setLecHallId(Integer lecHallId) {
+        this.lecHallId = lecHallId;
     }
 
-    public String getGrade() {
+    public Integer getGrade() {
         return grade;
     }
 
-    public void setGrade(String grade) {
+    public void setGrade(Integer grade) {
         this.grade = grade;
     }
 
-    public String getClassType() {
-        return classType;
-    }
-
-    public void setClassType(String classType) {
-        this.classType = classType;
-    }
-
-    public String getMedium() {
+    public Integer getMedium() {
         return medium;
     }
 
-    public void setMedium(String medium) {
+    public void setMedium(Integer medium) {
         this.medium = medium;
     }
 
-    public int getBatchNumber() {
-        return batchNumber;
+    public Integer getClassType() {
+        return classType;
     }
 
-    public void setBatchNumber(int batchNumber) {
-        this.batchNumber = batchNumber;
+    public void setClassType(Integer classType) {
+        this.classType = classType;
     }
 
-    public double getLecturerPaymentPrecentage() {
-        return lecturerPaymentPrecentage;
+    public Integer getBatchNo() {
+        return batchNo;
     }
 
-    public void setLecturerPaymentPrecentage(double lecturerPaymentPrecentage) {
-        this.lecturerPaymentPrecentage = lecturerPaymentPrecentage;
+    public void setBatchNo(Integer batchNo) {
+        this.batchNo = batchNo;
     }
 
-    public Lecturer getLecturerId() {
-        return lecturerId;
+    public Double getLecPaymentPercentage() {
+        return lecPaymentPercentage;
     }
 
-    public void setLecturerId(Lecturer lecturerId) {
-        this.lecturerId = lecturerId;
+    public void setLecPaymentPercentage(Double lecPaymentPercentage) {
+        this.lecPaymentPercentage = lecPaymentPercentage;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Set<ClassConductDetails> getClassConductDetailsSet() {
+        return classConductDetailsSet;
+    }
+
+    public void setClassConductDetailsSet(Set<ClassConductDetails> classConductDetailsSet) {
+        this.classConductDetailsSet = classConductDetailsSet;
+    }
+
+    public Set<LecturePayment> getLecturePaymentSet() {
+        return lecturePaymentSet;
+    }
+
+    public void setLecturePaymentSet(Set<LecturePayment> lecturePaymentSet) {
+        this.lecturePaymentSet = lecturePaymentSet;
+    }
+
+    public Set<Payments> getPaymentsSet() {
+        return paymentsSet;
+    }
+
+    public void setPaymentsSet(Set<Payments> paymentsSet) {
+        this.paymentsSet = paymentsSet;
+    }
+
+    public Set<PaymentBillDetails> getPaymentBillDetailsSet() {
+        return paymentBillDetailsSet;
+    }
+
+    public void setPaymentBillDetailsSet(Set<PaymentBillDetails> paymentBillDetailsSet) {
+        this.paymentBillDetailsSet = paymentBillDetailsSet;
+    }
+
+    public Set<CourseDates> getCourseDatesSet() {
+        return courseDatesSet;
+    }
+
+    public void setCourseDatesSet(Set<CourseDates> courseDatesSet) {
+        this.courseDatesSet = courseDatesSet;
     }
 
     public Subject getSubjectId() {
@@ -197,10 +249,42 @@ public class Course implements Serializable {
         this.subjectId = subjectId;
     }
 
+    public Lecturer getLectureId() {
+        return lectureId;
+    }
+
+    public void setLectureId(Lecturer lectureId) {
+        this.lectureId = lectureId;
+    }
+
+    public Set<Attendence> getAttendenceSet() {
+        return attendenceSet;
+    }
+
+    public void setAttendenceSet(Set<Attendence> attendenceSet) {
+        this.attendenceSet = attendenceSet;
+    }
+
+    public Set<ExtraClasses> getExtraClassesSet() {
+        return extraClassesSet;
+    }
+
+    public void setExtraClassesSet(Set<ExtraClasses> extraClassesSet) {
+        this.extraClassesSet = extraClassesSet;
+    }
+
+    public Set<StudentCourse> getStudentCourseSet() {
+        return studentCourseSet;
+    }
+
+    public void setStudentCourseSet(Set<StudentCourse> studentCourseSet) {
+        this.studentCourseSet = studentCourseSet;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (courseId != null ? courseId.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -211,7 +295,7 @@ public class Course implements Serializable {
             return false;
         }
         Course other = (Course) object;
-        if ((this.courseId == null && other.courseId != null) || (this.courseId != null && !this.courseId.equals(other.courseId))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -219,7 +303,7 @@ public class Course implements Serializable {
 
     @Override
     public String toString() {
-        return "mapping.Course[ courseId=" + courseId + " ]";
+        return "mapping.Course[ id=" + id + " ]";
     }
     
 }

@@ -13,17 +13,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
  *
- * @author ridmi_g
+ * @author Ridmi Shalika
  */
 @Entity
 @Table(name = "attendence", catalog = "institute_management", schema = "")
@@ -37,30 +38,29 @@ public class Attendence implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "s_id")
-    private Integer sId;
-    @Size(max = 50)
-    @Column(name = "c_id")
-    private String cId;
     @Column(name = "year")
     private Integer year;
     @Column(name = "month")
     private Integer month;
     @Column(name = "date")
     private Integer date;
-    @Size(max = 10)
+    @Size(max = 20)
     @Column(name = "day")
     private String day;
-    @Size(max = 10)
+    @Size(max = 20)
     @Column(name = "time")
     private String time;
-    @Column(name = "attendence")
-    private Boolean attendence;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "completeDate")
+    @Column(name = "atten")
+    private Boolean atten;
+    @Column(name = "complete_date")
     @Temporal(TemporalType.DATE)
     private Date completeDate;
+    @JoinColumn(name = "student_id", referencedColumnName = "S_ID")
+    @ManyToOne(optional = false)
+    private Student studentId;
+    @JoinColumn(name = "course_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Course courseId;
 
     public Attendence() {
     }
@@ -69,33 +69,12 @@ public class Attendence implements Serializable {
         this.id = id;
     }
 
-    public Attendence(Integer id, Date completeDate) {
-        this.id = id;
-        this.completeDate = completeDate;
-    }
-
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getSId() {
-        return sId;
-    }
-
-    public void setSId(Integer sId) {
-        this.sId = sId;
-    }
-
-    public String getCId() {
-        return cId;
-    }
-
-    public void setCId(String cId) {
-        this.cId = cId;
     }
 
     public Integer getYear() {
@@ -138,12 +117,12 @@ public class Attendence implements Serializable {
         this.time = time;
     }
 
-    public Boolean getAttendence() {
-        return attendence;
+    public Boolean getAtten() {
+        return atten;
     }
 
-    public void setAttendence(Boolean attendence) {
-        this.attendence = attendence;
+    public void setAtten(Boolean atten) {
+        this.atten = atten;
     }
 
     public Date getCompleteDate() {
@@ -152,6 +131,22 @@ public class Attendence implements Serializable {
 
     public void setCompleteDate(Date completeDate) {
         this.completeDate = completeDate;
+    }
+
+    public Student getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(Student studentId) {
+        this.studentId = studentId;
+    }
+
+    public Course getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Course courseId) {
+        this.courseId = courseId;
     }
 
     @Override

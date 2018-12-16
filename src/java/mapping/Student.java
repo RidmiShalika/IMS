@@ -6,15 +6,20 @@
 package mapping;
 
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -50,9 +55,6 @@ public class Student implements Serializable {
     @Size(max = 10)
     @Column(name = "S_TELEPHONE")
     private String sTelephone;
-    @Size(max = 50)
-    @Column(name = "S_SCHOOL")
-    private String sSchool;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -79,6 +81,19 @@ public class Student implements Serializable {
     @Size(max = 100)
     @Column(name = "card_number")
     private String cardNumber;
+    @JoinColumn(name = "S_SCHOOL", referencedColumnName = "school_id")
+    @ManyToOne(optional = false)
+    private School sSchool;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "studentId")
+    private Set<Payments> paymentsSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sId")
+    private Set<Admission> admissionSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "studentId")
+    private Set<PaymentBillDetails> paymentBillDetailsSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "studentId")
+    private Set<Attendence> attendenceSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "studentId")
+    private Set<StudentCourse> studentCourseSet;
 
     public Student() {
     }
@@ -143,14 +158,6 @@ public class Student implements Serializable {
         this.sTelephone = sTelephone;
     }
 
-    public String getSSchool() {
-        return sSchool;
-    }
-
-    public void setSSchool(String sSchool) {
-        this.sSchool = sSchool;
-    }
-
     public Integer getSId() {
         return sId;
     }
@@ -213,6 +220,54 @@ public class Student implements Serializable {
 
     public void setCardNumber(String cardNumber) {
         this.cardNumber = cardNumber;
+    }
+
+    public School getSSchool() {
+        return sSchool;
+    }
+
+    public void setSSchool(School sSchool) {
+        this.sSchool = sSchool;
+    }
+
+    public Set<Payments> getPaymentsSet() {
+        return paymentsSet;
+    }
+
+    public void setPaymentsSet(Set<Payments> paymentsSet) {
+        this.paymentsSet = paymentsSet;
+    }
+
+    public Set<Admission> getAdmissionSet() {
+        return admissionSet;
+    }
+
+    public void setAdmissionSet(Set<Admission> admissionSet) {
+        this.admissionSet = admissionSet;
+    }
+
+    public Set<PaymentBillDetails> getPaymentBillDetailsSet() {
+        return paymentBillDetailsSet;
+    }
+
+    public void setPaymentBillDetailsSet(Set<PaymentBillDetails> paymentBillDetailsSet) {
+        this.paymentBillDetailsSet = paymentBillDetailsSet;
+    }
+
+    public Set<Attendence> getAttendenceSet() {
+        return attendenceSet;
+    }
+
+    public void setAttendenceSet(Set<Attendence> attendenceSet) {
+        this.attendenceSet = attendenceSet;
+    }
+
+    public Set<StudentCourse> getStudentCourseSet() {
+        return studentCourseSet;
+    }
+
+    public void setStudentCourseSet(Set<StudentCourse> studentCourseSet) {
+        this.studentCourseSet = studentCourseSet;
     }
 
     @Override
