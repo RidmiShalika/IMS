@@ -181,7 +181,7 @@
                             <s:form  id="addForm"  theme="simple" method="post"  cssStyle="display:none">
                                 <table >
                                     <tr>
-                                        <td class="formLable">Course Description</td> <td>:</td>
+                                        <td class="formLable">Course Description<span class="mandatory">*</span></td> <td>:</td>
 
                                         <td><s:textfield id="addcourseDescription" name="addcourseDescription" cssClass="textField" /></td>
                                         <td width="25px;"></td>
@@ -202,7 +202,7 @@
                                                      listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
                                     </tr>
                                     <tr>
-                                        <td class="formLable">Total Course Fee<span class="mandatory">*</span></td> <td >:</td>
+                                        <td class="formLable">Total Course Fee</td> <td >:</td>
                                         <td><s:textfield id="addtotalCoursefee" name="addtotalCoursefee" cssClass="textField" /></td>                                    
                                         <td width="25px;"></td>
                                         <td class="formLable">Grade<span class="mandatory">*</span></td> <td>:</td>
@@ -211,7 +211,7 @@
                                                      listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
                                     </tr>
                                     <tr>
-                                        <td class="formLable">Course Duration<span class="mandatory">*</span></td> <td >:</td>
+                                        <td class="formLable">Course Duration</td> <td >:</td>
                                         <td><s:textfield id="addcourseDuration" name="addcourseDuration" cssClass="textField" /></td>                                    
                                         <td width="25px;"></td>
                                         <td class="formLable">Monthly Fee</td> <td>:</td>
@@ -220,7 +220,7 @@
                                     </tr>
 
                                     <tr>
-                                        <td class="formLable">Class Type<span class="mandatory">*</span></td> <td >:</td>
+                                        <td class="formLable">Class Type</td> <td >:</td>
                                         <!--<td><s:textfield id="addclassType" name="addclassType" cssClass="textField" /></td>-->  
                                         <td><s:select  name="addclassType" id="addclassType" list="%{clzList}" 
                                                      listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td>
@@ -236,7 +236,7 @@
                                         <td><s:select  name="addbatchNo" id="addbatchNo" list="%{batchList}" 
                                                      listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td>
                                         <td width="25px;"></td>
-                                        <td class="formLable">Lecturer Payment</td> <td>:</td>
+                                        <td class="formLable">Lecturer Payment<span class="mandatory">*</span></td> <td>:</td>
                                         <td><s:textfield id="addlecturerPayment" name="addlecturerPayment" cssClass="textField" /></td>  
                                     </tr>
                                     <tr>

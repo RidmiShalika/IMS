@@ -90,6 +90,7 @@
                         $('#upaddress').val(data.upaddress);
                         $('#uptitle').val(data.uptitle);
                          $('#uplecid').val(data.uplecid);
+                          $('#upfullname').val(data.upfullname);
                         
                     },
                     error: function (data) {
@@ -200,14 +201,14 @@
                                         <td class="formLable">Full Name<span class="mandatory">*</span></td> <td >:</td>
                                         <td><s:textfield id="addfullname" name="addfullname" cssClass="textField" /></td>                                    
                                         <td width="25px;"></td>
-                                        <td class="formLable">NIC<span class="mandatory">*</span></td> <td>:</td>
+                                        <td class="formLable">NIC</td> <td>:</td>
                                         <td><s:textfield id="addnic" name="addnic" cssClass="textField" /></td>
                                     </tr>
                                     <tr>
-                                        <td class="formLable">Contact<span class="mandatory">*</span></td> <td >:</td>
+                                        <td class="formLable">Contact</td> <td >:</td>
                                         <td><s:textfield id="addcontact" name="addcontact" cssClass="textField" /></td>                                    
                                         <td width="25px;"></td>
-                                        <td class="formLable">Email<span class="mandatory">*</span></td> <td>:</td>
+                                        <td class="formLable">Email</td> <td>:</td>
                                         <td><s:textfield id="addemail" name="addemail" cssClass="textField" /></td>
                                     </tr>
                                     <tr>
@@ -216,7 +217,7 @@
                                          <td><s:select  name="addsubject" id="addsubject" list="%{subjectList}" 
                                                      listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
                                         <td width="25px;"></td>-->
-                                        <td class="formLable">Gender</td> <td>:</td>
+                                        <td class="formLable">Gender<span class="mandatory">*</span></td> <td>:</td>
                                         <!--<td><s:textfield id="addgender" name="addgender" cssClass="textField" /></td>-->  
                                         <td><s:select  name="addgender" id="addgender" list="%{genList}" 
                                        listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
@@ -224,7 +225,7 @@
                                     </tr>
 
                                     <tr>
-                                        <td class="formLable">Address<span class="mandatory">*</span></td> <td >:</td>
+                                        <td class="formLable">Address</td> <td >:</td>
                                         <td><s:textfield id="addaddress" name="addaddress" cssClass="textField" /></td>                                    
                                         <td width="25px;"></td>
                                     </tr>
@@ -245,7 +246,7 @@
                             <s:form  id="updateForm"  theme="simple" method="post"  cssStyle="display:none">
                                 <table >
                                     <tr>
-                                        <td class="formLable">Title</td> <td>:</td>
+                                        <td class="formLable">Title<span class="mandatory">*</span></td> <td>:</td>
 
                                         <td><s:select  name="uptitle" id="uptitle" list="%{titleList}" 
                                        listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
@@ -257,7 +258,7 @@
                                     </tr>
                                     <tr>
                                         <s:hidden id="uplecid" name="uplecid" cssClass="textField" />   
-                                        <td class="formLable">Name</td> <td >:</td>
+                                        <td class="formLable">Name<span class="mandatory">*</span></td> <td >:</td>
                                         <td><s:textfield id="upname" name="upname" cssClass="textField" /></td>                                    
                                         <td width="25px;"></td>
                                         <td class="formLable">NIC</td> <td>:</td>
@@ -271,15 +272,13 @@
                                         <td><s:textfield id="upemail" name="upemail" cssClass="textField" /></td>
                                     </tr>
                                     <tr>
-                                        <td class="formLable">Gender</td> <td >:</td>
+                                        <td class="formLable">Gender<span class="mandatory">*</span></td> <td >:</td>
                                         <!--<td><s:textfield id="upgender" name="upgender" cssClass="textField" /></td>-->   
                                         <td><s:select  name="upgender" id="upgender" list="%{genList}" 
                                        listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
                                         <td width="25px;"></td>
-<!--                                        <td class="formLable">Subject</td> <td>:</td>
-                                        <td><s:textfield id="upsubject" name="upsubject" cssClass="textField" /></td>
-                                         <td><s:select  name="upsubject" id="upsubject" list="%{subjectList}" 
-                                                     listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> -->
+                                 <td class="formLable">Full Name<span class="mandatory">*</span></td> <td >:</td>
+                                        <td><s:textfield id="upfullname" name="upfullname" cssClass="textField" /></td>       
                                     </tr>
                                     
                                    
