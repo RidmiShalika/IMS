@@ -7,7 +7,9 @@ package mapping;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -71,6 +74,12 @@ public class Lecturer implements Serializable {
     @NotNull
     @Column(name = "title")
     private int title;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lecId")
+    private Set<AdvancePayments> advancePaymentsSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lectureId")
+    private Set<LecturePayment> lecturePaymentSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lectureId")
+    private Set<Course> courseSet;
 
     public Lecturer() {
     }
@@ -165,6 +174,30 @@ public class Lecturer implements Serializable {
 
     public void setTitle(int title) {
         this.title = title;
+    }
+
+    public Set<AdvancePayments> getAdvancePaymentsSet() {
+        return advancePaymentsSet;
+    }
+
+    public void setAdvancePaymentsSet(Set<AdvancePayments> advancePaymentsSet) {
+        this.advancePaymentsSet = advancePaymentsSet;
+    }
+
+    public Set<LecturePayment> getLecturePaymentSet() {
+        return lecturePaymentSet;
+    }
+
+    public void setLecturePaymentSet(Set<LecturePayment> lecturePaymentSet) {
+        this.lecturePaymentSet = lecturePaymentSet;
+    }
+
+    public Set<Course> getCourseSet() {
+        return courseSet;
+    }
+
+    public void setCourseSet(Set<Course> courseSet) {
+        this.courseSet = courseSet;
     }
 
     @Override
