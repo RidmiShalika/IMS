@@ -55,6 +55,15 @@
             <interceptor-ref name="defaultStack"></interceptor-ref>
             <result name="update">/pages/msgFrag.jsp</result>
         </action>
+        <action name="AssignCourse" class="student.action.StudentRegister" method="assign">
+            <result name="Assign">/pages/student/assignToCourse.jsp</result>
+        </action>
+         <action name="assstudentToCr" class="student.action.StudentRegister" method="studentRegistrationForCourse">
+            <result name="assForCourse">/pages/msgFrag.jsp</result>
+        </action>
+        <action name="listCr" class="student.action.StudentRegister" method="listcr" >
+            <result name="list1" type="json"></result>
+        </action>
     </package>
     
     <package name="Subject" extends="pglobal" namespace="/">

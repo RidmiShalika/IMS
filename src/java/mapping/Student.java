@@ -33,6 +33,10 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Student.findAll", query = "SELECT s FROM Student s")})
 public class Student implements Serializable {
 
+    @Lob
+    @Column(name = "S_IMAGE")
+    private byte[] sImage;
+
     private static final long serialVersionUID = 1L;
     @Size(max = 100)
     @Column(name = "S_NAME")
@@ -69,9 +73,6 @@ public class Student implements Serializable {
     @Size(max = 100)
     @Column(name = "S_PARENT_NAME")
     private String sParentName;
-    @Lob
-    @Column(name = "S_IMAGE")
-    private byte[] sImage;
     @Size(max = 20)
     @Column(name = "S_NIC")
     private String sNic;
@@ -294,5 +295,7 @@ public class Student implements Serializable {
     public String toString() {
         return "mapping.Student[ sId=" + sId + " ]";
     }
+
+   
     
 }
