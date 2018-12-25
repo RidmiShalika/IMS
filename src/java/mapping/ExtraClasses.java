@@ -22,7 +22,7 @@ import javax.validation.constraints.Size;
 /**
  *
  * @author Ridmi Shalika
- */
+ *///tetst modification
 @Entity
 @Table(name = "extra_classes", catalog = "institute_management", schema = "")
 @NamedQueries({
