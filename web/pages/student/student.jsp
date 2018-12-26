@@ -55,6 +55,7 @@
 
             }
             function ResetAddForm() {
+                $('#divmsg').empty();
                 $('#name').val("");
                 $('#firstname').val("");
                 $('#address').val("");
@@ -163,6 +164,13 @@
 //                $("#gridtable").jqGrid('setGridParam', {page: 1});
                 jQuery("#gridtable").trigger("reloadGrid");
             });
+            
+            function test(){
+                alert($('#addimage').val());
+                var tt = $('#addimage').val();
+//                var input = document.getElementById('file');
+                
+            }
 
         </script>
     </head>
@@ -257,6 +265,7 @@
                                                     <td class="formLable">Card No</td> <td >:</td>
                                                     <td><s:textfield id="cardno" name="cardno" cssClass="textField" /></td>                                    
                                                     <td width="25px;"></td>
+                                                    <td><s:file  id = "addimage" onchange="test()" name="addimage" label="File" cssClass="fileField" cssStyle="font-size : 14px"/>
                                                 </tr>
                 
                                             </table>
