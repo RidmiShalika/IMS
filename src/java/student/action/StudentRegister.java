@@ -136,6 +136,7 @@ public class StudentRegister extends ActionSupport implements ModelDriven<Studen
 
     public String Add() {
         System.out.println("add method in sudent");
+         System.out.println("8888 t "+inputBean.getTt());
         try {
             if (doValidation(inputBean)) {
                 if (service.addStudent(inputBean)) {

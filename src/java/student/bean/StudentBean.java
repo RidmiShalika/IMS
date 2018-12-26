@@ -5,6 +5,7 @@
  */
 package student.bean;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,6 +59,9 @@ public class StudentBean {
     private String birthday;
     private String parentContactNo;
     private String cardno;
+//    private File addimage;
+    private String tt;
+    
 
     //Edit data
     private String upname;
@@ -103,6 +107,16 @@ public class StudentBean {
     //search data
     private String searchname;
 
+    public String getTt() {
+        return tt;
+    }
+
+    public void setTt(String tt) {
+        this.tt = tt;
+    }
+
+    
+    
     public String getPay_status() {
         return pay_status;
     }
@@ -687,6 +701,17 @@ public class StudentBean {
     public void setSubList(Map<Integer, String> subList) {
         this.subList = subList;
     }
+
+//    public File getAddimage() {
+//        return addimage;
+//    }
+//
+//    public void setAddimage(File addimage) {
+//        this.addimage = addimage;
+//    }
+
+    
+
     
 
 }
