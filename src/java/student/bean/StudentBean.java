@@ -75,6 +75,7 @@ public class StudentBean {
     private String id;
     private String upId;
     private int  studentId;
+    private int stuId;
     
      private Map<Integer, String>  subList = new HashMap<Integer, String>();
      private Map<Integer, String>  gradeList = new HashMap<Integer, String>();
@@ -95,10 +96,47 @@ public class StudentBean {
     private String message;
     private boolean success;
      
-
+    //payment
+    private String pay_status;
+    private String payment_date;
+    private String payment_amount;
     //search data
     private String searchname;
 
+    public String getPay_status() {
+        return pay_status;
+    }
+
+    public void setPay_status(String pay_status) {
+        this.pay_status = pay_status;
+    }
+
+    public String getPayment_date() {
+        return payment_date;
+    }
+
+    public void setPayment_date(String payment_date) {
+        this.payment_date = payment_date;
+    }
+
+    public String getPayment_amount() {
+        return payment_amount;
+    }
+
+    public void setPayment_amount(String payment_amount) {
+        this.payment_amount = payment_amount;
+    }
+
+    
+    public int getStuId() {
+        return stuId;
+    }
+
+    public void setStuId(int stuId) {
+        this.stuId = stuId;
+    }
+
+    
     public String getMessage() {
         return message;
     }

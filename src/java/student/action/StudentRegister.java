@@ -286,5 +286,40 @@ public class StudentRegister extends ActionSupport implements ModelDriven<Studen
          }
          return "delete";
      }
+      public String pay() {
+
+        int stuid = inputBean.getStuId();
+        HttpSession session = ServletActionContext.getRequest().getSession(false);
+        session.setAttribute("stuid", stuid);
+        return "pay";
+
+    }
+      public String paymentAdd(){
+          try {
+              if(service.checkAddmission(inputBean)){
+                  addActionMessage("Student already paid admission");
+              }else{
+                  service.addAddmission(inputBean);
+                  addActionMessage("Student paid admission successfuly");
+              }
+          } catch (Exception e) {
+              e.printStackTrace();
+              addActionError("Payment add faill");
+          }
+          return "payment";
+      }
+      public String getInfo(){
+          try {
+              if(service.checkAddmission(inputBean)){
+                  inputBean.setPay_status("Paid");
+              }else{
+                  inputBean.setPay_status("Not Paid");
+              }
+              
+          } catch (Exception e) {
+              e.printStackTrace();
+          }
+          return "getInfo";
+      }
 
 }

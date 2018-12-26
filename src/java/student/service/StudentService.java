@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import login.bean.SessionBean;
+import mapping.Admission;
 import mapping.Course;
 import mapping.School;
 import mapping.Student;
@@ -593,6 +594,87 @@ public class StudentService {
 
         return ok;
 
+    }
+     public boolean checkAddmission(StudentBean bean){
+         boolean ok = false;
+         Session session = HibernateInit.getSessionFactory().openSession();
+         try {
+            session.beginTransaction();
+            
+            HttpSession session1 = ServletActionContext.getRequest().getSession(false);
+            int s_id =(int) session1.getAttribute("stuid");
+        
+            Admission admission = (Admission) session.createCriteria(Admission.class, "addmis")
+                    .createAlias("addmis.sId", "student")
+                    .add(Restrictions.eq("student.sId", s_id))
+                    .uniqueResult();
+            if (admission != null) {
+                bean.setPayment_date(admission.getPaymentDate());
+                ok = true;
+            }
+             
+         } catch (Exception ex) {
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            throw ex;
+        } finally {
+            if (session != null) {
+                session.getTransaction().commit();
+                session.flush();
+                session.close();
+                session = null;
+            }
+        }
+         return ok;
+     }
+     public boolean addAddmission(StudentBean bean) throws Exception {
+        boolean isAddStudent = false;
+        Admission add = null;
+        Session session = null;
+        List<School> school = null;
+        String schoolName = null;
+
+        try {
+            session = HibernateInit.getSessionFactory().openSession();
+            session.beginTransaction();
+            
+            
+            add = new Admission();
+
+            HttpSession sess = ServletActionContext.getRequest().getSession(false);
+            int st_id= (int) sess.getAttribute("stuid");
+            
+            System.out.println("st "+st_id);
+            
+            Student s1=new Student();
+            s1.setSId(st_id);
+            add.setSId(s1);
+            add.setPaymentDate(new Date().toString());
+            add.setAmount(Double.parseDouble(bean.getPayment_amount()));
+            
+          
+            session.save(add);
+           
+            isAddStudent = true;
+        } catch (Exception e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            throw e;
+        } finally {
+            if (session != null) {
+                 session.getTransaction().commit();
+                session.flush();
+                session.close();
+                session = null;
+            }
+        }
+        return isAddStudent;
     }
 
 }
