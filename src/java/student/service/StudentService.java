@@ -21,6 +21,7 @@ import mapping.Subject;
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.jfree.chart.axis.SubCategoryAxis;
 import student.bean.StudentBean;
 
@@ -200,11 +201,11 @@ public class StudentService {
                         databean.setS_c_courseId("--");
                     }
                     try {
-                         if(objBean.getCardType().equals("1")){
+                         if(objBean.getCardType() == 1){
                             databean.setS_c_cardType("Normal");
-                        }else if(objBean.getCardType().equals("2")){
+                        }else if(objBean.getCardType() == 2){
                             databean.setS_c_cardType("Half");
-                        }else if(objBean.getCardType().equals("3")){
+                        }else if(objBean.getCardType() == 3){
                             databean.setS_c_cardType("Free");
                         }
                     } catch (NullPointerException e) {
@@ -556,6 +557,42 @@ public class StudentService {
             }
         }
         return isAddStudent;
+    }
+     public boolean DeleteC(StudentBean bean) throws Exception {
+        boolean ok = false;
+
+        Session session = HibernateInit.getSessionFactory().openSession();
+        try {
+
+            session.beginTransaction();
+            StudentCourse at = (StudentCourse) session.createCriteria(StudentCourse.class)
+                    .add(Restrictions.eq("id", Integer.parseInt(bean.getS_c_id())))
+                    .uniqueResult();
+
+            if (at != null) {
+                session.delete(at);
+
+                ok = true;
+            }
+
+        } catch (Exception ex) {
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            throw ex;
+        } finally {
+            if (session != null) {
+                session.getTransaction().commit();
+                session.flush();
+                session.close();
+                session = null;
+            }
+        }
+
+        return ok;
+
     }
 
 }

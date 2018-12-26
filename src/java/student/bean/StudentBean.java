@@ -91,11 +91,31 @@ public class StudentBean {
     private String s_c_courseId;
     private String s_c_cardType;
     private String s_c_status;
+    
+    private String message;
+    private boolean success;
      
 
     //search data
     private String searchname;
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    
     public String getS_c_id() {
         return s_c_id;
     }

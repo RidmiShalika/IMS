@@ -267,10 +267,24 @@ public class StudentRegister extends ActionSupport implements ModelDriven<Studen
      public String studentRegistrationForCourse(){
          try {
              service.addStudentForCourse(inputBean);
+             addActionMessage("Student successfuly added to course");
          } catch (Exception e) {
              e.printStackTrace();
+             addActionError("Student added to course fail");
          }
          return "assForCourse";
+     }
+     public String delete(){
+         try {
+             service.DeleteC(inputBean);
+             inputBean.setMessage("Delete successfull");
+             inputBean.setSuccess(true);
+         } catch (Exception e) {
+             e.printStackTrace();
+             inputBean.setMessage("Delete fail");
+             inputBean.setSuccess(false);
+         }
+         return "delete";
      }
 
 }

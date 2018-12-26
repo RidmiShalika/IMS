@@ -64,6 +64,9 @@
         <action name="listCr" class="student.action.StudentRegister" method="listcr" >
             <result name="list1" type="json"></result>
         </action>
+        <action name="deletesc" class="student.action.StudentRegister" method="delete" > 
+            <result name="delete" type="json"></result>
+        </action>
     </package>
     
     <package name="Subject" extends="pglobal" namespace="/">
