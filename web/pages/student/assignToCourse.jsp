@@ -11,8 +11,52 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <script type="text/javascript">
+            function deleteformatter(cellvalue, options, rowObject) {
+                return "<a href='#' onClick='deleteInit(&#34;" + cellvalue + "&#34;)'><img src='${pageContext.request.contextPath}/resources/images/iconDelete.png'  /></a>";
+            }
+             function deleteInit(keyval) {
+                $("#confirmdialogbox").data('keyval', keyval).dialog('open');
+                $("#confirmdialogbox").html('<br><b><font size="3" color="red"><center>Please confirm to delete  : ' + keyval + '');
+                return false;
+            }
+            function deleteNow(keyval) {
+                $.ajax({
+                    url: '${pageContext.request.contextPath}/deletesc',
+                    data: {s_c_id: keyval},
+                    dataType: "json",
+                    type: "POST",
+                    success: function (data) {
+                        if (data.success) {
+                            $("#dialogbox").dialog('open');
+                            $("#dialogbox").html('<br><b><font size="3" color="green"><center>' + data.message + ' ');
+                        } else {
+                            $("#dialogbox").dialog('open');
+                            $("#dialogbox").html('<br><b><font size="3" color="red"><center>' + data.message + ' ');
+                        }
+                        jQuery("#gridtable1").trigger("reloadGrid");
+                    },
+                    error: function (data) {
+                        window.location = "${pageContext.request.contextPath}/LogoutloginCall";
+                    }
+                });
+
+            }
+            function resetData(){
+                jQuery("#gridtable1").trigger("reloadGrid");
+            }
+            function restfunction(){
+                jQuery("#gridtable1").trigger("reloadGrid");
+                $('#divmsg1').hide();
+                $('#assSubject').val("-1");
+                $('#assCourse').val("-1");
+                $('#assgrade').val("-1");
+                $('#asscard_type').val("-1");
+                $('#course_fee').val("");
+                $('#course_duration').val("");
+                
+            }
+        </script>
     </head>
     <body style="overflow:hidden" onload="load()">
         <section class="app-content">
@@ -65,7 +109,7 @@
                                             <s:url var="assaddurl" action="assstudentToCr" />
 
                                             <sj:submit  id="assAddbtn" button="true" href="%{assaddurl}" value="Add"   targets="divmsg1" cssClass="button_aback"/> 
-                                            <sj:submit button="true" value="Reset" cssClass="button_aback"/>
+                                            <sj:submit button="true" value="Reset" onclick="restfunction()" cssClass="button_aback"/>
                                             </td>
                                         </tr>
                                     </table>
@@ -77,7 +121,31 @@
                         </div>
                         <div class="viewuser_tbl">
                             <div id="tablediv">
-                                
+                                <sj:dialog 
+                                id="confirmdialogbox" 
+                                buttons="{ 
+                                'OK':function() { deleteNow($(this).data('keyval'));$( this ).dialog( 'close' ); },
+                                'Cancel':function() { $( this ).dialog( 'close' );} 
+                                }" 
+                                autoOpen="false" 
+                                modal="true" 
+                                title="Confirm Message"
+                                width="400"
+                                height="150"
+                                position="center"
+                                />
+                                 <sj:dialog 
+                                id="dialogbox" 
+                                buttons="{
+                                'OK':function() { $( this ).dialog( 'close' );}
+                                }"  
+                                autoOpen="false" 
+                                modal="true" 
+                                title="Delete Message" 
+                                width="400"
+                                height="150"
+                                position="center"
+                                />
 
                               
                                 
@@ -101,10 +169,10 @@
                                     >
 
                                     <sjg:gridColumn name="s_c_id" index="id" title="Id" hidden="true"/>
-                                    <sjg:gridColumn name="s_c_courseId" index="courseId" title="Course" hidden="true"/>
-                                    <sjg:gridColumn name="s_c_cardType" index="cardType" title="Card Type" hidden="true"/>
-                                    <sjg:gridColumn name="s_c_status" index="status" title="Status" hidden="true"/>
-                                   
+                                    <sjg:gridColumn name="s_c_courseId" index="courseId" title="Course" width="300"/>
+                                    <sjg:gridColumn name="s_c_cardType" index="cardType" title="Card Type" width="300"/>
+                                    <sjg:gridColumn name="s_c_status" index="status" title="Status" />
+                                   <sjg:gridColumn name="s_c_id" index="id" title="Delete" width="50" align="center"   formatter="deleteformatter" sortable="false"/>
 
                                 </sjg:grid> 
                             </div>
