@@ -34,6 +34,17 @@
                 var $led = $("#viewdialog");
                 $led.load("AssignCourse?studentId=" + $led.data('Id'));
             });
+            function admissionformatter(cellvalue, options, rowObject) {
+                return "<a href='#' onClick='javascript:admission(&#34;" + cellvalue + "&#34;,&#34;" + rowObject.sId + "&#34;)'><i class='fa fa-share-square-o' aria-hidden='true'></i></a>";
+            }
+            function admission(id, bin) {
+                $("#viewdialog1").data('Id', id);
+                $("#viewdialog1").data('sId', bin).dialog('open');
+            }
+            $.subscribe('openview1', function (event, data) {
+                var $led = $("#viewdialog1");
+                $led.load("PayAddmission?stuId=" + $led.data('Id'));
+            });
 
             function ResetSearchForm1() {
                 $('#searchname').val("");
@@ -341,6 +352,20 @@
                                         onOpenTopics="openview" 
                                         loadingText="Loading .."
                             />
+                                <sj:dialog 
+                                        id="viewdialog1" 
+                                        buttons="{
+                                        'OK':function() { $( this ).dialog( 'close' );}                                    
+                                        }" 
+                                        autoOpen="false" 
+                                        modal="true"                            
+                                        width="1000"
+                                        height="500"
+                                        position="center"
+                                        title="Pay Admission"
+                                        onOpenTopics="openview1" 
+                                        loadingText="Loading .."
+                            />
                                 
                                 <s:url var="listurl" action="liststudent"/>
                                 <sjg:grid
@@ -377,6 +402,7 @@
                                     <sjg:gridColumn name="cardNumber" index="cardNumber" title="Card No" />
                                     <sjg:gridColumn name="sId" index="sId" title="Edit" formatter="editformatter" align="center"/>
                                     <sjg:gridColumn name="sId" index="sId" title="Assign Course" formatter="assignformatter" align="center"/>
+                                    <sjg:gridColumn name="sId" index="sId" title="Pay Admission" formatter="admissionformatter" align="center"/>
 
                                 </sjg:grid> 
                             </div>
