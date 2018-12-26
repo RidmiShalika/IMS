@@ -9,6 +9,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,7 +22,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Ridmi Shalika
+ * @author ridmi_g
  */
 @Entity
 @Table(name = "admission", catalog = "institute_management", schema = "")
@@ -30,8 +32,8 @@ public class Admission implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
@@ -40,8 +42,8 @@ public class Admission implements Serializable {
     @Column(name = "paymentDate")
     private String paymentDate;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "PersonID")
-    private Double personID;
+    @Column(name = "amount")
+    private Double amount;
     @JoinColumn(name = "s_id", referencedColumnName = "S_ID")
     @ManyToOne(optional = false)
     private Student sId;
@@ -74,12 +76,12 @@ public class Admission implements Serializable {
         this.paymentDate = paymentDate;
     }
 
-    public Double getPersonID() {
-        return personID;
+    public Double getAmount() {
+        return amount;
     }
 
-    public void setPersonID(Double personID) {
-        this.personID = personID;
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 
     public Student getSId() {
