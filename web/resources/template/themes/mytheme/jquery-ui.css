@@ -850,7 +850,7 @@ body .ui-tooltip {
 }
 .ui-widget-content {
     border: 1px solid #666666;
-    background: #ffffff url("images/ui-bg_inset-soft_50_ffffff_1x100.png") 50% bottom repeat-y;
+    /*background: #ffffff url("images/ui-bg_inset-soft_50_ffffff_1x100.png") 50% bottom repeat-y;*/
     color: #5f5e5e;
     font-size: 12px;
     font-family: Arial;
