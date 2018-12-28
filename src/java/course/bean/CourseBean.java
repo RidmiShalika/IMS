@@ -62,7 +62,72 @@ public class CourseBean {
     private Map<Integer, String>  clzList = new HashMap<Integer, String>();
     private Map<Integer, String>  hallList = new HashMap<Integer, String>();
     private Map<Integer, String>  batchList = new HashMap<Integer, String>();
+    
+    //add class days time
+    private String starttimeM;
+    private String starttimeTu;
+    private String starttimeW;
+    private String starttimeTh;
+    private String starttimeF;
+    private String starttimeSa;
+    private String starttimeSu;
 
+    public String getStarttimeM() {
+        return starttimeM;
+    }
+
+    public void setStarttimeM(String starttimeM) {
+        this.starttimeM = starttimeM;
+    }
+
+    public String getStarttimeTu() {
+        return starttimeTu;
+    }
+
+    public void setStarttimeTu(String starttimeTu) {
+        this.starttimeTu = starttimeTu;
+    }
+
+    public String getStarttimeW() {
+        return starttimeW;
+    }
+
+    public void setStarttimeW(String starttimeW) {
+        this.starttimeW = starttimeW;
+    }
+
+    public String getStarttimeTh() {
+        return starttimeTh;
+    }
+
+    public void setStarttimeTh(String starttimeTh) {
+        this.starttimeTh = starttimeTh;
+    }
+
+    public String getStarttimeF() {
+        return starttimeF;
+    }
+
+    public void setStarttimeF(String starttimeF) {
+        this.starttimeF = starttimeF;
+    }
+
+    public String getStarttimeSa() {
+        return starttimeSa;
+    }
+
+    public void setStarttimeSa(String starttimeSa) {
+        this.starttimeSa = starttimeSa;
+    }
+
+    public String getStarttimeSu() {
+        return starttimeSu;
+    }
+
+    public void setStarttimeSu(String starttimeSu) {
+        this.starttimeSu = starttimeSu;
+    }
+    
     public Map<Integer, String> getBatchList() {
         return batchList;
     }

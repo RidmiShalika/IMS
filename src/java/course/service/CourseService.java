@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import login.bean.SessionBean;
 import mapping.Course;
+import mapping.CourseDates;
 import mapping.Lecturer;
 import mapping.Subject;
 import org.apache.struts2.ServletActionContext;
@@ -129,10 +130,7 @@ public class CourseService {
             cor.setSubjectId(s);
             cor.setLecHallId(Integer.parseInt(bean.getAddlectureHall()));
             cor.setLecPaymentPercentage(Double.parseDouble(bean.getAddlecturerPayment()));
-            
             System.out.println("ff "+bean.getAddtotalCoursefee());
-            
-            
             if(bean.getAddtotalCoursefee() != null | !bean.getAddtotalCoursefee().isEmpty()){
                 cor.setTotalCourseFee(Double.parseDouble(bean.getAddtotalCoursefee()));
             }
@@ -142,11 +140,40 @@ public class CourseService {
             if(bean.getAddmonthlyFee()!= null){
                 cor.setMonthlyFee(Double.parseDouble(bean.getAddmonthlyFee()));
             }
+            session.save(cor);
             
-//            
+            
+            isAddCor = true;
+        } catch (Exception e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            throw e;
+        } finally {
+            if (session != null) {
+                 session.getTransaction().commit();
+                session.flush();
+                session.close();
+                session = null;
+            }
+        }
+        return isAddCor;
+    }
+     public boolean addCourseDates(CourseBean bean) throws Exception {
+        boolean isAddCor = false;
+         CourseDates cor = null;
+        Session session = null;
+
+        try {
+            session = HibernateInit.getSessionFactory().openSession();
+            session.beginTransaction();
+            cor = new CourseDates();
             
             
             session.save(cor);
+            
             isAddCor = true;
         } catch (Exception e) {
             if (session != null) {
