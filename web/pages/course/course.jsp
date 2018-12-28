@@ -7,13 +7,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="/struts-tags" prefix="s"  %>  
 <%@taglib  uri="/struts-jquery-tags" prefix="sj"%>
-<%@taglib prefix="sjg" uri="/struts-jquery-grid-tags"%>    
+<%@taglib prefix="sjg" uri="/struts-jquery-grid-tags"%>  
 <!DOCTYPE html>
 <html>
     <head>
-
+       
         <jsp:include page="/Styles.jsp" />
-
         <script type="text/javascript">
 
             function ResetSearchForm1() {
@@ -133,220 +132,297 @@
 //                $("#gridtable").jqGrid('setGridParam', {page: 1});
                 jQuery("#gridtable").trigger("reloadGrid");
             });
+           
+            function getCheckValue(){
+                if ($('#addclassDaysM').is(":checked"))
+                {
+                  var starttimeM = $('#starttimeM').val();
+                }
+                if ($('#addclassDaysTu').is(":checked")){
+                   var starttimeTu = $('#starttimeTu').val();
+                }
+                if ($('#addclassDaysW').is(":checked")){
+                     var starttimeW = $('#starttimeW').val();
+                }
+                if ($('#addclassDaysTh').is(":checked")){
+                    var starttimeTh = $('#starttimeTh').val();;
+                }
+                if ($('#addclassDaysF').is(":checked")){
+                     var starttimeF = $('#starttimeF').val();
+                }
+                if ($('#addclassDaysSa').is(":checked")){
+                     var starttimeSa = $('#starttimeSa').val();
+                }
+                if ($('#addclassDaysSu').is(":checked")){
+                    var starttimeSu = $('#starttimeSu').val();
+                }
+            }
 
         </script>
-    </head>
+</head>
 
-    <body style="overflow:hidden" onload="load()">
-        <section class="app-content">
-            <jsp:include page="../../header.jsp" />    
-            <div class="wrapper">
-                <div class="body_content" id="includedContent" >
-                    <div class="watermark"></div>
-                    <div class="heading">Register New Courses</div>
-                    <div class="AddUser_box ">
-                        <div class="message">         
-                            <s:div id="divmsg">
-                                <i style="color: red">  <s:actionerror theme="jquery"/></i>
-                                <i style="color: green"> <s:actionmessage theme="jquery"/></i>
-                            </s:div>         
-                        </div>
-                        <div class="contentcenter">
-                            <s:form id="searchForm"  theme="simple">         
-                                <table >              
-                                    <tr>
-                                        <td style="font-size: 15px">Course Name</td>
-                                        <td>:</td>
-                                        <td colspan="2"><s:textfield name="searchname"  id="searchname" cssClass="textField" /> </td>
-                                        <td class="content_td formLable">
+<body style="overflow:hidden" onload="load()">
+    <section class="app-content">
+        <jsp:include page="../../header.jsp" />    
+        <div class="wrapper">
+            <div class="body_content" id="includedContent" >
+                <div class="watermark"></div>
+                <div class="heading">Register New Courses</div>
+                <div class="AddUser_box ">
+                    <div class="message">         
+                        <s:div id="divmsg">
+                            <i style="color: red">  <s:actionerror theme="jquery"/></i>
+                            <i style="color: green"> <s:actionmessage theme="jquery"/></i>
+                        </s:div>         
+                    </div>
+                    <div class="contentcenter">
+                        <s:form id="searchForm"  theme="simple">         
+                            <table >              
+                                <tr>
+                                    <td style="font-size: 15px">Course Name</td>
+                                    <td>:</td>
+                                    <td colspan="2"><s:textfield name="searchname"  id="searchname" cssClass="textField" /> </td>
+                                    <td class="content_td formLable">
+
+                                    </td>
+                                </tr>
+                            </table>
+                            <table>
+                                </br>
+                                <tr>                                
+                                    <td> 
+
+
+                                        <sj:a     button="true"    onClickTopics="onclicksearch"  cssClass="button_aback"  role="button" >Search</sj:a>
+
+                                        <sj:a     button="true"    onClickTopics="loadAddForm" onclick="loadAddForm()"  cssClass="button_aback"  role="button" >Add</sj:a>
+                                        <sj:a     button="true"  onclick="ResetSearchForm1()"  cssClass="button_aback"  role="button" >Reset</sj:a>
 
                                         </td>
                                     </tr>
                                 </table>
-                                <table>
-                                    </br>
-                                    <tr>                                
-                                        <td> 
+                        </s:form>
+                        <s:form  id="addForm"  theme="simple" method="post"  cssStyle="display:none">
+                            <table >
+                                <tr>
+                                    <td class="formLable">Course Description<span class="mandatory">*</span></td> <td>:</td>
 
+                                    <td><s:textfield id="addcourseDescription" name="addcourseDescription" cssClass="textField" /></td>
+                                    <td width="25px;"></td>
+                                    <td class="formLable">Lecturer<span class="mandatory">*</span></td> <td>:</td>
+                                    <!--<td><s:textfield id="addlecturer" name="addlecturer" cssClass="textField" /></td>-->
+                                    <td><s:select  name="addlecturer" id="addlecturer" list="%{lecList}" 
+                                               listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
+                                </tr> 
+                                <tr>
+                                    <td class="formLable">Conducting Medium<span class="mandatory">*</span></td> <td >:</td>
+                                    <!--<td><s:textfield id="addconductingMedium" name="addconductingMedium" cssClass="textField" /></td>-->    
+                                    <td><s:select  name="addconductingMedium" id="addconductingMedium" list="%{medList}" 
+                                               listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
+                                    <td width="25px;"></td>
+                                    <td class="formLable">Subject<span class="mandatory">*</span></td> <td>:</td>
+                                    <!--<td><s:textfield id="addsubject" name="addsubject" cssClass="textField" /></td>-->
+                                    <td><s:select  name="addsubject" id="addsubject" list="%{subList}" 
+                                               listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
+                                </tr>
+                                <tr>
+                                    <td class="formLable">Total Course Fee</td> <td >:</td>
+                                    <td><s:textfield id="addtotalCoursefee" name="addtotalCoursefee" cssClass="textField" /></td>                                    
+                                    <td width="25px;"></td>
+                                    <td class="formLable">Grade<span class="mandatory">*</span></td> <td>:</td>
+                                    <!--<td><s:textfield id="addgrade" name="addgrade" cssClass="textField" /></td>-->
+                                    <td><s:select  name="addgrade" id="addgrade" list="%{gradeList}" 
+                                               listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
+                                </tr>
+                                <tr>
+                                    <td class="formLable">Course Duration</td> <td >:</td>
+                                    <td><s:textfield id="addcourseDuration" name="addcourseDuration" cssClass="textField" /></td>                                    
+                                    <td width="25px;"></td>
+                                    <td class="formLable">Monthly Fee</td> <td>:</td>
+                                    <td><s:textfield id="addmonthlyFee" name="addmonthlyFee" cssClass="textField" /></td>  
 
-                                            <sj:a     button="true"    onClickTopics="onclicksearch"  cssClass="button_aback"  role="button" >Search</sj:a>
+                                </tr>
 
-                                            <sj:a     button="true"    onClickTopics="loadAddForm" onclick="loadAddForm()"  cssClass="button_aback"  role="button" >Add</sj:a>
-                                            <sj:a     button="true"  onclick="ResetSearchForm1()"  cssClass="button_aback"  role="button" >Reset</sj:a>
+                                <tr>
+                                    <td class="formLable">Class Type</td> <td >:</td>
+                                    <!--<td><s:textfield id="addclassType" name="addclassType" cssClass="textField" /></td>-->  
+                                    <td><s:select  name="addclassType" id="addclassType" list="%{clzList}" 
+                                               listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td>
+                                    <td width="25px;"></td>
+                                    <td class="formLable">Lecture Hall</td> <td>:</td>
+                                    <!--<td><s:textfield id="addlectureHall" name="addlectureHall" cssClass="textField" /></td>-->
+                                    <td><s:select  name="addlectureHall" id="addlectureHall" list="%{hallList}" 
+                                               listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="formLable">Batch No<span class="mandatory">*</span></td> <td >:</td>
+                                    <!--<td><s:textfield id="addbatchNo" name="addbatchNo" cssClass="textField" /></td>-->
+                                    <td><s:select  name="addbatchNo" id="addbatchNo" list="%{batchList}" 
+                                               listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td>
+                                    <td width="25px;"></td>
+                                    <td class="formLable">Lecturer Payment<span class="mandatory">*</span></td> <td>:</td>
+                                    <td><s:textfield id="addlecturerPayment" name="addlecturerPayment" cssClass="textField" /></td>  
+                                </tr>
 
-                                            </td>
-                                        </tr>
-                                    </table>
-                            </s:form>
-                            <s:form  id="addForm"  theme="simple" method="post"  cssStyle="display:none">
-                                <table >
-                                    <tr>
-                                        <td class="formLable">Course Description<span class="mandatory">*</span></td> <td>:</td>
-
-                                        <td><s:textfield id="addcourseDescription" name="addcourseDescription" cssClass="textField" /></td>
-                                        <td width="25px;"></td>
-                                        <td class="formLable">Lecturer<span class="mandatory">*</span></td> <td>:</td>
-                                        <!--<td><s:textfield id="addlecturer" name="addlecturer" cssClass="textField" /></td>-->
-                                        <td><s:select  name="addlecturer" id="addlecturer" list="%{lecList}" 
-                                                     listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
-                                    </tr> 
-                                    <tr>
-                                        <td class="formLable">Conducting Medium<span class="mandatory">*</span></td> <td >:</td>
-                                        <!--<td><s:textfield id="addconductingMedium" name="addconductingMedium" cssClass="textField" /></td>-->    
-                                        <td><s:select  name="addconductingMedium" id="addconductingMedium" list="%{medList}" 
-                                                     listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
-                                        <td width="25px;"></td>
-                                        <td class="formLable">Subject<span class="mandatory">*</span></td> <td>:</td>
-                                        <!--<td><s:textfield id="addsubject" name="addsubject" cssClass="textField" /></td>-->
-                                        <td><s:select  name="addsubject" id="addsubject" list="%{subList}" 
-                                                     listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
+                            </table>
+                            <table>
+                                <tr>
+                                    <td class="formLable">Class Days</td><td>:</td>
+                                    <td class="formLable"><s:checkbox id="addclassDaysM" name="addclassDaysM">Monday</s:checkbox></td>
+                                    <td class="formLable"><s:checkbox id="addclassDaysTu" name="addclassDaysTu">Tuesday</s:checkbox></td>
+                                    <td class="formLable"><s:checkbox id="addclassDaysW" name="addclassDaysW">Wednesday</s:checkbox></td>
+                                    <td class="formLable"><s:checkbox id="addclassDaysTh" name="addclassDaysTh">Thursday</s:checkbox></td>
+                                    <td class="formLable"><s:checkbox id="addclassDaysF" name="addclassDaysF">Friday</s:checkbox></td>
+                                    <td class="formLable"><s:checkbox id="addclassDaysSa" name="addclassDaysSa">Saturday</s:checkbox></td>
+                                    <td class="formLable"><s:checkbox id="addclassDaysSu" name="addclassDaysSu">Sunday</s:checkbox></td>
                                     </tr>
                                     <tr>
-                                        <td class="formLable">Total Course Fee</td> <td >:</td>
-                                        <td><s:textfield id="addtotalCoursefee" name="addtotalCoursefee" cssClass="textField" /></td>                                    
-                                        <td width="25px;"></td>
-                                        <td class="formLable">Grade<span class="mandatory">*</span></td> <td>:</td>
-                                        <!--<td><s:textfield id="addgrade" name="addgrade" cssClass="textField" /></td>-->
-                                        <td><s:select  name="addgrade" id="addgrade" list="%{gradeList}" 
-                                                     listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
-                                    </tr>
-                                    <tr>
-                                        <td class="formLable">Course Duration</td> <td >:</td>
-                                        <td><s:textfield id="addcourseDuration" name="addcourseDuration" cssClass="textField" /></td>                                    
-                                        <td width="25px;"></td>
-                                        <td class="formLable">Monthly Fee</td> <td>:</td>
-                                        <td><s:textfield id="addmonthlyFee" name="addmonthlyFee" cssClass="textField" /></td>  
+                                        <td class="formLable">Start Time</td><td>:</td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="starttimeM" name="starttimeM" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="starttimeTu" name="starttimeTu" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="starttimeW" name="starttimeW" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="starttimeTh" name="starttimeTh" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="starttimeF" name="starttimeF" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="starttimeSa" name="starttimeSa" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="starttimeSu" name="starttimeSu" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
 
-                                    </tr>
+                                </tr>
+                                <tr>
+                                        <td class="formLable">End Time</td><td>:</td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="endtimeM" name="endtimeM" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="endtimeTu" name="endtimeTu" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="endtimeW" name="endtimeW" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="endtimeTh" name="endtimeTh" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="endtimeF" name="endtimeF" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="endtimeSa" name="endtimeSa" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="endtimeSu" name="endtimeSu" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
 
-                                    <tr>
-                                        <td class="formLable">Class Type</td> <td >:</td>
-                                        <!--<td><s:textfield id="addclassType" name="addclassType" cssClass="textField" /></td>-->  
-                                        <td><s:select  name="addclassType" id="addclassType" list="%{clzList}" 
-                                                     listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td>
-                                        <td width="25px;"></td>
-                                        <td class="formLable">Lecture Hall</td> <td>:</td>
-                                        <!--<td><s:textfield id="addlectureHall" name="addlectureHall" cssClass="textField" /></td>-->
-                                        <td><s:select  name="addlectureHall" id="addlectureHall" list="%{hallList}" 
-                                                     listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="formLable">Batch No<span class="mandatory">*</span></td> <td >:</td>
-                                        <!--<td><s:textfield id="addbatchNo" name="addbatchNo" cssClass="textField" /></td>-->
-                                        <td><s:select  name="addbatchNo" id="addbatchNo" list="%{batchList}" 
-                                                     listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td>
-                                        <td width="25px;"></td>
-                                        <td class="formLable">Lecturer Payment<span class="mandatory">*</span></td> <td>:</td>
-                                        <td><s:textfield id="addlecturerPayment" name="addlecturerPayment" cssClass="textField" /></td>  
-                                    </tr>
-                                    <tr>
-                                        <td class="formLable">Class Days<span class="mandatory">*</span></td> <td >:</td>
-                                        <td><s:checkbox id="addclassDaysM" name="addclassDaysM" cssClass="textField">Monday</s:checkbox></td>
-                                        <td><s:checkbox id="addclassDaysM" name="addclassDaysM" cssClass="textField">Tuesday</s:checkbox></td>
-                                        <!--<td width="25px;"></td>-->
-<!--                                        <td class="formLable">Start Time</td> <td>:</td>
-                                        <td><s:textfield id="addstartTime" name="addstartTime" cssClass="textField" /></td>  
-                                        <td width="25px;"></td>
-                                        <td class="formLable">End Time</td> <td>:</td>
-                                        <td><s:textfield id="addendTime" name="addendTime" cssClass="textField" /></td>  -->
-                                    </tr>
+                                </tr>
 
-                                </table>
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <s:url var="addurl" action="AddCourse" />
-                                            <!--<button type="button" id="addbtn" onclick= "javascript:location.href='Addstudent.action';" class="btn btn-primary">Add</button>-->
-                                            <sj:submit  id="addbtn" button="true" href="%{addurl}" value="Add"   targets="divmsg" cssClass="button_aback"/> 
-                                            <sj:submit button="true" value="Reset"  onclick="ResetAddForm()" cssClass="button_aback"/>
-                                            <sj:submit id="backbtn" value="Back" onclick="BackToMain()" cssClass="button_aback"/>
+                            </table>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <s:url var="addurl" action="AddCourse" />
+                                        <!--<button type="button" id="addbtn" onclick= "javascript:location.href='Addstudent.action';" class="btn btn-primary">Add</button>-->
+                                        <sj:submit  id="addbtn" button="true" onclick="getCheckValue()" href="%{addurl}" value="Add"   targets="divmsg" cssClass="button_aback"/> 
+                                        <sj:submit button="true" value="Reset"  onclick="ResetAddForm()" cssClass="button_aback"/>
+                                        <sj:submit id="backbtn" value="Back" onclick="BackToMain()" cssClass="button_aback"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </s:form>
+                        <s:form  id="updateForm"  theme="simple" method="post"  cssStyle="display:none">
+                            <table >
+                                <tr>
+                                    <s:hidden id="uplecid" name="upcusid" cssClass="textField" />   
+                                    <td class="formLable">Name</td> <td >:</td>
+                                    <td><s:textfield id="upname" name="upname" cssClass="textField" /></td>                                    
+                                    <td width="25px;"></td>
+                                    <td class="formLable">NIC</td> <td>:</td>
+                                    <td><s:textfield id="upnic" name="upnic" cssClass="textField" /></td>
+                                </tr> 
+                                <tr>
+                                    <td class="formLable">Contact</td> <td >:</td>
+                                    <td><s:textfield id="upcontact" name="upcontact" cssClass="textField" /></td>                                    
+                                    <td width="25px;"></td>
+                                    <td class="formLable">Email</td> <td>:</td>
+                                    <td><s:textfield id="upemail" name="upemail" cssClass="textField" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="formLable">Gender</td> <td >:</td>
+                                    <td><s:textfield id="upgender" name="upgender" cssClass="textField" /></td>                                    
+                                    <td width="25px;"></td>
+                                    <td class="formLable">Subject</td> <td>:</td>
+                                    <td><s:textfield id="upsubject" name="upsubject" cssClass="textField" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="formLable">Address</td> <td >:</td>
+                                    <td><s:textfield id="upaddress" name="upaddress" cssClass="textField" /></td>                                    
+                                    <td width="25px;"></td>
+
+                                </tr>
+
+                            </table>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <s:url var="updateurl" action="updatelecturer" />
+
+                                        <sj:submit  id="updatebtn" button="true" href="%{updateurl}" value="Update"   targets="divmsg" cssClass="button_aback"/> 
+                                        <sj:submit button="true" value="Reset" onclick="resetUpdateForm()" cssClass="button_aback"/>
+                                        <%--<sj:submit id="upbackbtn" value="Back" onclick="BackToMain()" cssClass="button_aback"/>--%>
+                                        <sj:a href="#" name="back" button="true" onclick="BackToMain1()"  cssClass="button_aback" >Back</sj:a> 
                                         </td>
                                     </tr>
                                 </table>
-                            </s:form>
-                            <s:form  id="updateForm"  theme="simple" method="post"  cssStyle="display:none">
-                                <table >
-                                    <tr>
-                                        <s:hidden id="uplecid" name="upcusid" cssClass="textField" />   
-                                        <td class="formLable">Name</td> <td >:</td>
-                                        <td><s:textfield id="upname" name="upname" cssClass="textField" /></td>                                    
-                                        <td width="25px;"></td>
-                                        <td class="formLable">NIC</td> <td>:</td>
-                                        <td><s:textfield id="upnic" name="upnic" cssClass="textField" /></td>
-                                    </tr> 
-                                    <tr>
-                                        <td class="formLable">Contact</td> <td >:</td>
-                                        <td><s:textfield id="upcontact" name="upcontact" cssClass="textField" /></td>                                    
-                                        <td width="25px;"></td>
-                                        <td class="formLable">Email</td> <td>:</td>
-                                        <td><s:textfield id="upemail" name="upemail" cssClass="textField" /></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="formLable">Gender</td> <td >:</td>
-                                        <td><s:textfield id="upgender" name="upgender" cssClass="textField" /></td>                                    
-                                        <td width="25px;"></td>
-                                        <td class="formLable">Subject</td> <td>:</td>
-                                        <td><s:textfield id="upsubject" name="upsubject" cssClass="textField" /></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="formLable">Address</td> <td >:</td>
-                                        <td><s:textfield id="upaddress" name="upaddress" cssClass="textField" /></td>                                    
-                                        <td width="25px;"></td>
 
-                                    </tr>
+                        </s:form>
 
-                                </table>
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <s:url var="updateurl" action="updatelecturer" />
+                    </div>
+                    <div class="viewuser_tbl">
+                        <div id="tablediv">
+                            <s:url var="listurl" action="listcourses"/>
+                            <sjg:grid
+                                id="gridtable"
+                                caption="Registered Courses"
+                                cssStyle=""
+                                dataType="json"
+                                href="%{listurl}"
+                                pager="true"
+                                gridModel="gridModel"
+                                rowList="10,15,20"
+                                rowNum="10"
+                                autowidth="true"
+                                shrinkToFit = "false"
+                                rownumbers="true"
+                                onCompleteTopics="completetopics"
+                                rowTotal="false"
+                                viewrecords="true"
+                                >
+                                <sjg:gridColumn name="courseID" index="courseID" title="Course ID" />
+                                <sjg:gridColumn name="courseDescription" index="courseDescription" title="Course Description" />
+                                <sjg:gridColumn name="subject" index="subject" title="Subject" />
+                                <sjg:gridColumn name="lecturer" index="lecturer" title="Lecturer" />
+                                <sjg:gridColumn name="classType" index="classType" title="Class Type" />
+                                <sjg:gridColumn name="medium" index="medium" title="Medium" />
+                                <sjg:gridColumn name="courseID" index="courseID" title="Edit" formatter="editformatter" align="center"/>
 
-                                            <sj:submit  id="updatebtn" button="true" href="%{updateurl}" value="Update"   targets="divmsg" cssClass="button_aback"/> 
-                                            <sj:submit button="true" value="Reset" onclick="resetUpdateForm()" cssClass="button_aback"/>
-                                            <%--<sj:submit id="upbackbtn" value="Back" onclick="BackToMain()" cssClass="button_aback"/>--%>
-                                            <sj:a href="#" name="back" button="true" onclick="BackToMain1()"  cssClass="button_aback" >Back</sj:a> 
-                                            </td>
-                                        </tr>
-                                    </table>
-
-                            </s:form>
-
-                        </div>
-                        <div class="viewuser_tbl">
-                            <div id="tablediv">
-                                <s:url var="listurl" action="listcourses"/>
-                                <sjg:grid
-                                    id="gridtable"
-                                    caption="Registered Courses"
-                                    cssStyle=""
-                                    dataType="json"
-                                    href="%{listurl}"
-                                    pager="true"
-                                    gridModel="gridModel"
-                                    rowList="10,15,20"
-                                    rowNum="10"
-                                    autowidth="true"
-                                    shrinkToFit = "false"
-                                    rownumbers="true"
-                                    onCompleteTopics="completetopics"
-                                    rowTotal="false"
-                                    viewrecords="true"
-                                    >
-                                    <sjg:gridColumn name="courseID" index="courseID" title="Course ID" />
-                                    <sjg:gridColumn name="courseDescription" index="courseDescription" title="Course Description" />
-                                    <sjg:gridColumn name="subject" index="subject" title="Subject" />
-                                    <sjg:gridColumn name="lecturer" index="lecturer" title="Lecturer" />
-                                    <sjg:gridColumn name="classType" index="classType" title="Class Type" />
-                                    <sjg:gridColumn name="medium" index="medium" title="Medium" />
-                                    <sjg:gridColumn name="courseID" index="courseID" title="Edit" formatter="editformatter" align="center"/>
-
-                                </sjg:grid> 
-                            </div>
+                            </sjg:grid> 
                         </div>
                     </div>
-                    </section>
-
                 </div>
+                </section>
 
-                </body>
-                </html>
+            </div>
+
+            </body>
+            </html>
