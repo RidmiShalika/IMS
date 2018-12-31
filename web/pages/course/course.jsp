@@ -333,7 +333,7 @@
                                     <td>
                                         <s:url var="addurl" action="AddCourse" />
                                         <!--<button type="button" id="addbtn" onclick= "javascript:location.href='Addstudent.action';" class="btn btn-primary">Add</button>-->
-                                        <sj:submit  id="addbtn" button="true" onclick="getCheckValue()" href="%{addurl}" value="Add"   targets="divmsg" cssClass="button_aback"/> 
+                                        <sj:submit  id="addbtn" button="true"  href="%{addurl}" value="Add"   targets="divmsg" cssClass="button_aback"/> 
                                         <sj:submit button="true" value="Reset"  onclick="ResetAddForm()" cssClass="button_aback"/>
                                         <sj:submit id="backbtn" value="Back" onclick="BackToMain()" cssClass="button_aback"/>
                                     </td>
@@ -342,33 +342,59 @@
                         </s:form>
                         <s:form  id="updateForm"  theme="simple" method="post"  cssStyle="display:none">
                             <table >
+                                
                                 <tr>
-                                    <s:hidden id="uplecid" name="upcusid" cssClass="textField" />   
-                                    <td class="formLable">Name</td> <td >:</td>
-                                    <td><s:textfield id="upname" name="upname" cssClass="textField" /></td>                                    
+                                    <s:hidden id="upcourseid" name="upcourseid" cssClass="textField" />   
+                                    <td class="formLable">Course Description<span class="mandatory">*</span></td> <td>:</td>
+
+                                    <td><s:textfield id="upcourseDescription" name="upcourseDescription" cssClass="textField" /></td>
                                     <td width="25px;"></td>
-                                    <td class="formLable">NIC</td> <td>:</td>
-                                    <td><s:textfield id="upnic" name="upnic" cssClass="textField" /></td>
+                                    <td class="formLable">Lecturer<span class="mandatory">*</span></td> <td>:</td>
+                                    <td><s:select  name="uplecturer" id="uplecturer" list="%{lecList}" 
+                                               listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
                                 </tr> 
                                 <tr>
-                                    <td class="formLable">Contact</td> <td >:</td>
-                                    <td><s:textfield id="upcontact" name="upcontact" cssClass="textField" /></td>                                    
+                                    <td class="formLable">Conducting Medium<span class="mandatory">*</span></td> <td >:</td>
+                                    <td><s:select  name="upconductingMedium" id="upconductingMedium" list="%{medList}" 
+                                               listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
                                     <td width="25px;"></td>
-                                    <td class="formLable">Email</td> <td>:</td>
-                                    <td><s:textfield id="upemail" name="upemail" cssClass="textField" /></td>
+                                    <td class="formLable">Subject<span class="mandatory">*</span></td> <td>:</td>
+                                    <td><s:select  name="upsubject" id="upsubject" list="%{subList}" 
+                                               listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
                                 </tr>
                                 <tr>
-                                    <td class="formLable">Gender</td> <td >:</td>
-                                    <td><s:textfield id="upgender" name="upgender" cssClass="textField" /></td>                                    
+                                    <td class="formLable">Total Course Fee</td> <td >:</td>
+                                    <td><s:textfield id="uptotalCoursefee" name="uptotalCoursefee" cssClass="textField" /></td>                                    
                                     <td width="25px;"></td>
-                                    <td class="formLable">Subject</td> <td>:</td>
-                                    <td><s:textfield id="upsubject" name="upsubject" cssClass="textField" /></td>
+                                    <td class="formLable">Grade<span class="mandatory">*</span></td> <td>:</td>
+                                    <td><s:select  name="upgrade" id="upgrade" list="%{gradeList}" 
+                                               listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
                                 </tr>
                                 <tr>
-                                    <td class="formLable">Address</td> <td >:</td>
-                                    <td><s:textfield id="upaddress" name="upaddress" cssClass="textField" /></td>                                    
+                                    <td class="formLable">Course Duration</td> <td >:</td>
+                                    <td><s:textfield id="upcourseDuration" name="upcourseDuration" cssClass="textField" /></td>                                    
                                     <td width="25px;"></td>
+                                    <td class="formLable">Monthly Fee</td> <td>:</td>
+                                    <td><s:textfield id="upmonthlyFee" name="upmonthlyFee" cssClass="textField" /></td>  
 
+                                </tr>
+
+                                <tr>
+                                    <td class="formLable">Class Type</td> <td >:</td>
+                                    <td><s:select  name="upclassType" id="upclassType" list="%{clzList}" 
+                                               listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td>
+                                    <td width="25px;"></td>
+                                    <td class="formLable">Lecture Hall</td> <td>:</td>
+                                    <td><s:select  name="uplectureHall" id="uplectureHall" list="%{hallList}" 
+                                               listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="formLable">Batch No<span class="mandatory">*</span></td> <td >:</td>
+                                    <td><s:select  name="upbatchNo" id="upbatchNo" list="%{batchList}" 
+                                               listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td>
+                                    <td width="25px;"></td>
+                                    <td class="formLable">Lecturer Payment<span class="mandatory">*</span></td> <td>:</td>
+                                    <td><s:textfield id="uplecturerPayment" name="uplecturerPayment" cssClass="textField" /></td>  
                                 </tr>
 
                             </table>
