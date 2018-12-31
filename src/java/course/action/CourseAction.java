@@ -149,7 +149,12 @@ public class CourseAction extends ActionSupport implements ModelDriven<CourseBea
          try {
              if(doValidation(inputbean)){
                  if(service.addCourse(inputbean)){
-                 addActionMessage("Course addes successfull");
+                     if(service.addCourseDates(inputbean)){
+                         addActionMessage("Course addes successfull");
+                     }else{
+                         addActionError("Course added fail");
+                     }
+                 
              }else{
                  addActionError("Course added fail");
              }

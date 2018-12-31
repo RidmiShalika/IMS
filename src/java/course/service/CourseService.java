@@ -16,21 +16,25 @@ import mapping.CourseDates;
 import mapping.Lecturer;
 import mapping.Subject;
 import org.apache.struts2.ServletActionContext;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
  * @author ridmi_g
  */
 public class CourseService {
+
     SessionBean sub = (SessionBean) ServletActionContext.getRequest().getSession(false).getAttribute("SessionObject");
-    
+
     public List<CourseBean> loadCourse(CourseBean inputBean, int max, int first, String orderBy) throws Exception {
-        
+
         List<CourseBean> dataList = new ArrayList<CourseBean>();
         Session session = null;
-        
+
         try {
             long count = 0;
             session = (Session) HibernateInit.getSessionFactory().openSession();
@@ -64,26 +68,40 @@ public class CourseService {
                         databean.setCourseDescription("--");
                     }
                     try {
-                        databean.setClassType(objBean.getClassType()+"");
+                        if(objBean.getClassType() == 1){
+                            databean.setClassType("Theory Class");
+                        }else if(objBean.getClassType() == 2){
+                             databean.setClassType("Revision Class");
+                        }else if(objBean.getClassType() == 3){
+                             databean.setClassType("Paper Class");
+                        }
+                        
                     } catch (NullPointerException e) {
                         databean.setClassType("--");
                     }
                     try {
-                        databean.setMedium(""+objBean.getMedium());
+                        if(objBean.getMedium() == 1){
+                            databean.setMedium("Sinhala");
+                        }else if(objBean.getMedium() == 2){
+                             databean.setMedium("English");
+                        }else if(objBean.getMedium() == 3){
+                             databean.setMedium("Tamil");
+                        }
+                        
                     } catch (NullPointerException e) {
                         databean.setMedium("--");
                     }
                     try {
-                        databean.setSubject(""+objBean.getSubjectId());
+                        databean.setSubject(objBean.getSubjectId().getSubjectName());
                     } catch (NullPointerException e) {
                         databean.setSubject("--");
                     }
-                   try {
+                    try {
                         databean.setLecturer(objBean.getLectureId().getName());
                     } catch (NullPointerException e) {
                         databean.setSubject("--");
                     }
-                 
+
                     databean.setFullCount(count);
                     dataList.add(databean);
 
@@ -107,7 +125,8 @@ public class CourseService {
         return dataList;
 
     }
-     public boolean addCourse(CourseBean bean) throws Exception {
+
+    public boolean addCourse(CourseBean bean) throws Exception {
         boolean isAddCor = false;
         Course cor = null;
         Session session = null;
@@ -130,19 +149,24 @@ public class CourseService {
             cor.setSubjectId(s);
             cor.setLecHallId(Integer.parseInt(bean.getAddlectureHall()));
             cor.setLecPaymentPercentage(Double.parseDouble(bean.getAddlecturerPayment()));
-            System.out.println("ff "+bean.getAddtotalCoursefee());
-            if(bean.getAddtotalCoursefee() != null | !bean.getAddtotalCoursefee().isEmpty()){
+            
+            try {
                 cor.setTotalCourseFee(Double.parseDouble(bean.getAddtotalCoursefee()));
+            } catch (Exception e) {
+                cor.setTotalCourseFee(0.0);
             }
-            if(bean.getAddcourseDuration()!= null || !bean.getAddcourseDuration().isEmpty()){
-                cor.setCourseDuration(bean.getAddcourseDuration());
+            try {
+              cor.setCourseDuration(bean.getAddcourseDuration());  
+            } catch (Exception e) {
+                cor.setCourseDuration("");
             }
-            if(bean.getAddmonthlyFee()!= null){
+            try {
                 cor.setMonthlyFee(Double.parseDouble(bean.getAddmonthlyFee()));
+            } catch (Exception e) {
+                cor.setMonthlyFee(0.0);
             }
             session.save(cor);
-            
-            
+
             isAddCor = true;
         } catch (Exception e) {
             if (session != null) {
@@ -153,7 +177,7 @@ public class CourseService {
             throw e;
         } finally {
             if (session != null) {
-                 session.getTransaction().commit();
+                session.getTransaction().commit();
                 session.flush();
                 session.close();
                 session = null;
@@ -161,20 +185,96 @@ public class CourseService {
         }
         return isAddCor;
     }
-     public boolean addCourseDates(CourseBean bean) throws Exception {
+
+    public boolean addCourseDates(CourseBean bean) throws Exception {
         boolean isAddCor = false;
-         CourseDates cor = null;
+        CourseDates cor = null;
         Session session = null;
+        Integer id = null;
 
         try {
             session = HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
+
+            Criteria criteria = session
+                    .createCriteria(Course.class)
+                    .setProjection(Projections.max("id"));
+            id = (Integer) criteria.uniqueResult();
+
+            System.out.println("max course id " + id);
+            
             cor = new CourseDates();
-            
-            
+            Course c = new Course();
+            c.setId(id);
+            cor.setCourseId(c);
+            try {
+                cor.setMonday(bean.getStarttimeM());
+            } catch (NullPointerException e) {
+                cor.setMonday("--");
+            }
+            try {
+                cor.setTueday(bean.getStarttimeTu());
+            } catch (NullPointerException e) {
+                cor.setTueday("--");
+            }
+            try {
+                cor.setWedday(bean.getStarttimeW());
+            } catch (NullPointerException e) {
+                cor.setWedday("--");
+            }
+            try {
+                cor.setThurday(bean.getStarttimeTh());
+            } catch (NullPointerException e) {
+                cor.setThurday("--");
+            }
+            try {
+                cor.setFriday(bean.getStarttimeF());
+            } catch (NullPointerException e) {
+                cor.setFriday("--");
+            }
+            try {
+                cor.setSatday(bean.getStarttimeSa());
+            } catch (NullPointerException e) {
+                cor.setSatday("--");
+            }
+            try {
+                cor.setSunday(bean.getStarttimeSu());
+            } catch (NullPointerException e) {
+                cor.setSunday("--");
+            }
+
             session.save(cor);
-            
+
             isAddCor = true;
+        } catch (Exception e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+                deleteCourse(id);// delete course 
+                session.close();
+                session = null;
+            }
+            throw e;
+        } finally {
+            if (session != null) {
+                session.getTransaction().commit();
+                session.flush();
+                session.close();
+                session = null;
+            }
+        }
+        return isAddCor;
+    }
+
+    public void deleteCourse(Integer id) throws Exception {
+        Session session = null;
+        try {
+            session = HibernateInit.getSessionFactory().openSession();
+            session.beginTransaction();
+            Course c = (Course) session.createCriteria(Course.class)
+                    .add(Restrictions.eq("id", id)).uniqueResult();
+            session.delete(c);
+            System.out.println("delete sucess");
+
         } catch (Exception e) {
             if (session != null) {
                 session.getTransaction().rollback();
@@ -184,82 +284,79 @@ public class CourseService {
             throw e;
         } finally {
             if (session != null) {
-                 session.getTransaction().commit();
+                session.getTransaction().commit();
                 session.flush();
                 session.close();
                 session = null;
             }
         }
-        return isAddCor;
     }
-     public void getlecList(CourseBean inputbean) throws Exception{
-         List<Lecturer> lec = null;
-         Session session = null;
-         
-         try {
+
+    public void getlecList(CourseBean inputbean) throws Exception {
+        List<Lecturer> lec = null;
+        Session session = null;
+
+        try {
             session = HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
 
             String sql = "from Lecturer";
             Query query = session.createQuery(sql);
             lec = query.list();
-            
+
             for (int i = 0; i < lec.size(); i++) {
 //                System.out.println(school.get(0));
                 inputbean.getLecList().put(lec.get(i).getId(), lec.get(i).getName());
             }
-            
 
-            
         } catch (Exception e) {
-             if (session != null) {
-                 session.getTransaction().rollback();
+            if (session != null) {
+                session.getTransaction().rollback();
                 session.close();
                 session = null;
             }
             throw e;
-        }finally {
+        } finally {
             if (session != null) {
                 session.getTransaction().commit();
                 session.close();
                 session = null;
             }
         }
-         
+
     }
-     public void getsubList(CourseBean inputbean) throws Exception{
-         List<Subject> sub = null;
-         Session session = null;
-         
-         try {
+
+    public void getsubList(CourseBean inputbean) throws Exception {
+        List<Subject> sub = null;
+        Session session = null;
+
+        try {
             session = HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
 
             String sql = "from Subject";
             Query query = session.createQuery(sql);
             sub = query.list();
-            
+
             for (int i = 0; i < sub.size(); i++) {
 //                System.out.println(school.get(0));
                 inputbean.getSubList().put(sub.get(i).getSubjectId(), sub.get(i).getSubjectName());
             }
-            
 
-            
         } catch (Exception e) {
-             if (session != null) {
-                 session.getTransaction().rollback();
+            if (session != null) {
+                session.getTransaction().rollback();
                 session.close();
                 session = null;
             }
             throw e;
-        }finally {
+        } finally {
             if (session != null) {
                 session.getTransaction().commit();
                 session.close();
                 session = null;
             }
         }
-         
+
     }
 }
