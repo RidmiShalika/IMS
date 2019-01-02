@@ -398,6 +398,69 @@
                                 </tr>
 
                             </table>
+                                <table>
+                                <tr>
+                                    <td class="formLable">Class Days</td><td>:</td>
+                                    <td class="formLable"><s:checkbox id="upclassDaysM" name="upclassDaysM">Monday</s:checkbox></td>
+                                    <td class="formLable"><s:checkbox id="upclassDaysTu" name="upclassDaysTu">Tuesday</s:checkbox></td>
+                                    <td class="formLable"><s:checkbox id="upclassDaysW" name="upclassDaysW">Wednesday</s:checkbox></td>
+                                    <td class="formLable"><s:checkbox id="upclassDaysTh" name="upclassDaysTh">Thursday</s:checkbox></td>
+                                    <td class="formLable"><s:checkbox id="upclassDaysF" name="upclassDaysF">Friday</s:checkbox></td>
+                                    <td class="formLable"><s:checkbox id="upclassDaysSa" name="upclassDaysSa">Saturday</s:checkbox></td>
+                                    <td class="formLable"><s:checkbox id="upclassDaysSu" name="upclassDaysSu">Sunday</s:checkbox></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="formLable">Start Time</td><td>:</td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="upstarttimeM" name="upstarttimeM" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="upstarttimeTu" name="upstarttimeTu" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="upstarttimeW" name="upstarttimeW" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="upstarttimeTh" name="upstarttimeTh" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="upstarttimeF" name="upstarttimeF" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="upstarttimeSa" name="upstarttimeSa" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="upstarttimeSu" name="upstarttimeSu" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
+
+                                </tr>
+                                <tr>
+                                        <td class="formLable">End Time</td><td>:</td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="upendtimeM" name="upendtimeM" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="upendtimeTu" name="upendtimeTu" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="upendtimeW" name="upendtimeW" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="upendtimeTh" name="upendtimeTh" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="upendtimeF" name="upendtimeF" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="upendtimeSa" name="upendtimeSa" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
+                                        <td class="formLable">
+                                        <sj:datepicker id="upendtimeSu" name="upendtimeSu" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                        </td>
+
+                                </tr>
+
+                            </table>
                             <table>
                                 <tr>
                                     <td>
