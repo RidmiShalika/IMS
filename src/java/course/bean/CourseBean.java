@@ -53,6 +53,25 @@ public class CourseBean {
     private String addstartTime;
     private String addendTime;
     
+    // update
+    private String upcourseid;
+    private String upcourseDescription;
+    private String uplecturer;
+    private String upconductingMedium;
+    private String upsubject;
+    private String uptotalCoursefee;
+    private String upgrade;
+    private String upcourseDuration;
+    private String upmonthlyFee;
+    private String upclassType;
+    private String uplectureHall;
+    private String upbatchNo;
+    private String uplecturerPayment;
+    private String upclassDays;
+    private String upstartTime;
+    private String upendTime;
+    
+    
     private String searchname = "";
     
     private Map<Integer, String> lecList = new HashMap<Integer, String>();
@@ -431,6 +450,134 @@ public class CourseBean {
 
     public void setMedium(String medium) {
         this.medium = medium;
+    }
+
+    public String getUpcourseid() {
+        return upcourseid;
+    }
+
+    public void setUpcourseid(String upcourseid) {
+        this.upcourseid = upcourseid;
+    }
+
+    public String getUpcourseDescription() {
+        return upcourseDescription;
+    }
+
+    public void setUpcourseDescription(String upcourseDescription) {
+        this.upcourseDescription = upcourseDescription;
+    }
+
+    public String getUplecturer() {
+        return uplecturer;
+    }
+
+    public void setUplecturer(String uplecturer) {
+        this.uplecturer = uplecturer;
+    }
+
+    public String getUpconductingMedium() {
+        return upconductingMedium;
+    }
+
+    public void setUpconductingMedium(String upconductingMedium) {
+        this.upconductingMedium = upconductingMedium;
+    }
+
+    public String getUpsubject() {
+        return upsubject;
+    }
+
+    public void setUpsubject(String upsubject) {
+        this.upsubject = upsubject;
+    }
+
+    public String getUptotalCoursefee() {
+        return uptotalCoursefee;
+    }
+
+    public void setUptotalCoursefee(String uptotalCoursefee) {
+        this.uptotalCoursefee = uptotalCoursefee;
+    }
+
+    public String getUpgrade() {
+        return upgrade;
+    }
+
+    public void setUpgrade(String upgrade) {
+        this.upgrade = upgrade;
+    }
+
+    public String getUpcourseDuration() {
+        return upcourseDuration;
+    }
+
+    public void setUpcourseDuration(String upcourseDuration) {
+        this.upcourseDuration = upcourseDuration;
+    }
+
+    public String getUpmonthlyFee() {
+        return upmonthlyFee;
+    }
+
+    public void setUpmonthlyFee(String upmonthlyFee) {
+        this.upmonthlyFee = upmonthlyFee;
+    }
+
+    public String getUpclassType() {
+        return upclassType;
+    }
+
+    public void setUpclassType(String upclassType) {
+        this.upclassType = upclassType;
+    }
+
+    public String getUplectureHall() {
+        return uplectureHall;
+    }
+
+    public void setUplectureHall(String uplectureHall) {
+        this.uplectureHall = uplectureHall;
+    }
+
+    public String getUpbatchNo() {
+        return upbatchNo;
+    }
+
+    public void setUpbatchNo(String upbatchNo) {
+        this.upbatchNo = upbatchNo;
+    }
+
+    public String getUplecturerPayment() {
+        return uplecturerPayment;
+    }
+
+    public void setUplecturerPayment(String uplecturerPayment) {
+        this.uplecturerPayment = uplecturerPayment;
+    }
+
+    public String getUpclassDays() {
+        return upclassDays;
+    }
+
+    public void setUpclassDays(String upclassDays) {
+        this.upclassDays = upclassDays;
+    }
+
+    public String getUpstartTime() {
+        return upstartTime;
+    }
+
+    public void setUpstartTime(String upstartTime) {
+        this.upstartTime = upstartTime;
+    }
+
+    public String getUpendTime() {
+        return upendTime;
+    }
+
+    public void setUpendTime(String upendTime) {
+        this.upendTime = upendTime;
     }
     
 
