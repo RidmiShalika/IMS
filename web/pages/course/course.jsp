@@ -68,20 +68,36 @@
                 var text = ' Edit User';
 
                 $.ajax({
-                    url: '${pageContext.request.contextPath}/findLecturer',
-                    data: {ID: keyval},
+                    url: '${pageContext.request.contextPath}/findCourse',
+                    data: {courseID: keyval},
                     dataType: "json",
                     type: "POST",
                     success: function (data) {
-
                         $('#searchForm').hide();
-                        $('#upname').val(data.upname);
-                        $('#upnic').val(data.upnic);
-                        $('#upcontact').val(data.upcontact);
-                        $('#upemail').val(data.upemail);
-                        $('#upgender').val(data.upgender);
+                        $('#upcourseid').val(data.upcourseid);
+                        $('#upcourseDescription').val(data.upcourseDescription);
+                        $('#uplecturer').val(data.uplecturer);
+                        $('#upconductingMedium').val(data.upconductingMedium);
                         $('#upsubject').val(data.upsubject);
-                        $('#upaddress').val(data.upaddress);
+                        $('#uptotalCoursefee').val(data.uptotalCoursefee);
+                        $('#upgrade').val(data.upgrade);
+                        $('#upcourseDuration').val(data.upcourseDuration);
+                        $('#upmonthlyFee').val(data.upmonthlyFee);
+                        $('#upclassType').val(data.upclassType);
+                        $('#uplectureHall').val(data.uplectureHall);
+                        $('#upbatchNo').val(data.upbatchNo);
+                        $('#uplecturerPayment').val(data.uplecturerPayment);
+                        $('#upclassDays').val(data.upclassDays);
+                        $('#upstartTime').val(data.upstartTime);
+                        $('#upendTime').val(data.upendTime);
+                        
+                        $('#upstarttimeM').val(data.upstarttimeM);
+                        $('#upstarttimeTu').val(data.upstarttimeTu);
+                        $('#upstarttimeW').val(data.upstarttimeW);
+                        $('#upstarttimeTh').val(data.upstarttimeTh);
+                        $('#upstarttimeF').val(data.upstarttimeF);
+                        $('#upstarttimeSa').val(data.upstarttimeSa);
+                        $('#upstarttimeSu').val(data.upstarttimeSu);
 
                     },
                     error: function (data) {
@@ -464,7 +480,7 @@
                             <table>
                                 <tr>
                                     <td>
-                                        <s:url var="updateurl" action="updatelecturer" />
+                                        <s:url var="updateurl" action="updateCourse" />
 
                                         <sj:submit  id="updatebtn" button="true" href="%{updateurl}" value="Update"   targets="divmsg" cssClass="button_aback"/> 
                                         <sj:submit button="true" value="Reset" onclick="resetUpdateForm()" cssClass="button_aback"/>
