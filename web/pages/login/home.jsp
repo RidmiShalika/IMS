@@ -5,6 +5,9 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="/struts-tags" prefix="s"  %>  
+<%@taglib  uri="/struts-jquery-tags" prefix="sj"%>
+<%@taglib prefix="sjg" uri="/struts-jquery-grid-tags"%>  
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,13 +15,19 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
 
+        <script type="text/javascript">
+            function showClass(){
+                alert("test");
+                ("#viewdialog").dialog('open');
+            }
+        </script>
     </head>
     <!--<body oncontextmenu="return false;" style="overflow:hidden" onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">-->
 
        <body oncontextmenu="return false;" style="overflow:hidden" onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
 
         <section class="app-content">
-             <jsp:include page="../../header.jsp" /> 
+            <jsp:include page="../../header.jsp" /> 
              <div class="body_content" id="includedContent">
                 <div class="AddUser_box">
                     <!--                    <div class="watermark"></div>-->
@@ -26,17 +35,39 @@
                         <div class="table_center">
 
                             <table class="form_table" cellspacing="8" align="center">
-
+                                <tr>
+                                    <td><sj:submit  id="stopclass" button="true" value="STOP CLASSES" cssStyle="width:150px" onclick="showClass()"/> </td>
+                                </tr>
+                                 <tr>
+                                     <td ><img src="${pageContext.request.contextPath}/resources/images/images.jpg" ></td>
+                                </tr>
+                                
                             </table>
                         </div>
-                        <div id="favorite" >
-                            <h4 style="text-align: center;">Favorite Links</h4>
-                        </div>
+                        <!--<div id="favorite" >-->
+                            <!--<h4 style="text-align: center;">Favorite Links</h4>-->
+                        <!--</div>-->
 
 
 
 
                     </div>
+                                
+                                
+                                <sj:dialog 
+                                        id="viewdialog" 
+                                        buttons="{
+                                        'OK':function() { $( this ).dialog( 'close' );}                                    
+                                        }" 
+                                        autoOpen="false" 
+                                        modal="true"                            
+                                        width="1000"
+                                        height="500"
+                                        position="center"
+                                        title="Assign To Courses"
+                                        onOpenTopics="openview" 
+                                        loadingText="Loading .."
+                            />
                 </div>
             </div>
         </section>
