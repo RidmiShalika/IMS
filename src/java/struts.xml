@@ -140,6 +140,12 @@
             <interceptor-ref name="defaultStack"></interceptor-ref>
             <result name="add">/pages/msgFrag.jsp</result>
         </action>
+        <action name="findCourse" class="course.action.CourseAction" method="find">
+            <result name="find" type="json"></result>
+        </action>
+         <action name="updateCourse" class="course.action.CourseAction" method="update" > 
+            <result name="update">/pages/msgFrag.jsp</result>
+        </action>
         
     </package>
     
