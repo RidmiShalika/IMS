@@ -71,6 +71,14 @@ public class CourseBean {
     private String upstartTime;
     private String upendTime;
     
+    private String upstarttimeM;
+    private String upstarttimeTu;
+    private String upstarttimeW;
+    private String upstarttimeTh;
+    private String upstarttimeF;
+    private String upstarttimeSa;
+    private String upstarttimeSu;
+    
     
     private String searchname = "";
     
@@ -578,6 +586,62 @@ public class CourseBean {
 
     public void setUpendTime(String upendTime) {
         this.upendTime = upendTime;
+    }
+
+    public String getUpstarttimeM() {
+        return upstarttimeM;
+    }
+
+    public void setUpstarttimeM(String upstarttimeM) {
+        this.upstarttimeM = upstarttimeM;
+    }
+
+    public String getUpstarttimeTu() {
+        return upstarttimeTu;
+    }
+
+    public void setUpstarttimeTu(String upstarttimeTu) {
+        this.upstarttimeTu = upstarttimeTu;
+    }
+
+    public String getUpstarttimeW() {
+        return upstarttimeW;
+    }
+
+    public void setUpstarttimeW(String upstarttimeW) {
+        this.upstarttimeW = upstarttimeW;
+    }
+
+    public String getUpstarttimeTh() {
+        return upstarttimeTh;
+    }
+
+    public void setUpstarttimeTh(String upstarttimeTh) {
+        this.upstarttimeTh = upstarttimeTh;
+    }
+
+    public String getUpstarttimeF() {
+        return upstarttimeF;
+    }
+
+    public void setUpstarttimeF(String upstarttimeF) {
+        this.upstarttimeF = upstarttimeF;
+    }
+
+    public String getUpstarttimeSa() {
+        return upstarttimeSa;
+    }
+
+    public void setUpstarttimeSa(String upstarttimeSa) {
+        this.upstarttimeSa = upstarttimeSa;
+    }
+
+    public String getUpstarttimeSu() {
+        return upstarttimeSu;
+    }
+
+    public void setUpstarttimeSu(String upstarttimeSu) {
+        this.upstarttimeSu = upstarttimeSu;
     }
     
 

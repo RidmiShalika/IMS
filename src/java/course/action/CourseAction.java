@@ -185,7 +185,67 @@ public class CourseAction extends ActionSupport implements ModelDriven<CourseBea
         }else if(inputbean.getAddgrade().equals("-1")){
              addActionError("Please select grade");
              ok = false;
+        }else if(inputbean.getAddclassType().equals("-1")){
+             addActionError("Please select class type");
+             ok = false;
         }else if(inputbean.getAddlecturerPayment() == null || inputbean.getAddlecturerPayment().isEmpty()){
+             addActionError("Lecture payment can not be empty");
+             ok = false;
+        }else{
+             ok = true;
+         }
+         
+         
+         return ok;
+     }
+     
+     public String find(){
+         try {
+             System.out.println("inputbean.getCourseID() "+inputbean.getCourseID());
+             service.findCourse(inputbean, inputbean.getCourseID());
+         } catch (Exception e) {
+             e.printStackTrace();;
+         }
+         return "find";
+     }
+     public String update(){
+         try {
+             if(updoValidation(inputbean)){
+                 if(service.updateCourse(inputbean)){
+                     addActionMessage("Course update successfully");
+                 }else{
+                     addActionError("Course update fail");
+                 }
+             }
+             
+         } catch (Exception e) {
+             e.printStackTrace();
+             addActionError("Course update fail");
+         }
+         return "update";
+     }
+     public boolean updoValidation(CourseBean inputbean){
+         boolean ok;
+         
+         if(inputbean.getUpcourseDescription() == null || inputbean.getUpcourseDescription().isEmpty()){
+             addActionError("Description can not be empty");
+             ok = false;
+         }else if(inputbean.getUplecturer().equals("-1")){
+             addActionError("Please select lecture");
+             ok = false;
+        }else if(inputbean.getUpconductingMedium().equals("-1")){
+             addActionError("Please select medium");
+             ok = false;
+        }else if(inputbean.getUpsubject().equals("-1")){
+             addActionError("Please select subject");
+             ok = false;
+        }else if(inputbean.getUpgrade().equals("-1")){
+             addActionError("Please select grade");
+             ok = false;
+        }else if(inputbean.getUpclassType().equals("-1")){
+             addActionError("Please select class type");
+             ok = false;
+        }else if(inputbean.getUplecturerPayment() == null || inputbean.getUplecturerPayment().isEmpty()){
              addActionError("Lecture payment can not be empty");
              ok = false;
         }else{

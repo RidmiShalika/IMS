@@ -359,4 +359,176 @@ public class CourseService {
         }
 
     }
+    
+   public void findCourse(CourseBean inputbean, String id) throws Exception {
+
+        Session session = HibernateInit.getSessionFactory().openSession();
+
+        try {
+            session.beginTransaction();
+
+            Iterator it = session.createCriteria(Course.class, "course")
+                    .createAlias("course.lectureId", "lecid")
+                    .createAlias("course.subjectId", "subid")
+                    .add(Restrictions.eq("course.id", Integer.parseInt(id)))
+                    .list()
+                    .iterator();
+
+            while (it.hasNext()) {
+                Course ac = (Course) it.next();
+
+               inputbean.setUpcourseid(ac.getId().toString());
+               inputbean.setUpbatchNo(ac.getBatchNo().toString());
+//               inputbean.setUpclassDays(ac.get);
+               inputbean.setUpclassType(ac.getClassType().toString());
+               inputbean.setUpconductingMedium(ac.getMedium().toString());
+               inputbean.setUpcourseDescription(ac.getCourseDescription());
+//               inputbean.setUpendTime(ac.get);
+               inputbean.setUpgrade(ac.getGrade().toString());
+               inputbean.setUplectureHall(ac.getLecHallId().toString());
+               inputbean.setUplecturer(ac.getLectureId().getId().toString());
+               inputbean.setUplecturerPayment(ac.getLecPaymentPercentage().toString());
+               inputbean.setUpmonthlyFee(ac.getMonthlyFee().toString());
+//               inputbean.setUpstartTime(ac);
+               inputbean.setUpsubject(ac.getSubjectId().getSubjectId().toString());
+               inputbean.setUptotalCoursefee(ac.getTotalCourseFee().toString());
+
+            }
+            Iterator it1 = session.createCriteria(CourseDates.class, "coursed")
+                    .createAlias("coursed.courseId", "courseId")
+                    .add(Restrictions.eq("courseId.id", Integer.parseInt(id)))
+                    .list()
+                    .iterator();
+             while (it1.hasNext()) {
+                CourseDates courseDates = (CourseDates) it1.next();
+                inputbean.setUpstarttimeM(courseDates.getMonday());
+                inputbean.setUpstarttimeTu(courseDates.getTueday());
+                inputbean.setUpstarttimeW(courseDates.getWedday());
+                inputbean.setUpstarttimeTh(courseDates.getThurday());
+                inputbean.setUpstarttimeF(courseDates.getFriday());
+                inputbean.setUpstarttimeSa(courseDates.getSatday());
+                inputbean.setUpstarttimeSu(courseDates.getSunday());
+             }
+
+        } catch (Exception e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            throw e;
+        } finally {
+            if (session != null) {
+                if (!session.getTransaction().wasCommitted()) {
+                    session.getTransaction().commit();
+                }
+
+                session.flush();
+                session.close();
+                session = null;
+            }
+        }
+    }
+   public boolean updateCourse(CourseBean inputbean) throws Exception {
+
+        Session session = HibernateInit.getSessionFactory().openSession();
+        boolean ok = false;
+        try {
+            session.beginTransaction();
+            Course course = (Course) session
+                    .createCriteria(Course.class)
+                    .add(Restrictions.eq("id", Integer.parseInt(inputbean.getUpcourseid())))
+                    .uniqueResult();
+            
+            CourseDates cd = (CourseDates) session
+                    .createCriteria(CourseDates.class, "courDate")
+                    .createAlias("courDate.courseId", "courseId")
+                    .add(Restrictions.eq("courseId.id", Integer.parseInt(inputbean.getUpcourseid())))
+                    .uniqueResult();
+            if (course != null) {
+
+                course.setBatchNo(Integer.parseInt(inputbean.getUpbatchNo()));
+                course.setClassType(Integer.parseInt(inputbean.getUpclassType()));
+                course.setCourseDescription(inputbean.getUpcourseDescription());
+                course.setCourseDuration(inputbean.getUpcourseDuration());
+                course.setGrade(Integer.parseInt(inputbean.getUpgrade()));
+                course.setLecHallId(Integer.parseInt(inputbean.getUplectureHall()));
+                course.setLecPaymentPercentage(Double.parseDouble(inputbean.getUplecturerPayment()));
+                
+                Lecturer l = new Lecturer();
+                l.setId(Integer.parseInt(inputbean.getUplecturer()));
+                course.setLectureId(l);
+                
+                course.setMedium(Integer.parseInt(inputbean.getUpconductingMedium()));
+                course.setMonthlyFee(Double.parseDouble(inputbean.getUpmonthlyFee()));
+                
+                Subject s = new Subject();
+                s.setSubjectId(Integer.parseInt(inputbean.getUpsubject()));
+                course.setSubjectId(s);
+                
+                course.setTotalCourseFee(Double.parseDouble(inputbean.getUptotalCoursefee()));
+
+
+                session.update(course);
+                ok = true;
+            }
+            
+            if(cd != null){
+                try {
+                    cd.setMonday(inputbean.getUpstarttimeM());
+                } catch (Exception e) {
+                    cd.setMonday("");
+                }
+                try {
+                    cd.setTueday(inputbean.getUpstarttimeTu());
+                } catch (Exception e) {
+                    cd.setTueday("");
+                }
+                try {
+                    cd.setWedday(inputbean.getUpstarttimeW());
+                } catch (Exception e) {
+                    cd.setWedday("");
+                }
+                try {
+                    cd.setThurday(inputbean.getUpstarttimeTh());
+                } catch (Exception e) {
+                    cd.setThurday("");
+                }
+                try {
+                    cd.setFriday(inputbean.getUpstarttimeF());
+                } catch (Exception e) {
+                    cd.setFriday("");
+                }
+                try {
+                    cd.setSatday(inputbean.getUpstarttimeSa());
+                } catch (Exception e) {
+                    cd.setSatday("");
+                }
+                try {
+                    cd.setSunday(inputbean.getUpstarttimeSu());
+                } catch (Exception e) {
+                    cd.setSunday("");
+                }
+                session.update(cd);
+                ok = true;
+            }
+            
+        } catch (Exception e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            ok = false;
+            throw e;
+        } finally {
+            if (session != null) {
+                session.getTransaction().commit();
+                session.flush();
+                session.close();
+                session = null;
+            }
+        }
+        return ok;
+    }
 }
