@@ -98,6 +98,14 @@
                         $('#upstarttimeF').val(data.upstarttimeF);
                         $('#upstarttimeSa').val(data.upstarttimeSa);
                         $('#upstarttimeSu').val(data.upstarttimeSu);
+                        
+                        $('#upendtimeM').val(data.upendtimeM);
+                        $('#upendtimeTu').val(data.upendtimeTu);
+                        $('#upendtimeW').val(data.upendtimeW);
+                        $('#upendtimeTh').val(data.upendtimeTh);
+                        $('#upendtimeF').val(data.upendtimeF);
+                        $('#upendtimeSa').val(data.upendtimeSa);
+                        $('#upendtimeSu').val(data.upendtimeSu);
 
                     },
                     error: function (data) {
@@ -260,7 +268,7 @@
                                 </tr>
 
                                 <tr>
-                                    <td class="formLable">Class Type</td> <td >:</td>
+                                    <td class="formLable">Class Type<span class="mandatory">*</span></td> <td >:</td>
                                     <!--<td><s:textfield id="addclassType" name="addclassType" cssClass="textField" /></td>-->  
                                     <td><s:select  name="addclassType" id="addclassType" list="%{clzList}" 
                                                listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td>
@@ -396,7 +404,7 @@
                                 </tr>
 
                                 <tr>
-                                    <td class="formLable">Class Type</td> <td >:</td>
+                                    <td class="formLable">Class Type<span class="mandatory">*</span></td> <td >:</td>
                                     <td><s:select  name="upclassType" id="upclassType" list="%{clzList}" 
                                                listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td>
                                     <td width="25px;"></td>
