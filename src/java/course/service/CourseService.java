@@ -208,39 +208,39 @@ public class CourseService {
             c.setId(id);
             cor.setCourseId(c);
             try {
-                cor.setMonday(bean.getStarttimeM());
+                cor.setMonday(bean.getStarttimeM() +"-"+ bean.getEndtimeM());
             } catch (NullPointerException e) {
-                cor.setMonday("--");
+                cor.setMonday("-");
             }
             try {
-                cor.setTueday(bean.getStarttimeTu());
+                cor.setTueday(bean.getStarttimeTu() +"-"+ bean.getEndtimeTu());
             } catch (NullPointerException e) {
-                cor.setTueday("--");
+                cor.setTueday("-");
             }
             try {
-                cor.setWedday(bean.getStarttimeW());
+                cor.setWedday(bean.getStarttimeW() +"-"+ bean.getEndtimeW());
             } catch (NullPointerException e) {
-                cor.setWedday("--");
+                cor.setWedday("-");
             }
             try {
-                cor.setThurday(bean.getStarttimeTh());
+                cor.setThurday(bean.getStarttimeTh() +"-"+ bean.getEndtimeTh());
             } catch (NullPointerException e) {
-                cor.setThurday("--");
+                cor.setThurday("-");
             }
             try {
-                cor.setFriday(bean.getStarttimeF());
+                cor.setFriday(bean.getStarttimeF() +"-"+ bean.getEndtimeF());
             } catch (NullPointerException e) {
-                cor.setFriday("--");
+                cor.setFriday("-");
             }
             try {
-                cor.setSatday(bean.getStarttimeSa());
+                cor.setSatday(bean.getStarttimeSa() +"-"+ bean.getEndtimeSa());
             } catch (NullPointerException e) {
-                cor.setSatday("--");
+                cor.setSatday("-");
             }
             try {
-                cor.setSunday(bean.getStarttimeSu());
+                cor.setSunday(bean.getStarttimeSu() +"-"+ bean.getEndtimeSu());
             } catch (NullPointerException e) {
-                cor.setSunday("--");
+                cor.setSunday("-");
             }
 
             session.save(cor);
@@ -383,13 +383,11 @@ public class CourseService {
                inputbean.setUpclassType(ac.getClassType().toString());
                inputbean.setUpconductingMedium(ac.getMedium().toString());
                inputbean.setUpcourseDescription(ac.getCourseDescription());
-//               inputbean.setUpendTime(ac.get);
                inputbean.setUpgrade(ac.getGrade().toString());
                inputbean.setUplectureHall(ac.getLecHallId().toString());
                inputbean.setUplecturer(ac.getLectureId().getId().toString());
                inputbean.setUplecturerPayment(ac.getLecPaymentPercentage().toString());
                inputbean.setUpmonthlyFee(ac.getMonthlyFee().toString());
-//               inputbean.setUpstartTime(ac);
                inputbean.setUpsubject(ac.getSubjectId().getSubjectId().toString());
                inputbean.setUptotalCoursefee(ac.getTotalCourseFee().toString());
 
@@ -401,13 +399,81 @@ public class CourseService {
                     .iterator();
              while (it1.hasNext()) {
                 CourseDates courseDates = (CourseDates) it1.next();
-                inputbean.setUpstarttimeM(courseDates.getMonday());
-                inputbean.setUpstarttimeTu(courseDates.getTueday());
-                inputbean.setUpstarttimeW(courseDates.getWedday());
-                inputbean.setUpstarttimeTh(courseDates.getThurday());
-                inputbean.setUpstarttimeF(courseDates.getFriday());
-                inputbean.setUpstarttimeSa(courseDates.getSatday());
-                inputbean.setUpstarttimeSu(courseDates.getSunday());
+                
+                 System.out.println("--------------1 "+courseDates.getMonday());
+                 System.out.println("--------------2 "+courseDates.getTueday());
+                
+                if(!courseDates.getMonday().isEmpty()){
+                     String arr[] = courseDates.getMonday().split("-");
+                     try {
+                        inputbean.setUpstarttimeM(arr[0]);
+                        inputbean.setUpendtimeM(arr[1]);
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        inputbean.setUpstarttimeM(courseDates.getMonday());
+                        inputbean.setUpendtimeM(courseDates.getMonday());
+                    }
+                }
+                if(!courseDates.getTueday().isEmpty()){
+                     String arr[] = courseDates.getTueday().split("-");
+                     try {
+                        inputbean.setUpstarttimeTu(arr[0]);
+                        inputbean.setUpendtimeTu(arr[1]);
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                      inputbean.setUpstarttimeTu(courseDates.getTueday());
+                      inputbean.setUpendtimeTu(courseDates.getTueday());  
+                    }
+                }
+                if(!courseDates.getWedday().isEmpty()){
+                     String arr[] = courseDates.getWedday().split("-");
+                     try {
+                         inputbean.setUpstarttimeW(arr[0]);
+                         inputbean.setUpendtimeW(arr[1]);
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                         inputbean.setUpstarttimeW(courseDates.getWedday());
+                         inputbean.setUpendtimeW(courseDates.getWedday());
+                    }
+                 }
+                 if(!courseDates.getThurday().isEmpty()){
+                     String arr[] = courseDates.getThurday().split("-");
+                     try {
+                         inputbean.setUpstarttimeTh(arr[0]);
+                         inputbean.setUpendtimeTh(arr[1]);
+                     } catch (ArrayIndexOutOfBoundsException e) {
+                         inputbean.setUpstarttimeTh(courseDates.getThurday());
+                         inputbean.setUpendtimeTh(courseDates.getThurday());
+                     }
+                 }
+                 if(!courseDates.getFriday().isEmpty()){
+                     String arr[] = courseDates.getFriday().split("-");
+                     try {
+                        inputbean.setUpstarttimeF(arr[0]);
+                        inputbean.setUpendtimeF(arr[1]); 
+                     } catch (ArrayIndexOutOfBoundsException e) {
+                         inputbean.setUpstarttimeF(courseDates.getFriday());
+                         inputbean.setUpendtimeF(courseDates.getFriday());
+                     }
+                 }
+                 if(!courseDates.getSatday().isEmpty()){
+                     String arr[] = courseDates.getSatday().split("-");
+                     try {
+                         inputbean.setUpstarttimeSa(arr[0]);
+                         inputbean.setUpendtimeSa(arr[1]);
+                     } catch (ArrayIndexOutOfBoundsException e) {
+                         inputbean.setUpstarttimeSa(courseDates.getSatday());
+                         inputbean.setUpendtimeSa(courseDates.getSatday());
+                     }
+                 }
+                 if(!courseDates.getSunday().isEmpty()){
+                     String arr[] = courseDates.getSunday().split("-");
+                     try {
+                         inputbean.setUpstarttimeSu(arr[0]);
+                         inputbean.setUpendtimeSu(arr[1]);
+                     } catch (ArrayIndexOutOfBoundsException e) {
+                         inputbean.setUpstarttimeSu(courseDates.getSunday());
+                         inputbean.setUpendtimeSu(courseDates.getSunday());
+                     }
+                 }
+                 
              }
 
         } catch (Exception e) {
@@ -475,39 +541,53 @@ public class CourseService {
             
             if(cd != null){
                 try {
-                    cd.setMonday(inputbean.getUpstarttimeM());
+                    if(!inputbean.getUpstarttimeM().equals("-") || !inputbean.getUpendtimeM().equals("-")){
+                        cd.setMonday(inputbean.getUpstarttimeM() +"-"+ inputbean.getUpendtimeM());
+                    }
                 } catch (Exception e) {
-                    cd.setMonday("");
+                    cd.setMonday("-");
                 }
                 try {
-                    cd.setTueday(inputbean.getUpstarttimeTu());
+                    if(!inputbean.getUpstarttimeTu().equals("-") || !inputbean.getUpendtimeTu().equals("-")){
+                        cd.setTueday(inputbean.getUpstarttimeTu() +"-"+ inputbean.getUpendtimeTu());
+                    }
                 } catch (Exception e) {
-                    cd.setTueday("");
+                    cd.setTueday("-");
                 }
                 try {
-                    cd.setWedday(inputbean.getUpstarttimeW());
+                    if(!inputbean.getUpstarttimeW().equals("-") || !inputbean.getUpendtimeW().equals("-")){
+                        cd.setWedday(inputbean.getUpstarttimeW() +"-"+ inputbean.getUpendtimeW());
+                    }
                 } catch (Exception e) {
-                    cd.setWedday("");
+                    cd.setWedday("-");
                 }
                 try {
-                    cd.setThurday(inputbean.getUpstarttimeTh());
+                    if(!inputbean.getUpstarttimeTh().equals("-") || !inputbean.getUpendtimeTh().equals("-")){
+                        cd.setThurday(inputbean.getUpstarttimeTh() +"-"+ inputbean.getUpendtimeTh());
+                    }
                 } catch (Exception e) {
-                    cd.setThurday("");
+                    cd.setThurday("-");
                 }
                 try {
-                    cd.setFriday(inputbean.getUpstarttimeF());
+                    if(!inputbean.getUpstarttimeF().equals("-") || !inputbean.getUpendtimeF().equals("-")){
+                        cd.setFriday(inputbean.getUpstarttimeF() +"-"+ inputbean.getUpendtimeF());
+                    }
                 } catch (Exception e) {
-                    cd.setFriday("");
+                    cd.setFriday("-");
                 }
                 try {
-                    cd.setSatday(inputbean.getUpstarttimeSa());
+                    if(!inputbean.getUpstarttimeSa().equals("-") || !inputbean.getUpendtimeSa().equals("-")){
+                        cd.setSatday(inputbean.getUpstarttimeSa() +"-"+ inputbean.getUpendtimeSa());
+                    }
                 } catch (Exception e) {
-                    cd.setSatday("");
+                    cd.setSatday("-");
                 }
                 try {
-                    cd.setSunday(inputbean.getUpstarttimeSu());
+                    if(!inputbean.getUpstarttimeSu().equals("-") || !inputbean.getUpendtimeSu().equals("-")){
+                        cd.setSunday(inputbean.getUpstarttimeSu() +"-"+ inputbean.getUpendtimeSu());
+                    }
                 } catch (Exception e) {
-                    cd.setSunday("");
+                    cd.setSunday("-");
                 }
                 session.update(cd);
                 ok = true;

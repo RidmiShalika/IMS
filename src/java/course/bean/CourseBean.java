@@ -79,6 +79,14 @@ public class CourseBean {
     private String upstarttimeSa;
     private String upstarttimeSu;
     
+    private String upendtimeM;
+    private String upendtimeTu;
+    private String upendtimeW;
+    private String upendtimeTh;
+    private String upendtimeF;
+    private String upendtimeSa;
+    private String upendtimeSu;
+    
     
     private String searchname = "";
     
@@ -98,6 +106,14 @@ public class CourseBean {
     private String starttimeF;
     private String starttimeSa;
     private String starttimeSu;
+    
+    private String endtimeM;
+    private String endtimeTu;
+    private String endtimeW;
+    private String endtimeTh;
+    private String endtimeF;
+    private String endtimeSa;
+    private String endtimeSu;
 
     public String getStarttimeM() {
         return starttimeM;
@@ -643,7 +659,117 @@ public class CourseBean {
     public void setUpstarttimeSu(String upstarttimeSu) {
         this.upstarttimeSu = upstarttimeSu;
     }
-    
 
-    
+    public String getEndtimeM() {
+        return endtimeM;
+    }
+
+    public void setEndtimeM(String endtimeM) {
+        this.endtimeM = endtimeM;
+    }
+
+    public String getEndtimeTu() {
+        return endtimeTu;
+    }
+
+    public void setEndtimeTu(String endtimeTu) {
+        this.endtimeTu = endtimeTu;
+    }
+
+    public String getEndtimeW() {
+        return endtimeW;
+    }
+
+    public void setEndtimeW(String endtimeW) {
+        this.endtimeW = endtimeW;
+    }
+
+    public String getEndtimeTh() {
+        return endtimeTh;
+    }
+
+    public void setEndtimeTh(String endtimeTh) {
+        this.endtimeTh = endtimeTh;
+    }
+
+    public String getEndtimeF() {
+        return endtimeF;
+    }
+
+    public void setEndtimeF(String endtimeF) {
+        this.endtimeF = endtimeF;
+    }
+
+    public String getEndtimeSa() {
+        return endtimeSa;
+    }
+
+    public void setEndtimeSa(String endtimeSa) {
+        this.endtimeSa = endtimeSa;
+    }
+
+    public String getEndtimeSu() {
+        return endtimeSu;
+    }
+
+    public void setEndtimeSu(String endtimeSu) {
+        this.endtimeSu = endtimeSu;
+    }
+
+    public String getUpendtimeM() {
+        return upendtimeM;
+    }
+
+    public void setUpendtimeM(String upendtimeM) {
+        this.upendtimeM = upendtimeM;
+    }
+
+    public String getUpendtimeTu() {
+        return upendtimeTu;
+    }
+
+    public void setUpendtimeTu(String upendtimeTu) {
+        this.upendtimeTu = upendtimeTu;
+    }
+
+    public String getUpendtimeW() {
+        return upendtimeW;
+    }
+
+    public void setUpendtimeW(String upendtimeW) {
+        this.upendtimeW = upendtimeW;
+    }
+
+    public String getUpendtimeTh() {
+        return upendtimeTh;
+    }
+
+    public void setUpendtimeTh(String upendtimeTh) {
+        this.upendtimeTh = upendtimeTh;
+    }
+
+    public String getUpendtimeF() {
+        return upendtimeF;
+    }
+
+    public void setUpendtimeF(String upendtimeF) {
+        this.upendtimeF = upendtimeF;
+    }
+
+    public String getUpendtimeSa() {
+        return upendtimeSa;
+    }
+
+    public void setUpendtimeSa(String upendtimeSa) {
+        this.upendtimeSa = upendtimeSa;
+    }
+
+    public String getUpendtimeSu() {
+        return upendtimeSu;
+    }
+
+    public void setUpendtimeSu(String upendtimeSu) {
+        this.upendtimeSu = upendtimeSu;
+    }
+   
 }
