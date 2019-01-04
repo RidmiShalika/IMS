@@ -146,7 +146,13 @@
          <action name="updateCourse" class="course.action.CourseAction" method="update" > 
             <result name="update">/pages/msgFrag.jsp</result>
         </action>
-        
+        <action name="liststopClass" class="course.action.CourseAction" method="listStop" >
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="liststop" type="json"></result>
+        </action>
+        <action name="load" class="course.action.CourseAction" method="load" >
+            <result name="load">/pages/course/stopClass.jsp</result>
+        </action>
     </package>
     
     <package name="Privilege" extends="pglobal" namespace="/">
