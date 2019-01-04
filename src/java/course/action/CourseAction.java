@@ -255,5 +255,35 @@ public class CourseAction extends ActionSupport implements ModelDriven<CourseBea
          
          return ok;
      }
+     public String listStop(){
+         List<CourseBean> dataList;
+        try {
+            int rows = inputbean.getRows();
+            int page = inputbean.getPage();
+            int to = (rows * page);
+            int from = to - rows;
+            long records;
+            String orderBy = "";
+            
+            dataList = service.loadStopCourse(inputbean, rows, from, orderBy);
+            
+            if (!dataList.isEmpty()) {
+                records = dataList.get(0).getFullCount();
+                System.out.println("recode "+records);
+                inputbean.setRecords(records);
+                inputbean.setGridModel(dataList);
+                int total = (int) Math.ceil((double) records / (double) rows);
+                inputbean.setTotal(total);
+            } else {
+                inputbean.setRecords(0L);
+                inputbean.setTotal(0);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+         return "liststop";
+     }
+     
 
 }

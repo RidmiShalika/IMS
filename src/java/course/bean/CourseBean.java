@@ -114,6 +114,17 @@ public class CourseBean {
     private String endtimeF;
     private String endtimeSa;
     private String endtimeSu;
+    
+    //stop class
+    private String id;
+    private String stopcourseDescription;
+    private String monday;
+    private String tueday;
+    private String wedday;
+    private String thurday;
+    private String friday;
+    private String satday;
+    private String sunday;
 
     public String getStarttimeM() {
         return starttimeM;
@@ -770,6 +781,78 @@ public class CourseBean {
 
     public void setUpendtimeSu(String upendtimeSu) {
         this.upendtimeSu = upendtimeSu;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getStopcourseDescription() {
+        return stopcourseDescription;
+    }
+
+    public void setStopcourseDescription(String stopcourseDescription) {
+        this.stopcourseDescription = stopcourseDescription;
+    }
+
+    public String getMonday() {
+        return monday;
+    }
+
+    public void setMonday(String monday) {
+        this.monday = monday;
+    }
+
+    public String getTueday() {
+        return tueday;
+    }
+
+    public void setTueday(String tueday) {
+        this.tueday = tueday;
+    }
+
+    public String getWedday() {
+        return wedday;
+    }
+
+    public void setWedday(String wedday) {
+        this.wedday = wedday;
+    }
+
+    public String getThurday() {
+        return thurday;
+    }
+
+    public void setThurday(String thurday) {
+        this.thurday = thurday;
+    }
+
+    public String getFriday() {
+        return friday;
+    }
+
+    public void setFriday(String friday) {
+        this.friday = friday;
+    }
+
+    public String getSatday() {
+        return satday;
+    }
+
+    public void setSatday(String satday) {
+        this.satday = satday;
+    }
+
+    public String getSunday() {
+        return sunday;
+    }
+
+    public void setSunday(String sunday) {
+        this.sunday = sunday;
     }
    
 }

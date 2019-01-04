@@ -611,4 +611,98 @@ public class CourseService {
         }
         return ok;
     }
+   public List<CourseBean> loadStopCourse(CourseBean inputBean, int max, int first, String orderBy) throws Exception {
+
+        List<CourseBean> dataList = new ArrayList<CourseBean>();
+        Session session = null;
+
+        try {
+            long count = 0;
+            session = (Session) HibernateInit.getSessionFactory().openSession();
+            session.beginTransaction();
+
+            String sqlCount = "select count(id) from CourseDates";
+            Query queryCount = session.createQuery(sqlCount);
+            Iterator itCount = queryCount.iterate();
+            count = (Long) itCount.next();
+            if (count > 0) {
+                String sqlSearch = "from CourseDates ";
+                Query querySearch = session.createQuery(sqlSearch);
+                querySearch.setMaxResults(max);
+                querySearch.setFirstResult(first);
+
+                Iterator it = querySearch.iterate();
+                while (it.hasNext()) {
+                    CourseBean databean = new CourseBean();
+                    CourseDates objBean = (CourseDates) it.next();
+
+                    try {
+                        databean.setId(objBean.getId().toString());
+                    } catch (NullPointerException e) {
+                        databean.setCourseID("--");
+                    }
+                    try {
+                        databean.setStopcourseDescription(objBean.getCourseId().getCourseDescription());
+                    } catch (NullPointerException e) {
+                        databean.setStopcourseDescription("--");
+                    }
+                    try {
+                        databean.setMonday(objBean.getMonday());
+                    } catch (NullPointerException e) {
+                        databean.setMonday("--");
+                    }
+                    try {
+                        databean.setTueday(objBean.getTueday());
+                    } catch (NullPointerException e) {
+                        databean.setTueday("--");
+                    }
+                    try {
+                        databean.setWedday(objBean.getWedday());
+                    } catch (NullPointerException e) {
+                        databean.setWedday("--");
+                    }
+                    try {
+                        databean.setThurday(objBean.getThurday());
+                    } catch (NullPointerException e) {
+                        databean.setThurday("--");
+                    }
+                    try {
+                        databean.setFriday(objBean.getFriday());
+                    } catch (NullPointerException e) {
+                        databean.setFriday("--");
+                    }
+                    try {
+                        databean.setSatday(objBean.getSatday());
+                    } catch (NullPointerException e) {
+                        databean.setSatday("--");
+                    }
+                    try {
+                        databean.setSunday(objBean.getSunday());
+                    } catch (NullPointerException e) {
+                        databean.setSunday("--");
+                    }
+
+                    databean.setFullCount(count);
+                    dataList.add(databean);
+
+                }
+            }
+        } catch (Exception e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+        } finally {
+            if (session != null) {
+                session.flush();
+                session.clear();
+                session.getTransaction().commit();
+                session.close();
+                session = null;
+            }
+        }
+        return dataList;
+
+    }
 }
