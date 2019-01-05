@@ -5,10 +5,23 @@
  */
 package main.action;
 
+import Util.AccessControlService;
+import com.opensymphony.xwork2.ActionSupport;
+
 /**
  *
  * @author Ridmi Shalika
  */
-public class MainPage {
+public class MainPage extends ActionSupport implements AccessControlService{
+
+    @Override
+    public boolean checkAccess(String method, int userRole) {
+        return  true;
+    }
+    @Override
+    public String execute() {
+
+        return SUCCESS;
+    }
     
 }
