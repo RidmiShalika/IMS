@@ -32,6 +32,11 @@
         
         
     </package>
+    <package name="Main" extends="pglobal" namespace="/">
+        <action name="main" class="main.action.MainPage" method="execute"> 
+            <result name="success">/pages/login/home.jsp</result>
+        </action>
+    </package>
 
     <package name="Student" extends="pglobal" namespace="/">
         <action name="student" class="student.action.StudentRegister" method="execute"> 
