@@ -64,6 +64,7 @@
             }
             function editNow(keyval) {
 
+               
                 $('#updateForm').show();
                 var text = ' Edit User';
 
@@ -74,6 +75,7 @@
                     type: "POST",
                     success: function (data) {
                         $('#searchForm').hide();
+                         $('#addForm').hide()();
                         $('#upcourseid').val(data.upcourseid);
                         $('#upcourseDescription').val(data.upcourseDescription);
                         $('#uplecturer').val(data.uplecturer);
@@ -292,13 +294,14 @@
                             <table>
                                 <tr>
                                     <td class="formLable">Class Days</td><td>:</td>
-                                    <td class="formLable"><s:checkbox id="addclassDaysM" name="addclassDaysM">Monday</s:checkbox></td>
-                                    <td class="formLable"><s:checkbox id="addclassDaysTu" name="addclassDaysTu">Tuesday</s:checkbox></td>
-                                    <td class="formLable"><s:checkbox id="addclassDaysW" name="addclassDaysW">Wednesday</s:checkbox></td>
-                                    <td class="formLable"><s:checkbox id="addclassDaysTh" name="addclassDaysTh">Thursday</s:checkbox></td>
-                                    <td class="formLable"><s:checkbox id="addclassDaysF" name="addclassDaysF">Friday</s:checkbox></td>
-                                    <td class="formLable"><s:checkbox id="addclassDaysSa" name="addclassDaysSa">Saturday</s:checkbox></td>
-                                    <td class="formLable"><s:checkbox id="addclassDaysSu" name="addclassDaysSu">Sunday</s:checkbox></td>
+                                    <td class="formLable"><s:label id="addclassDaysM" name="addclassDaysM">Monday</s:label></td>
+                                    <!--<td class="formLable"><s:label id="addclassDaysM" name="addclassDaysM">Monday</s:label></td>-->
+                                    <td class="formLable"><s:label id="addclassDaysTu" name="addclassDaysTu">Tuesday</s:label></td>
+                                    <td class="formLable"><s:label id="addclassDaysW" name="addclassDaysW">Wednesday</s:label></td>
+                                    <td class="formLable"><s:label id="addclassDaysTh" name="addclassDaysTh">Thursday</s:label></td>
+                                    <td class="formLable"><s:label id="addclassDaysF" name="addclassDaysF">Friday</s:label></td>
+                                    <td class="formLable"><s:label id="addclassDaysSa" name="addclassDaysSa">Saturday</s:label></td>
+                                    <td class="formLable"><s:label id="addclassDaysSu" name="addclassDaysSu">Sunday</s:label></td>
                                     </tr>
                                     <tr>
                                         <td class="formLable">Start Time</td><td>:</td>
@@ -425,13 +428,13 @@
                                 <table>
                                 <tr>
                                     <td class="formLable">Class Days</td><td>:</td>
-                                    <td class="formLable"><s:checkbox id="upclassDaysM" name="upclassDaysM">Monday</s:checkbox></td>
-                                    <td class="formLable"><s:checkbox id="upclassDaysTu" name="upclassDaysTu">Tuesday</s:checkbox></td>
-                                    <td class="formLable"><s:checkbox id="upclassDaysW" name="upclassDaysW">Wednesday</s:checkbox></td>
-                                    <td class="formLable"><s:checkbox id="upclassDaysTh" name="upclassDaysTh">Thursday</s:checkbox></td>
-                                    <td class="formLable"><s:checkbox id="upclassDaysF" name="upclassDaysF">Friday</s:checkbox></td>
-                                    <td class="formLable"><s:checkbox id="upclassDaysSa" name="upclassDaysSa">Saturday</s:checkbox></td>
-                                    <td class="formLable"><s:checkbox id="upclassDaysSu" name="upclassDaysSu">Sunday</s:checkbox></td>
+                                    <td class="formLable"><s:label id="upclassDaysM" name="upclassDaysM">Monday</s:label></td>
+                                    <td class="formLable"><s:label id="upclassDaysTu" name="upclassDaysTu">Tuesday</s:label></td>
+                                    <td class="formLable"><s:label id="upclassDaysW" name="upclassDaysW">Wednesday</s:label></td>
+                                    <td class="formLable"><s:label id="upclassDaysTh" name="upclassDaysTh">Thursday</s:label></td>
+                                    <td class="formLable"><s:label id="upclassDaysF" name="upclassDaysF">Friday</s:label></td>
+                                    <td class="formLable"><s:label id="upclassDaysSa" name="upclassDaysSa">Saturday</s:label></td>
+                                    <td class="formLable"><s:label id="upclassDaysSu" name="upclassDaysSu">Sunday</s:label></td>
                                     </tr>
                                     <tr>
                                         <td class="formLable">Start Time</td><td>:</td>
