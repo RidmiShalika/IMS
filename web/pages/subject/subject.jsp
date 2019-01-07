@@ -210,9 +210,9 @@
                                                     <td class="formLable">Subject Name<span class="mandatory">*</span></td> <td >:</td>
                                                     <td><s:textfield id="subjectname" name="subjectname" cssClass="textField" /></td>                                    
                                                     <td width="25px;"></td>
-                                                    <td class="formLable">Subject Medium<span class="mandatory">*</span></td> <td>:</td>
+<!--                                                    <td class="formLable">Subject Medium<span class="mandatory">*</span></td> <td>:</td>
                                                     <td><s:select  name="subjectmedium" id="subjectmedium" list="%{subList}" 
-                                       listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
+                                       listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> -->
                                                 </tr> 
 <!--                                                 <tr>
                                                     <td class="formLable">Subject Code<span class="mandatory">*</span></td> <td >:</td>
@@ -242,7 +242,6 @@
                                         <td><s:textfield id="upsubjectname" name="upsubjectname" cssClass="textField" /></td>                                    
                                         <td width="25px;"></td>
                                         <td class="formLable">Subject Medium</td> <td>:</td>
-                                        <!--<td><s:textfield id="upsubjectmedium" name="upsubjectmedium" cssClass="textField" /></td>-->
                                          <td><s:select  name="upsubjectmedium" id="upsubjectmedium" list="%{subList}" 
                                        listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
                                     </tr> 
@@ -320,7 +319,7 @@
                                     <sjg:gridColumn name="subjectId" index="subjectId" title="subjectId" hidden="true"/>
                                     <sjg:gridColumn name="subjectName" index="subjectName" title="Subject Name" width="400"/>
                                     <sjg:gridColumn name="subjectCode" index="subjectCode" title="Subject Code" width="400"/>
-                                    <sjg:gridColumn name="subjectMedium" index="subjectMedium" title="Subject Medium"width="350" />
+                                    <%--<sjg:gridColumn name="subjectMedium" index="subjectMedium" title="Subject Medium"width="350" />--%>
                                     
                                     <%--<sjg:gridColumn name="subjectName" index="subjectId" title="Edit" formatter="editformatter" align="center" sortable="false"/>--%>
                                     <%--<sjg:gridColumn name="subjectId" index="subjectId" title="Delete" formatter="deleteformatter" align="center" sortable="false"/>--%>
