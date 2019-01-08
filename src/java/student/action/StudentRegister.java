@@ -126,9 +126,6 @@ public class StudentRegister extends ActionSupport implements ModelDriven<Studen
         try {
             inputbean.getGenderlList().put(1, "Male");
             inputbean.getGenderlList().put(2, "Female");
-//               inputbean.getGenderlList().add("Female");
-//               inputbean.getGenderlList().add("Male");
-            System.out.println("tttttttttttttttttttttttttt  " + inputbean.getGenderlList().get(1));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -136,8 +133,12 @@ public class StudentRegister extends ActionSupport implements ModelDriven<Studen
 
     public String Add() {
         System.out.println("add method in sudent");
-         System.out.println("8888 t "+inputBean.getTt());
+         
         try {
+//              String filePath = ServletActionContext.getServletContext().getRealPath("/").concat("userimages");
+//            System.out.println("Image Location:" + filePath);
+
+//            System.out.println("8888 t "+inputBean.getAddimage().getAbsolutePath());
             if (doValidation(inputBean)) {
                 if (service.addStudent(inputBean)) {
                     addActionMessage("Student registration successfull");

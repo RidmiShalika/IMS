@@ -59,7 +59,7 @@ public class StudentBean {
     private String birthday;
     private String parentContactNo;
     private String cardno;
-//    private File addimage;
+    private File addimage;
     private String tt;
     
 
@@ -107,6 +107,15 @@ public class StudentBean {
     //search data
     private String searchname;
 
+    public File getAddimage() {
+        return addimage;
+    }
+
+    public void setAddimage(File addimage) {
+        this.addimage = addimage;
+    }
+    
+    
     public String getTt() {
         return tt;
     }
