@@ -96,13 +96,27 @@ public class LecturerService {
                         databean.setFirstname("--");
                     }
                     try {
-                        databean.setGender(objBean.getGender()+"");
+                        if(objBean.getGender() == 1){
+                            databean.setGender("Male");
+                        }else if(objBean.getGender() == 2){
+                            databean.setGender("Female");
+                        }
+//                        databean.setGender(objBean.getGender()+"");
                     } catch (NullPointerException e) {
                         databean.setGender("--");
                     }
                  
                     try {
-                        databean.setTitle(objBean.getTitle()+"");
+                        if(objBean.getTitle() == 1){
+                             databean.setTitle("Mr");
+                        }else if(objBean.getTitle() == 2){
+                             databean.setTitle("Mrs");
+                        }else if(objBean.getTitle() == 3){
+                             databean.setTitle("Miss");
+                        }else if(objBean.getTitle() == 4){
+                             databean.setTitle("Rev");
+                        }
+                       
                     } catch (NullPointerException e) {
                         databean.setTitle("--");
                     }
