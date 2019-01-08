@@ -265,7 +265,7 @@
                                                     <td class="formLable">Card No</td> <td >:</td>
                                                     <td><s:textfield id="cardno" name="cardno" cssClass="textField" /></td>                                    
                                                     <td width="25px;"></td>
-                                                    <td><s:file  id = "addimage" onchange="test()" name="addimage" label="File" cssClass="fileField" cssStyle="font-size : 14px"/>
+                                                    <td><s:file  id = "addimage" name="addimage" label="File" cssClass="fileField" cssStyle="font-size : 14px"/>
                                                 </tr>
                 
                                             </table>
