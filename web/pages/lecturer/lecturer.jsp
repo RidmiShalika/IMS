@@ -81,6 +81,7 @@
                     success: function (data) {
                         
                         $('#searchForm').hide();
+                        $('#addForm').hide();
                         $('#upname').val(data.upname);
                         $('#upnic').val(data.upnic);
                         $('#upcontact').val(data.upcontact);
@@ -114,6 +115,7 @@
                     success: function (data) {
 
                          $('#searchForm').hide();
+                         $('#addForm').hide();
                         $('#upname').val(data.upname);
                         $('#upnic').val(data.upnic);
                         $('#upcontact').val(data.upcontact);
