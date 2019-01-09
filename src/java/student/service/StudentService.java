@@ -46,14 +46,17 @@ public class StudentService {
             long count = 0;
             session = (Session) HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
+            
+            System.out.println("search name "+inputBean.getSearchname());
 
             String sqlCount = "select count(sName) from Student";
             Query queryCount = session.createQuery(sqlCount);
             Iterator itCount = queryCount.iterate();
             count = (Long) itCount.next();
             if (count > 0) {
-                String sqlSearch = "from Student ";
+                String sqlSearch = "from Student s where s.sName LIKE :sName";
                 Query querySearch = session.createQuery(sqlSearch);
+                querySearch.setString("sName", "%"+inputBean.getSearchname()+"%");
 
                 querySearch.setMaxResults(max);
                 querySearch.setFirstResult(first);
