@@ -7,7 +7,7 @@
   
    
         <global-results>
-            <result name="noaccessPage" type="chain" >logOut</result>
+            <result name="noaccessPage" type="chain" >logoutCall</result>
             <result name="multiaccess">/pages/login/login.jsp</result>
                 
         </global-results> 
@@ -28,6 +28,9 @@
      
         <action name="init" class="login.action.LoginAction" method="execute">
             <result name="success">/pages/login/login.jsp</result>
+        </action>
+        <action name="logoutCall" class="login.action.LoginAction" method="Logout">
+            <result name="login">/pages/login/login.jsp</result>           
         </action>
         
         
