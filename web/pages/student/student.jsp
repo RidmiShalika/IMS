@@ -19,6 +19,10 @@
                 color: white;
                 background-color: blue;
             }
+            .ui-datepicker {
+                 /*background: transparent;*/
+                 background: white;
+            }
 
 
         </style>

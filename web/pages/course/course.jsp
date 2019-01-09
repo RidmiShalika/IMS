@@ -13,6 +13,12 @@
     <head>
        
         <jsp:include page="/Styles.jsp" />
+         <style>
+            .ui-datepicker {
+                 /*background: transparent;*/
+                 background: white;
+            }
+        </style>
         <script type="text/javascript">
 
             function ResetSearchForm1() {
