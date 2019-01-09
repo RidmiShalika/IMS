@@ -123,8 +123,25 @@ public class LoginAction extends ActionSupport implements ModelDriven<LoginBean>
         return true;
 
     }
-     public String logoutFunction() {
-         return LOGIN;
+    
+     public String Logout(){
+         System.out.println("logout");
+         try {
+            HttpSession session = ServletActionContext.getRequest().getSession(false);
+            if (session != null) {
+
+                session.removeAttribute("SessionObject");
+                session.removeAttribute("pageTaskList");
+                session.invalidate();
+                session = null;
+            } else {
+                addActionError("Session timeout");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return LOGIN;
      }
 
 }
