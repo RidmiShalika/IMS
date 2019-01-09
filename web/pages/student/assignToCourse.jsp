@@ -12,6 +12,25 @@
 <html>
     <head>
         <script type="text/javascript">
+//            $(document).ready(function () { 
+              function test(keyval){
+                  alert(keyval);
+                  var tId = keyval;
+                  $.ajax({
+                    url: '${pageContext.request.contextPath}/getclassInfo',
+                    data: {s_c_id: tId},
+                    dataType: "json",
+                    type: "GET",
+                    success: function (data) {
+                       $('#course_fee').val(data.course_fee);
+                       $('#course_duration').val(data.course_duration);
+                    },
+                    error: function (data) {
+                       
+                    }
+                });
+              }
+//             });
             function deleteformatter(cellvalue, options, rowObject) {
                 return "<a href='#' onClick='deleteInit(&#34;" + cellvalue + "&#34;)'><img src='${pageContext.request.contextPath}/resources/images/iconDelete.png'  /></a>";
             }
@@ -86,7 +105,7 @@
                                      <tr>
                                         <td class="formLable">Select Course</td> <td >:</td>
                                          <td><s:select  name="assCourse" id="assCourse" list="%{corList}" 
-                                                     listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
+                                                     listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" onchange="test(this.value)" /></td> 
                                         <td width="25px;"></td>
                                         <td class="formLable">Course Fee</td> <td >:</td>
                                         <td><s:textfield id="course_fee" name="course_fee"></s:textfield></td> 
@@ -97,9 +116,9 @@
                                         <td class="formLable">Course Duration</td> <td >:</td>
                                         <td><s:textfield id="course_duration" name="course_duration"></s:textfield></td> 
                                      <td width="25px;"></td>
-                                    <td class="formLable">Card Type</td> <td >:</td>
+                                    <td class="formLable">Card Type<span class="mandatory">*</span></td> <td >:</td>
                                          <td><s:select  name="asscard_type" id="asscard_type" list="%{cardTypeList}" 
-                                                     listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
+                                               listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
                                     </tr>
                                 
                                 </table>
