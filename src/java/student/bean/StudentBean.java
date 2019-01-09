@@ -104,6 +104,7 @@ public class StudentBean {
     private String pay_status;
     private String payment_date;
     private String payment_amount;
+    
     //search data
     private String searchname;
 

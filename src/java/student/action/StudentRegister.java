@@ -268,14 +268,33 @@ public class StudentRegister extends ActionSupport implements ModelDriven<Studen
     }
      public String studentRegistrationForCourse(){
          try {
-             service.addStudentForCourse(inputBean);
-             addActionMessage("Student successfuly added to course");
+             if(doVali(inputBean)){
+                 service.addStudentForCourse(inputBean);
+                addActionMessage("Student successfuly added to course");
+             }
+             
          } catch (Exception e) {
              e.printStackTrace();
              addActionError("Student added to course fail");
          }
          return "assForCourse";
      }
+     public boolean doVali(StudentBean bean) throws Exception {
+        boolean ok = false;
+
+        try {
+            if (bean.getAsscard_type().equals("-1")) {
+                addActionError("Please select card type");
+                return ok;
+            } else {
+                ok = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return ok;
+    }
      public String delete(){
          try {
              service.DeleteC(inputBean);
@@ -323,5 +342,13 @@ public class StudentRegister extends ActionSupport implements ModelDriven<Studen
           }
           return "getInfo";
       }
-
+      public String getclassInfo(){
+          try {
+              service.checkcourse(inputBean);
+          } catch (Exception e) {
+              e.printStackTrace();
+          }
+          return "getclassInfo";
+      }
 }
+

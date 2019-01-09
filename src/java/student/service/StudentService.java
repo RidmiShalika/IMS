@@ -682,5 +682,35 @@ public class StudentService {
         }
         return isAddStudent;
     }
+     public void checkcourse(StudentBean bean){
+         Session session = HibernateInit.getSessionFactory().openSession();
+         try {
+            session.beginTransaction();
+            Course course = (Course) session.createCriteria(Course.class, "course")
+                    .add(Restrictions.eq("course.id", Integer.parseInt(bean.getS_c_id())))
+                    .uniqueResult();
+            if (course != null) {
+                bean.setCourse_fee(course.getMonthlyFee()+"");
+                bean.setCourse_duration(course.getCourseDuration());
+            }
+       
+            
+             
+         } catch (Exception ex) {
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            throw ex;
+        } finally {
+            if (session != null) {
+                session.getTransaction().commit();
+                session.flush();
+                session.close();
+                session = null;
+            }
+        }
+     }
 
 }
