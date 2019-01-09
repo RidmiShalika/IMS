@@ -105,6 +105,7 @@
                         
 
                         $('#searchForm').hide();
+                        $('#addForm').hide();
                         $('#upname').val(data.upname);
                         $('#upfirstname').val(data.upfirstname);
                         $('#upaddress').val(data.upaddress);
@@ -117,7 +118,7 @@
                         $('#upparentContactNo').val(data.upparentContactNo);
                         $('#upcardno').val(data.upcardno);
                         $('#upId').val(data.upId);
-                        alert($('#upId').val());
+//                        alert($('#upId').val());
 
                     },
                     error: function (data) {
@@ -170,7 +171,7 @@
             });
             
             function test(){
-                alert($('#addimage').val());
+//                alert($('#addimage').val());
                 var tt = $('#addimage').val();
 //                var input = document.getElementById('file');
                 
