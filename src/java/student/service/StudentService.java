@@ -27,6 +27,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.jfree.chart.axis.SubCategoryAxis;
+import student.bean.CoData;
 import student.bean.StudentBean;
 
 /**
@@ -177,14 +178,20 @@ public class StudentService {
             long count = 0;
             session = (Session) HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
+            
+            HttpSession sess = ServletActionContext.getRequest().getSession(false);
+            int st_id= (int) sess.getAttribute("assToCourse");
+            System.out.println("st_id== "+st_id);
 
-            String sqlCount = "select count(id) from StudentCourse";
+            String sqlCount = "select count(id) from StudentCourse s where s.studentId.sId=:sId";
             Query queryCount = session.createQuery(sqlCount);
+            queryCount.setInteger("sId", st_id);
             Iterator itCount = queryCount.iterate();
             count = (Long) itCount.next();
             if (count > 0) {
-                String sqlSearch = "from StudentCourse ";
+                String sqlSearch = "from StudentCourse s where s.studentId.sId=:sId";
                 Query querySearch = session.createQuery(sqlSearch);
+                querySearch.setInteger("sId", st_id);
 
                 querySearch.setMaxResults(max);
                 querySearch.setFirstResult(first);
@@ -480,21 +487,31 @@ public class StudentService {
         }
          
     }
-     public void getCorList(StudentBean inputbean) throws Exception{
+     public ArrayList<CoData> getCorList(StudentBean inputbean) throws Exception{
          List<Course> cr = null;
          Session session = null;
+         ArrayList<CoData> arrayList = new ArrayList<CoData>();
          
          try {
             session = HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
+            
+             System.out.println("inputbean.getGrade_id() "+inputbean.getGrade_id());
+             System.out.println("inputbean.getSub_id() "+inputbean.getSub_id());
 
-            String sql = "from Course";
+            String sql = "from Course c where c.grade=:grade and c.subjectId.subjectId=:subjectId";
             Query query = session.createQuery(sql);
+            query.setInteger("grade", Integer.parseInt(inputbean.getGrade_id()));
+            query.setInteger("subjectId", Integer.parseInt(inputbean.getSub_id()));
             cr = query.list();
+            CoData coData = null;
             
             for (int i = 0; i < cr.size(); i++) {
-//                System.out.println(school.get(0));
-                inputbean.getCorList().put(cr.get(i).getId(), cr.get(i).getCourseDescription());
+                coData = new CoData();
+                coData.setId(cr.get(i).getId().toString());
+                coData.setName(cr.get(i).getCourseDescription());
+                arrayList.add(coData);
+//                inputbean.getCorList().put(cr.get(i).getId(), cr.get(i).getCourseDescription());
             }
             
 
@@ -513,7 +530,7 @@ public class StudentService {
                 session = null;
             }
         }
-         
+         return  arrayList;
     }
      public boolean addStudentForCourse(StudentBean bean) throws Exception {
         boolean isAddStudent = false;

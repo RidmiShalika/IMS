@@ -83,8 +83,9 @@ public class StudentBean {
     
      private Map<Integer, String>  subList = new HashMap<Integer, String>();
      private Map<Integer, String>  gradeList = new HashMap<Integer, String>();
-     private Map<Integer, String>  corList = new HashMap<Integer, String>();
+//     private Map<Integer, String>  corList = new HashMap<Integer, String>();
      private Map<Integer, String>  cardTypeList = new HashMap<Integer, String>();
+     private ArrayList<CoData> corList = new ArrayList<CoData>();
      private String assgrade;
      private String assSubject;
      private String assCourse;
@@ -105,9 +106,29 @@ public class StudentBean {
     private String payment_date;
     private String payment_amount;
     
+    private String grade_id;
+    private String sub_id;
+    
     //search data
     private String searchname;
 
+    public String getGrade_id() {
+        return grade_id;
+    }
+
+    public void setGrade_id(String grade_id) {
+        this.grade_id = grade_id;
+    }
+
+    public String getSub_id() {
+        return sub_id;
+    }
+
+    public void setSub_id(String sub_id) {
+        this.sub_id = sub_id;
+    }
+
+    
     public File getAddimage() {
         return addimage;
     }
@@ -208,15 +229,6 @@ public class StudentBean {
 
     public void setS_c_status(String s_c_status) {
         this.s_c_status = s_c_status;
-    }
-
-    
-    public Map<Integer, String> getCorList() {
-        return corList;
-    }
-
-    public void setCorList(Map<Integer, String> corList) {
-        this.corList = corList;
     }
 
     public Map<Integer, String> getCardTypeList() {
@@ -711,6 +723,7 @@ public class StudentBean {
     public void setSubList(Map<Integer, String> subList) {
         this.subList = subList;
     }
+    
 
 //    public File getAddimage() {
 //        return addimage;
@@ -719,6 +732,14 @@ public class StudentBean {
 //    public void setAddimage(File addimage) {
 //        this.addimage = addimage;
 //    }
+
+    public ArrayList<CoData> getCorList() {
+        return corList;
+    }
+
+    public void setCorList(ArrayList<CoData> corList) {
+        this.corList = corList;
+    }
 
     
 

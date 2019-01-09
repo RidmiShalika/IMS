@@ -114,12 +114,19 @@ public class StudentRegister extends ActionSupport implements ModelDriven<Studen
             genderList(inputBean);
             service.getsubList(inputBean);
             getGrade(inputBean);
-            service.getCorList(inputBean);
+//            service.getCorList(inputBean);
             cardTypeList(inputBean);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return inputBean;
+    }
+    public String getCList(){
+        try {
+            inputBean.setCorList(service.getCorList(inputBean));
+        } catch (Exception e) {
+        }
+        return "getCList";
     }
 
     public void genderList(StudentBean inputbean) {
@@ -283,7 +290,16 @@ public class StudentRegister extends ActionSupport implements ModelDriven<Studen
         boolean ok = false;
 
         try {
-            if (bean.getAsscard_type().equals("-1")) {
+            if(bean.getAssSubject().equals("-1")){
+                addActionError("Please select subject");
+                return ok;
+            }else if(bean.getAssgrade().equals("-1")){
+                addActionError("Please select grade");
+                return ok;
+            }else if(bean.getAssCourse().equals("-1")){
+                addActionError("Please select course");
+                return ok;
+            } else if (bean.getAsscard_type().equals("-1")) {
                 addActionError("Please select card type");
                 return ok;
             } else {
