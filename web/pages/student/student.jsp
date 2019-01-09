@@ -165,6 +165,7 @@
             }
             $.subscribe('onclicksearch', function (event, data) {
                 var searchname = $('#searchname').val();
+                alert(searchname);
                 $("#gridtable").jqGrid('setGridParam', {postData: {searchname: searchname, search: true}});
 //                $("#gridtable").jqGrid('setGridParam', {page: 1});
                 jQuery("#gridtable").trigger("reloadGrid");
