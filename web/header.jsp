@@ -54,7 +54,7 @@
             <div class="dropdownnav">
                 <div id="myDropdown" class="dropdown-content">
                 
-                    <a  onclick="clearCookie()" href="LogoutloginCall.action" style="color: white">Logout</a>
+                    <a  onclick="clearCookie()" href="logoutCall.action" style="color: white">Logout</a>
                     <!--<a  onclick="clearCookie()" >Logout</a>-->
                 </div>
             </div> 
