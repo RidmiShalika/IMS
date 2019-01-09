@@ -53,7 +53,7 @@ public class StudentService {
                 inputBean.setSearchname("");
             }
 
-            String sqlCount = "select count(sName) from Student";
+            String sqlCount = "select count(sName) from Student ";
             Query queryCount = session.createQuery(sqlCount);
             Iterator itCount = queryCount.iterate();
             count = (Long) itCount.next();
