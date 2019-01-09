@@ -88,6 +88,9 @@
         <action name="getclassInfo" class="student.action.StudentRegister" method="getclassInfo" > 
             <result name="getclassInfo" type="json"></result>
         </action>
+        <action name="getCList" class="student.action.StudentRegister" method="getCList" > 
+            <result name="getCList" type="json"></result>
+        </action>
     </package>
     
     <package name="Subject" extends="pglobal" namespace="/">
