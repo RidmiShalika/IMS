@@ -48,6 +48,10 @@ public class StudentService {
             session.beginTransaction();
             
             System.out.println("search name "+inputBean.getSearchname());
+            if(inputBean.getSearchname() == null){
+                System.out.println("---------");
+                inputBean.setSearchname("");
+            }
 
             String sqlCount = "select count(sName) from Student";
             Query queryCount = session.createQuery(sqlCount);
