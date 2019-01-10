@@ -29,26 +29,25 @@ public class SubjectService {
             long count = 0;
             
             System.out.println("search name "+inputBean.getSearchname());
+            if(inputBean.getSearchname() == null){
+                inputBean.setSearchname("");
+            }
             
             
             session = (Session) HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
 
-            String sqlCount = "select count(subjectName) from Subject ";
+            String sqlCount = "select count(subjectName) from Subject sub where sub.subjectName LIKE :subjectName";
             Query queryCount = session.createQuery(sqlCount);
-            
-            
-//            if(inputBean.getSearchname() != null && !inputBean.getSearchname().isEmpty()){
-//              queryCount.setParameter("subjectName", "%" + inputBean.getSearchname() + "%");
-//            }
-            
+            queryCount.setString("subjectName", "%" + inputBean.getSearchname() + "%");
+      
             Iterator itCount = queryCount.iterate();
             count = (Long) itCount.next();
             if (count > 0) {
-                String sqlSearch = "from Subject";
-//                String sqlSearch = "from Subject sub where sub.subjectName LIKE :subjectName";
+//                String sqlSearch = "from Subject";
+                String sqlSearch = "from Subject sub where sub.subjectName LIKE :subjectName";
                 Query querySearch = session.createQuery(sqlSearch);
-//                querySearch.setParameter("subjectName", "%" + inputBean.getSearchname() + "%");
+                querySearch.setString("subjectName", "%" + inputBean.getSearchname() + "%");
 
                 querySearch.setMaxResults(max);
                 querySearch.setFirstResult(first);
