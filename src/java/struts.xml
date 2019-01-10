@@ -177,6 +177,20 @@
         <action name="load" class="course.action.CourseAction" method="load" >
             <result name="load">/pages/course/stopClass.jsp</result>
         </action>
+        <action name="AddExtraClz" class="course.action.CourseAction" method="AddExtraClz">
+            <result name="AddExtraClz">/pages/course/extraclass.jsp</result>
+        </action>
+        <action name="addextraclz" class="course.action.CourseAction" method="Addextraclass">
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="addex">/pages/msgFrag.jsp</result>
+        </action>
+        <action name="listextraclz" class="course.action.CourseAction" method="listextraclz" >
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="listextraclz" type="json"></result>
+        </action>
+        <action name="Deletex" class="course.action.CourseAction" method="Deletex" > 
+            <result name="deleteex" type="json"></result>
+        </action>
     </package>
     
     <package name="Privilege" extends="pglobal" namespace="/">
