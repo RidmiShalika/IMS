@@ -53,10 +53,14 @@ public class StudentService {
                 inputBean.setSearchname("");
             }
 
-            String sqlCount = "select count(sName) from Student ";
+            String sqlCount = "select count(s.sName) from Student s where s.sName LIKE :sName";
             Query queryCount = session.createQuery(sqlCount);
+            queryCount.setString("sName", "%"+inputBean.getSearchname()+"%");
             Iterator itCount = queryCount.iterate();
             count = (Long) itCount.next();
+            
+            System.out.println("count "+count);
+            
             if (count > 0) {
                 String sqlSearch = "from Student s where s.sName LIKE :sName";
                 Query querySearch = session.createQuery(sqlSearch);
