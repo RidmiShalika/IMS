@@ -30,7 +30,33 @@
                 });
             }
 //             });
+            
+            function editformatter(cellvalue, options, rowObject) {
+                return "<a href='#' onClick='javascript:editNow1(&#34;" + cellvalue + "&#34;)'><img src ='${pageContext.request.contextPath}/resources/images/iconEdit.png' /></a>";
+            }
+            function editNow1(keyval) {
+                $('#updateForm1').show();
+                var text = ' Edit User';
 
+                $.ajax({
+                    url: '${pageContext.request.contextPath}/findCard',
+                    data: {card_id: keyval},
+                    dataType: "json",
+                    type: "POST",
+                    success: function (data) {
+                      
+                      $('#assignC').hide();
+                        $('#upasscard_type').val(data.upasscard_type);
+                        $('#upcardId').val(data.upcardId);
+ 
+
+                    },
+                    error: function (data) {
+                        window.location = "${pageContext.request.contextPath}/logOut.action";
+                    }
+                });
+
+            }
             function deleteformatter(cellvalue, options, rowObject) {
                 return "<a href='#' onClick='deleteInit(&#34;" + cellvalue + "&#34;)'><img src='${pageContext.request.contextPath}/resources/images/iconDelete.png'  /></a>";
             }
@@ -74,6 +100,11 @@
                 $('#course_fee').val("");
                 $('#course_duration').val("");
 
+            }
+            function BackToMain12(){
+                 $('#divmsg1').hide();
+                 $('#updateForm1').hide();
+                 $('#assignC').show();
             }
         </script>
     </head>
@@ -138,7 +169,28 @@
                                 </tr>
                             </table>
                         </s:form>
+                        <s:form  id="updateForm1"  theme="simple" method="post"  cssStyle="display:none">
+                                <table >
+                                    <tr>
+                                        <s:hidden id="upcardId" name="upcardId"/>
+                                        <td class="formLable">Card Type<span class="mandatory">*</span></td> <td >:</td>
+                                    <td><s:select  name="upasscard_type" id="upasscard_type" list="%{cardTypeList}" 
+                                               listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
 
+                                    </tr> 
+                                   
+                                </table>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <s:url var="updateurl1" action="updateCard" />
+
+                                            <sj:submit  id="updatebtn1" button="true" href="%{updateurl1}" value="Update"   targets="divmsg1" cssClass="button_aback"/> 
+                                            <sj:a href="#" name="back" button="true" onclick="BackToMain12()"  cssClass="button_aback" >Back</sj:a> 
+                                            </td>
+                                        </tr>
+                                    </table>
+                            </s:form>
 
 
 
@@ -193,10 +245,11 @@
                                 >
 
                                 <sjg:gridColumn name="s_c_id" index="id" title="Id" hidden="true"/>
-                                <sjg:gridColumn name="s_c_courseId" index="courseId" title="Course" width="300"/>
-                                <sjg:gridColumn name="s_c_cardType" index="cardType" title="Card Type" width="300"/>
+                                <sjg:gridColumn name="s_c_courseId" index="courseId" title="Course" />
+                                <sjg:gridColumn name="s_c_cardType" index="cardType" title="Card Type" />
                                 <sjg:gridColumn name="s_c_status" index="status" title="Status" />
-                                <sjg:gridColumn name="s_c_id" index="id" title="Delete" width="50" align="center"   formatter="deleteformatter" sortable="false"/>
+                                <sjg:gridColumn name="s_c_id" index="sId" title="Edit" formatter="editformatter" align="center" width="200"/>
+                                <sjg:gridColumn name="s_c_id" index="id" title="Delete" width="50" align="center" width="200"  formatter="deleteformatter" sortable="false"/>
 
                             </sjg:grid> 
                         </div>
