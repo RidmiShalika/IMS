@@ -27,6 +27,7 @@
 
             function ResetSearchForm1() {
                 $('#searchname').val("");
+                jQuery("#gridtable").trigger("reloadGrid");
             }
             function loadAddForm() {
                 $('#searchForm').hide();
@@ -62,7 +63,6 @@
                 jQuery("#gridtable").trigger("reloadGrid");
             }
             function editformatter(cellvalue, options, rowObject) {
-//                 alert(cellvalue);
                 return "<a href='#' onClick='javascript:editNow(&#34;" + cellvalue + "&#34;)'><img src ='${pageContext.request.contextPath}/resources/images/iconEdit.png' /></a>";
             }
             function editNow(keyval) {
@@ -70,7 +70,6 @@
                 $('#updateForm').show();
                 $('#searchForm').hide();
 
-//                $('#addForm').hide()();
                 var text = ' Edit User';
 
                 $.ajax({
