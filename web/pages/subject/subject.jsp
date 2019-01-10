@@ -317,8 +317,8 @@
                                     >
 
                                     <sjg:gridColumn name="subjectId" index="subjectId" title="subjectId" hidden="true"/>
-                                    <sjg:gridColumn name="subjectName" index="subjectName" title="Subject Name" width="400"/>
-                                    <sjg:gridColumn name="subjectCode" index="subjectCode" title="Subject Code" width="400"/>
+                                    <sjg:gridColumn name="subjectName" index="subjectName" title="Subject Name" width="500"/>
+                                    <sjg:gridColumn name="subjectCode" index="subjectCode" title="Subject Code" width="481"/>
                                     <%--<sjg:gridColumn name="subjectMedium" index="subjectMedium" title="Subject Medium"width="350" />--%>
                                     
                                     <%--<sjg:gridColumn name="subjectName" index="subjectId" title="Edit" formatter="editformatter" align="center" sortable="false"/>--%>
