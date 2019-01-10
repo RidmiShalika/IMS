@@ -21,6 +21,17 @@
         </style>
         <script type="text/javascript">
 
+             function extraclzformatter(cellvalue, options, rowObject) {
+                return "<a href='#' onClick='javascript:addextraclz(&#34;" + cellvalue + "&#34;,&#34;" + rowObject.courseID + "&#34;)'><i class='fa fa-share-square-o' aria-hidden='true'></i></a>";
+            }
+             function addextraclz(id, bin) {
+                $("#viewdialog").data('Id', id);
+                $("#viewdialog").data('courseID', bin).dialog('open');
+            }
+             $.subscribe('openview', function (event, data) {
+                var $led = $("#viewdialog");
+                $led.load("AddExtraClz?course_ID=" + $led.data('Id'));
+            });
             function ResetSearchForm1() {
                 $('#searchname').val("");
                 jQuery("#gridtable").trigger("reloadGrid");
@@ -65,11 +76,9 @@
                 jQuery("#gridtable").trigger("reloadGrid");
             }
             function editformatter(cellvalue, options, rowObject) {
-//                 alert(cellvalue);
                 return "<a href='#' onClick='javascript:editNow(&#34;" + cellvalue + "&#34;)'><img src ='${pageContext.request.contextPath}/resources/images/iconEdit.png' /></a>";
             }
             function editNow(keyval) {
-
                
                 $('#updateForm').show();
                 var text = ' Edit User';
@@ -80,8 +89,9 @@
                     dataType: "json",
                     type: "POST",
                     success: function (data) {
+                        alert(JSON.stringify(data));
                         $('#searchForm').hide();
-                         $('#addForm').hide()();
+//                         $('#addForm').hide()();
                         $('#upcourseid').val(data.upcourseid);
                         $('#upcourseDescription').val(data.upcourseDescription);
                         $('#uplecturer').val(data.uplecturer);
@@ -512,6 +522,20 @@
                     </div>
                     <div class="viewuser_tbl">
                         <div id="tablediv">
+                            <sj:dialog 
+                                        id="viewdialog" 
+                                        buttons="{
+                                        'OK':function() { $( this ).dialog( 'close' );}                                    
+                                        }" 
+                                        autoOpen="false" 
+                                        modal="true"                            
+                                        width="1000"
+                                        height="500"
+                                        position="center"
+                                        title="Add Extra Class"
+                                        onOpenTopics="openview" 
+                                        loadingText="Loading .."
+                            />
                             <s:url var="listurl" action="listcourses"/>
                             <sjg:grid
                                 id="gridtable"
@@ -537,6 +561,7 @@
                                 <sjg:gridColumn name="classType" index="classType" title="Class Type" />
                                 <sjg:gridColumn name="medium" index="medium" title="Medium" />
                                 <sjg:gridColumn name="courseID" index="courseID" title="Edit" formatter="editformatter" align="center"/>
+                                <sjg:gridColumn name="courseID" index="courseID" title="Extra Class" formatter="extraclzformatter" align="center"/>
 
                             </sjg:grid> 
                         </div>
