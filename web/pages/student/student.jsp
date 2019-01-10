@@ -52,6 +52,8 @@
 
             function ResetSearchForm1() {
                 $('#searchname').val("");
+                $('#divmsg').empty();
+                jQuery("#gridtable").trigger("reloadGrid");
             }
             function loadAddForm() {
                 $('#searchForm').hide();
@@ -133,10 +135,10 @@
                 jQuery("#gridtable").trigger("reloadGrid");
             }
             function resetUpdateForm() {
-                var keyval = $('#upname').val();
+                var keyval = $('#upId').val();
                 $.ajax({
                     url: '${pageContext.request.contextPath}/findStudent',
-                    data: {upname: keyval},
+                    data: {id: keyval},
                     dataType: "json",
                     type: "POST",
                     success: function (data) {
