@@ -366,5 +366,27 @@ public class StudentRegister extends ActionSupport implements ModelDriven<Studen
           }
           return "getclassInfo";
       }
+       public String findCard(){
+          try {
+              service.findcards(inputBean);
+          } catch (Exception e) {
+              e.printStackTrace();
+          }
+          return "findCard";
+      }
+        public String updateCard(){
+          try {
+              if(!inputBean.getUpasscard_type().equals("-1")){
+                  service.updatecards(inputBean);
+                  addActionMessage("Student card type updated successfully");
+              }else{
+                  addActionError("Please select card type");
+              }
+              
+          } catch (Exception e) {
+              e.printStackTrace();
+          }
+          return "updateCard";
+      }
 }
 

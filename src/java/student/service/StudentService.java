@@ -740,5 +740,83 @@ public class StudentService {
             }
         }
      }
+     public void findcards(StudentBean inputBean) throws Exception {
+
+        List<StudentCourse> studentlist = null;
+        Session session = null;
+
+        try {
+            
+            session = HibernateInit.getSessionFactory().openSession();
+            session.beginTransaction();
+            
+            String sql = "from StudentCourse wu where wu.id =:id";
+            Query query = session.createQuery(sql);
+            query.setInteger("id", Integer.parseInt(inputBean.getCard_id()));
+            studentlist = query.list();
+
+            if (0 < studentlist.size()) {
+                
+               
+                inputBean.setUpasscard_type(studentlist.get(0).getCardType().toString());
+                inputBean.setUpcardId(studentlist.get(0).getId().toString());
+
+            }
+          
+
+        } catch (Exception e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if (session != null) {
+                session.getTransaction().commit();
+                session.close();
+                session = null;
+            }
+        }
+    }
+      public boolean updatecards(StudentBean inputBean) throws Exception {
+        boolean isUpdated = false;
+        Session session = null;
+        Query query = null;
+        List<StudentCourse> studentCourses = null;
+       
+        try {
+            session = HibernateInit.getSessionFactory().openSession();
+            session.beginTransaction();
+            
+            
+            String sql = "from StudentCourse wu where wu.id =:id";
+            query = session.createQuery(sql);
+            query.setInteger("id", Integer.parseInt(inputBean.getUpcardId()));
+            studentCourses = query.list();
+            if (studentCourses.size() > 0) {
+                studentCourses.get(0).setCardType(Integer.parseInt(inputBean.getUpasscard_type()));
+          
+                session.update(studentCourses.get(0));
+                session.getTransaction().commit();
+                isUpdated = true;
+            }
+        } catch (Exception e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            throw e;
+        } finally {
+            if (session != null) {
+                session.flush();
+                session.close();
+                session = null;
+            }
+        }
+        return isUpdated;
+    }
 
 }

@@ -81,6 +81,11 @@ public class StudentBean {
     private int  studentId;
     private int stuId;
     
+    
+    private String card_id;
+    private String upcardId;
+    private String upasscard_type;
+    
      private Map<Integer, String>  subList = new HashMap<Integer, String>();
      private Map<Integer, String>  gradeList = new HashMap<Integer, String>();
 //     private Map<Integer, String>  corList = new HashMap<Integer, String>();
@@ -112,6 +117,31 @@ public class StudentBean {
     //search data
     private String searchname;
 
+    public String getCard_id() {
+        return card_id;
+    }
+
+    public void setCard_id(String card_id) {
+        this.card_id = card_id;
+    }
+
+    public String getUpcardId() {
+        return upcardId;
+    }
+
+    public void setUpcardId(String upcardId) {
+        this.upcardId = upcardId;
+    }
+
+    public String getUpasscard_type() {
+        return upasscard_type;
+    }
+
+    public void setUpasscard_type(String upasscard_type) {
+        this.upasscard_type = upasscard_type;
+    }
+
+    
     public String getGrade_id() {
         return grade_id;
     }
