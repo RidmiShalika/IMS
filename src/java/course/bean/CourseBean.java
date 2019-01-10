@@ -125,7 +125,122 @@ public class CourseBean {
     private String friday;
     private String satday;
     private String sunday;
+    
+    private int course_ID;
+    
+    //extra class
+    private String extraDate;
+    private String extraStartTime;
+    private String extraEndTime;
+    
+    //list extra clz
+    private String exid;
+    private String courseId;
+    private String date;
+    private String startTime;
+    private String endTime;
+    private String status;
+    
+    private String message;
+    private boolean success;
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+    
+    public String getExid() {
+        return exid;
+    }
+
+    public void setExid(String exid) {
+        this.exid = exid;
+    }
+
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getExtraDate() {
+        return extraDate;
+    }
+
+    public void setExtraDate(String extraDate) {
+        this.extraDate = extraDate;
+    }
+
+    public String getExtraStartTime() {
+        return extraStartTime;
+    }
+
+    public void setExtraStartTime(String extraStartTime) {
+        this.extraStartTime = extraStartTime;
+    }
+
+    public String getExtraEndTime() {
+        return extraEndTime;
+    }
+
+    public void setExtraEndTime(String extraEndTime) {
+        this.extraEndTime = extraEndTime;
+    }
+
+    public int getCourse_ID() {
+        return course_ID;
+    }
+
+    public void setCourse_ID(int course_ID) {
+        this.course_ID = course_ID;
+    }
+
+    
     public String getStarttimeM() {
         return starttimeM;
     }

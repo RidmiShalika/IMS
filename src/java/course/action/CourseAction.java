@@ -12,6 +12,7 @@ import course.bean.CourseBean;
 import course.service.CourseService;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import login.bean.SessionBean;
 import org.apache.struts2.ServletActionContext;
 
@@ -284,6 +285,86 @@ public class CourseAction extends ActionSupport implements ModelDriven<CourseBea
         }
          return "liststop";
      }
-     
+     public String AddExtraClz() {
+
+        int cid = inputbean.getCourse_ID();
+        HttpSession session = ServletActionContext.getRequest().getSession(false);
+        session.setAttribute("extraclass", cid);
+        return "AddExtraClz";
+
+    }
+     public String Addextraclass(){
+         try {
+             if(exupdoValidation(inputbean)){
+                 service.addextraclz(inputbean);
+                  addActionMessage("Extra class add successfully");
+             }
+             
+         } catch (Exception e) {
+             e.printStackTrace();
+             addActionError("Extra class add fail");
+         }
+         return "addex";
+     }
+     public boolean exupdoValidation(CourseBean inputbean){
+         boolean ok;
+         
+         if(inputbean.getExtraDate() == null || inputbean.getExtraDate().isEmpty()){
+             addActionError("Please select date");
+             ok = false;
+         }else if(inputbean.getExtraStartTime() == null || inputbean.getExtraStartTime().isEmpty()){
+             addActionError("Please select start time");
+             ok = false;
+        }else if(inputbean.getExtraEndTime() == null || inputbean.getExtraEndTime().isEmpty()){
+             addActionError("Please select end time");
+             ok = false;
+        }else{
+             ok = true;
+         }
+         
+         
+         return ok;
+     }
+     public String listextraclz(){
+         List<CourseBean> dataList;
+        try {
+            int rows = inputbean.getRows();
+            int page = inputbean.getPage();
+            int to = (rows * page);
+            int from = to - rows;
+            long records;
+            String orderBy = "";
+            
+            dataList = service.loadexclz(inputbean, rows, from, orderBy);
+            
+            if (!dataList.isEmpty()) {
+                records = dataList.get(0).getFullCount();
+                System.out.println("recode "+records);
+                inputbean.setRecords(records);
+                inputbean.setGridModel(dataList);
+                int total = (int) Math.ceil((double) records / (double) rows);
+                inputbean.setTotal(total);
+            } else {
+                inputbean.setRecords(0L);
+                inputbean.setTotal(0);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+         return "listextraclz";
+     }
+     public String Deletex(){
+         try {
+             service.DeleteexClz(inputbean);
+             inputbean.setMessage("Extra class delete successfully");
+             inputbean.setSuccess(true);
+         } catch (Exception e) {
+             e.printStackTrace();
+             inputbean.setMessage("Extra class delete fail");
+             inputbean.setSuccess(true);
+         }
+         return "deleteex";
+     }
 
 }

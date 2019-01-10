@@ -10,9 +10,11 @@ import course.bean.CourseBean;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import login.bean.SessionBean;
 import mapping.Course;
 import mapping.CourseDates;
+import mapping.ExtraClasses;
 import mapping.Lecturer;
 import mapping.Subject;
 import org.apache.struts2.ServletActionContext;
@@ -703,6 +705,163 @@ public class CourseService {
             }
         }
         return dataList;
+
+    }
+    public boolean addextraclz(CourseBean bean) throws Exception {
+        boolean isAddCor = false;
+        ExtraClasses extraClasses = null;
+        Session session = null;
+
+        try {
+            session = HibernateInit.getSessionFactory().openSession();
+            session.beginTransaction();
+            
+            HttpSession sess = ServletActionContext.getRequest().getSession(false);
+            int c_id= (int) sess.getAttribute("extraclass");
+            
+            extraClasses = new ExtraClasses();
+            
+            Course c = new Course();
+            c.setId(c_id);
+            extraClasses.setCourseId(c);
+            extraClasses.setDate(bean.getExtraDate());
+            extraClasses.setStartTime(bean.getExtraStartTime());
+            extraClasses.setEndTime(bean.getExtraEndTime());
+            extraClasses.setStatus("ACT");
+
+            session.save(extraClasses);
+
+            isAddCor = true;
+        } catch (Exception e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            throw e;
+        } finally {
+            if (session != null) {
+                session.getTransaction().commit();
+                session.flush();
+                session.close();
+                session = null;
+            }
+        }
+        return isAddCor;
+    }
+    public List<CourseBean> loadexclz(CourseBean inputBean, int max, int first, String orderBy) throws Exception {
+
+        List<CourseBean> dataList = new ArrayList<CourseBean>();
+        Session session = null;
+
+        try {
+            long count = 0;
+            session = (Session) HibernateInit.getSessionFactory().openSession();
+            session.beginTransaction();
+
+            String sqlCount = "select count(id) from ExtraClasses";
+            Query queryCount = session.createQuery(sqlCount);
+            Iterator itCount = queryCount.iterate();
+            count = (Long) itCount.next();
+            if (count > 0) {
+                String sqlSearch = "from ExtraClasses ";
+                Query querySearch = session.createQuery(sqlSearch);
+                querySearch.setMaxResults(max);
+                querySearch.setFirstResult(first);
+
+                Iterator it = querySearch.iterate();
+                while (it.hasNext()) {
+                    CourseBean databean = new CourseBean();
+                    ExtraClasses objBean = (ExtraClasses) it.next();
+
+                    try {
+                        databean.setExid(objBean.getId().toString());
+                    } catch (NullPointerException e) {
+                        databean.setExid("--");
+                    }
+                    try {
+                        databean.setCourseId(objBean.getCourseId().getCourseDescription());
+                    } catch (NullPointerException e) {
+                        databean.setCourseId("--");
+                    }
+                    try {
+                        databean.setDate(objBean.getDate());
+                    } catch (NullPointerException e) {
+                        databean.setDate("--");
+                    }
+                    try {
+                        databean.setStartTime(objBean.getStartTime());
+                    } catch (NullPointerException e) {
+                        databean.setStartTime("--");
+                    }
+                    try {
+                        databean.setEndTime(objBean.getEndTime());
+                    } catch (NullPointerException e) {
+                        databean.setEndTime("--");
+                    }
+                    try {
+                        databean.setStatus(objBean.getStatus());
+                    } catch (NullPointerException e) {
+                        databean.setStatus("--");
+                    }
+                  
+                    databean.setFullCount(count);
+                    dataList.add(databean);
+
+                }
+            }
+        } catch (Exception e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+        } finally {
+            if (session != null) {
+                session.flush();
+                session.clear();
+                session.getTransaction().commit();
+                session.close();
+                session = null;
+            }
+        }
+        return dataList;
+
+    }
+    public boolean DeleteexClz(CourseBean bean) throws Exception {
+        boolean ok = false;
+
+        Session session = HibernateInit.getSessionFactory().openSession();
+        try {
+
+            session.beginTransaction();
+            ExtraClasses at = (ExtraClasses) session.createCriteria(ExtraClasses.class)
+                    .add(Restrictions.eq("id", Integer.parseInt(bean.getExid())))
+                    .uniqueResult();
+
+            if (at != null) {
+                session.delete(at);
+
+                ok = true;
+            }
+
+        } catch (Exception ex) {
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            throw ex;
+        } finally {
+            if (session != null) {
+                session.getTransaction().commit();
+                session.flush();
+                session.close();
+                session = null;
+            }
+        }
+
+        return ok;
 
     }
 }
