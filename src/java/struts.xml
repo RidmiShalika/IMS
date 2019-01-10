@@ -91,6 +91,15 @@
         <action name="getCList" class="student.action.StudentRegister" method="getCList" > 
             <result name="getCList" type="json"></result>
         </action>
+         <action name="findCard" class="student.action.StudentRegister" method="findCard" > 
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="findCard" type="json"></result>
+            <result name="success">/pages/student/assignToCourse.jsp</result>
+        </action>
+        <action name="updateCard" class="student.action.StudentRegister" method="updateCard" > 
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="updateCard">/pages/msgFrag.jsp</result>
+        </action>
     </package>
     
     <package name="Subject" extends="pglobal" namespace="/">
