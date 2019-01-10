@@ -38,14 +38,20 @@ public class LecturerService {
             long count = 0;
             session = (Session) HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
+            
+            if(inputBean.getSearchname() == null){
+                inputBean.setSearchname("");
+            }
 
-            String sqlCount = "select count(name) from Lecturer";
+            String sqlCount = "select count(l.name) from Lecturer l where l.name LIKE :name";
             Query queryCount = session.createQuery(sqlCount);
+            queryCount.setString("name", "%"+inputBean.getSearchname()+"%");
             Iterator itCount = queryCount.iterate();
             count = (Long) itCount.next();
             if (count > 0) {
-                String sqlSearch = "from Lecturer ";
+                String sqlSearch = "from Lecturer l where l.name LIKE :name";
                 Query querySearch = session.createQuery(sqlSearch);
+                querySearch.setString("name", "%"+inputBean.getSearchname()+"%");
 
                 querySearch.setMaxResults(max);
                 querySearch.setFirstResult(first);
