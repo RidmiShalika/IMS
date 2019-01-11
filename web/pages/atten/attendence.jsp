@@ -18,6 +18,14 @@
             function ResetForm(){
                 $('#attenid').val("");
             }
+            function keyPress() {
+//                 if (e.keyCode === 13) {
+//                      window.location.href = "${pageContext.request.contextPath}/pages/course/stopClass.jsp";
+//                     alert(${pageContext.request.contextPath});
+                     window.location.href = "${pageContext.request.contextPath}/pages/atten/atte.jsp";
+//                }
+            }
+
         </script>
     </head>
     <body style="overflow:hidden" onload="load()">
@@ -48,7 +56,8 @@
 
                                     <tr>
                                         <td>
-                                            <sj:submit button="true" value="Reset"  onclick="ResetForm()" cssClass="button_aback"/>
+                                            <sj:submit button="true" value="Atten"  onclick="keyPress()" cssClass="button_aback"/>
+                                            <%--<sj:submit button="true" value="Reset"  onclick="ResetForm()" cssClass="button_aback"/>--%>
                                         </td>
                                     </tr>
                                 </table>
