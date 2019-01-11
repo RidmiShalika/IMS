@@ -17,7 +17,6 @@
 
         <script type="text/javascript">
             function showClass(){
-                alert("test");
                 var keyval = 1;
                 window.location.href = "${pageContext.request.contextPath}/pages/course/stopClass.jsp";
 //                $.ajax({
