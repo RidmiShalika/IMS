@@ -194,13 +194,13 @@ public class StudentService {
             int st_id= (int) sess.getAttribute("assToCourse");
             System.out.println("st_id== "+st_id);
 
-            String sqlCount = "select count(id) from StudentCourse s where s.studentId.sId=:sId";
+            String sqlCount = "select count(id) from StudentCourse s where s.studentId.sId=:sId and s.status='ACT'";
             Query queryCount = session.createQuery(sqlCount);
             queryCount.setInteger("sId", st_id);
             Iterator itCount = queryCount.iterate();
             count = (Long) itCount.next();
             if (count > 0) {
-                String sqlSearch = "from StudentCourse s where s.studentId.sId=:sId";
+                String sqlSearch = "from StudentCourse s where s.studentId.sId=:sId and s.status='ACT'";
                 Query querySearch = session.createQuery(sqlSearch);
                 querySearch.setInteger("sId", st_id);
 
@@ -605,7 +605,9 @@ public class StudentService {
                     .uniqueResult();
 
             if (at != null) {
-                session.delete(at);
+                at.setStatus("DCT");
+//                session.delete(at);
+                session.update(at);
 
                 ok = true;
             }
