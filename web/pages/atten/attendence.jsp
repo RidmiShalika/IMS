@@ -19,12 +19,30 @@
                 $('#attenid').val("");
             }
             function keyPress() {
-//                 if (e.keyCode === 13) {
-//                      window.location.href = "${pageContext.request.contextPath}/pages/course/stopClass.jsp";
-//                     alert(${pageContext.request.contextPath});
-                     window.location.href = "${pageContext.request.contextPath}/pages/atten/atte.jsp";
-//                }
+                
+                var keyval = $('#attenid').val();
+                
+                 $.ajax({
+                    url: '${pageContext.request.contextPath}/findSt',
+                    data: {attenid: keyval},
+                    dataType: "json",
+                    type: "POST",
+                    success: function (data) {
+                        window.location.href = "${pageContext.request.contextPath}/pages/atten/atte.jsp";
+                    },
+                    error: function (data) {
+                    }
+                });
             }
+//            function keyPress() {
+//                var keyval = $('#attenid').val();
+//                $("#viewdialog").data('Id', keyval);
+//                $("#viewdialog").data('sId', keyval).dialog('open');
+//            }
+//             $.subscribe('openview', function (event, data) {
+//                var $led = $("#viewdialog");
+//                $led.load("findSt?attenid=" + $led.data('Id'));
+//            });
 
         </script>
     </head>
@@ -65,6 +83,28 @@
                             </s:form>
 
 
+                        </div>
+                        <div class="viewuser_tbl">
+                            <div id="tablediv">
+                                
+
+                                <sj:dialog 
+                                        id="viewdialog" 
+                                        buttons="{
+                                        'OK':function() { $( this ).dialog( 'close' );}                                    
+                                        }" 
+                                        autoOpen="false" 
+                                        modal="true"                            
+                                        width="1000"
+                                        height="500"
+                                        position="center"
+                                        title="Assign To Courses"
+                                        onOpenTopics="openview" 
+                                        loadingText="Loading .."
+                            />
+                                
+                               
+                            </div>
                         </div>
 
                     </div>
