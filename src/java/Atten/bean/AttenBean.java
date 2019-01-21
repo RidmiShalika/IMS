@@ -11,4 +11,14 @@ package Atten.bean;
  */
 public class AttenBean {
     
+    private String attenid;
+
+    public String getAttenid() {
+        return attenid;
+    }
+
+    public void setAttenid(String attenid) {
+        this.attenid = attenid;
+    }
+    
 }

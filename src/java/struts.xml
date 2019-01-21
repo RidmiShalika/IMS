@@ -275,5 +275,11 @@
         <action name="attendance" class="Atten.action.AttenAction" method="execute"> 
             <result name="success">/pages/atten/attendence.jsp</result>
         </action> 
+         <action name="findSt" class="Atten.action.AttenAction" method="findSt"> 
+             <result name="findSt" type="json"></result>
+        </action>
+        <action name="loadandattendence" class="Atten.action.AttenAction" method="loadandattendence"> 
+             <result name="loadandattendence" type="json"></result>
+        </action>
     </package>
 </struts>
