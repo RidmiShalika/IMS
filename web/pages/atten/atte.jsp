@@ -41,8 +41,6 @@
                             </s:div>         
                         </div>
                         <div style="width: 40%; float:left">
-
-
                             <s:form id="studentDetailsForm"  theme="simple" >
                                 <table>
                                     <tr>
@@ -72,8 +70,6 @@
                                         <td class="formLable">Payments</td> <td >:</td>
                                         <td><s:textfield id="payments" name="payments" cssClass="textField" disabled="true"/></td>
                                     </tr>
-
-
                                     <tr>
                                         <td>
                                             <%--<sj:submit button="true" value="Atten"  onclick="keyPress()" cssClass="button_aback"/>--%>
@@ -82,34 +78,38 @@
                                 </table>
 
                             </s:form>
-
-
                         </div>
                         <div style="width: 40%; float:right">
-
-
                             <s:form id="lectureDetailsForm"  theme="simple" >
                                 <table>
                                     <tr>
                                         <td class="formLable">Lecture Details</td> 
                                     </tr>
                                     <tr>
-                                        <td class="formLable">Name</td> <td >:</td>
+                                        <td class="formLable">Lecture Name</td> <td >:</td>
                                         <td><s:textfield id="lname" name="lname" cssClass="textField" disabled="true"/></td>
                                     </tr>
+                                        <td class="formLable">Class Type</td> <td >:</td>
+                                        <td><s:textfield id="classType" name="classType" cssClass="textField" disabled="true"/></td>
                                     <tr>
+                                        <td class="formLable">Time</td> <td >:</td>
+                                        <td><s:textfield id="time" name="time" cssClass="textField" disabled="true"/></td>
                                     </tr>
                                     <tr>
+                                        <td class="formLable">Course Id</td> <td >:</td>
+                                        <td><s:textfield id="courseId" name="courseId" cssClass="textField" disabled="true"/></td>
                                     </tr>
+                                       
                                     <tr>
+                                         <td class="formLable">Extra/Normal</td> <td >:</td>
+                                        <td><s:textfield id="extra_normal" name="extra_normal" cssClass="textField" disabled="true"/></td>
                                     </tr>
-                                    <tr>
+                                     <tr>
+                                         <td class="formLable"></td> <td ></td>
+                                         <td ><s:textfield id="" name="" cssClass="textField" disabled="true"/></td>
                                     </tr>
-                                    <tr>
-                                    </tr>
-
-
-                                    <tr>
+                                  
+                                   <tr>
                                         <td>
                                             <%--<sj:submit button="true" value="Atten"  onclick="keyPress()" cssClass="button_aback"/>--%>
                                         </td>
@@ -117,12 +117,8 @@
                                 </table>
 
                             </s:form>
-
-
                         </div>
-
                     </div>
-
                     </section>
 
 
