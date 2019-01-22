@@ -40,7 +40,7 @@
                                 <i style="color: green"> <s:actionmessage theme="jquery"/></i>
                             </s:div>         
                         </div>
-                        <div style="width: 40%; float:left">
+                        <div style="width: 50%; float:left">
                             <s:form id="studentDetailsForm"  theme="simple" >
                                 <table>
                                     <tr>
@@ -118,7 +118,64 @@
 
                             </s:form>
                         </div>
+                        <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                    <div style="width: 50%; float:left">    
+                        <div class="viewuser_tbl">
+                            <div id="tablediv">
+                                <s:url var="listurl" action="liststudent"/>
+                                <sjg:grid
+                                    id="gridtable"
+                                    caption="Student Attendance"
+                                    cssStyle=""
+                                    dataType="json"
+                                    href="%{listurl}"
+                                    pager="true"
+                                    gridModel="gridModel"
+                                    rowList="10,15,20"
+                                    rowNum="10"
+                                    autowidth="true"
+                                    shrinkToFit = "false"
+                                    rownumbers="true"
+                                    onCompleteTopics="completetopics"
+                                    rowTotal="false"
+                                    viewrecords="true"
+                                    multiselect="true"
+                                    >
+
+                                    <sjg:gridColumn name="sId" index="sId" title="StudentId" hidden="true" width="10"/>
+                                    <sjg:gridColumn name="sName" index="sName" title="Course Id" width="150"/>
+                                    <sjg:gridColumn name="sDob" index="sDob" title="Fee" width="100"/>
+                                    <sjg:gridColumn name="sAddress" index="sAddress" title="Card Type" width="130"/>
+                                    <sjg:gridColumn name="sEmail" index="sEmail" title="Last Payment" width="150"/>
+                                    
+                                    
+
+                                </sjg:grid> 
+                            </div>
+                        </div>
                     </div>
+                                
+                                
+                    <div style="width: 40%; float:right">
+                            <s:form id="attHistory"  theme="simple" >
+                                <table>
+                                    <tr>
+                                        <td class="formLable">Attendance History</td> 
+                                    </tr>
+                                </table>
+
+                            </s:form>
+                    </div><div style="width: 40%; float:right">
+                            <s:form id="payHistory"  theme="simple" >
+                                <table>
+                                    <tr>
+                                        <td class="formLable">Payment History</td> 
+                                    </tr>
+                                </table>
+
+                            </s:form>
+                    </div>
+            </div>
                     </section>
 
 
