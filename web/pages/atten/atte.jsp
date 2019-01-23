@@ -23,6 +23,25 @@
                     }
                 });
             });
+            
+             function paymentformatter(cellvalue, options, rowObject) {
+                return "<a href='#' onClick='javascript:pay(&#34;" + cellvalue + "&#34;,&#34;" + rowObject.sId + "&#34;)'><i class='fa fa-share-square-o' aria-hidden='true'></i></a>";
+            }
+            function pay(keyval){
+                alert(keyval);
+                //load history lists
+                 $.ajax({
+                    url: '${pageContext.request.contextPath}/loadhistorylist',
+                    dataType: "json",
+                    type: "GET",
+                    success: function (data) {
+                       $('#name').val("data.pay_status");
+                    },
+                    error: function (data) {
+                       
+                    }
+                });
+            }
 
         </script>
     </head>
@@ -122,7 +141,7 @@
                     <div style="width: 50%; float:left">    
                         <div class="viewuser_tbl">
                             <div id="tablediv">
-                                <s:url var="listurl" action="liststudent"/>
+                                <s:url var="listurl" action="liststatt"/>
                                 <sjg:grid
                                     id="gridtable"
                                     caption="Student Attendance"
@@ -139,14 +158,14 @@
                                     onCompleteTopics="completetopics"
                                     rowTotal="false"
                                     viewrecords="true"
-                                    multiselect="true"
                                     >
-
-                                    <sjg:gridColumn name="sId" index="sId" title="StudentId" hidden="true" width="10"/>
-                                    <sjg:gridColumn name="sName" index="sName" title="Course Id" width="150"/>
-                                    <sjg:gridColumn name="sDob" index="sDob" title="Fee" width="100"/>
-                                    <sjg:gridColumn name="sAddress" index="sAddress" title="Card Type" width="130"/>
-                                    <sjg:gridColumn name="sEmail" index="sEmail" title="Last Payment" width="150"/>
+                                   
+                                    <sjg:gridColumn name="Id" index="Id" title="StudentId" hidden="true" width="10"/>
+                                    <sjg:gridColumn name="Id" index="Id" title="Pay" width="50" formatter="paymentformatter"/>
+                                    <sjg:gridColumn name="courseid" index="courseId.courseDescription" title="Course Id" width="150"/>
+                                    <sjg:gridColumn name="payments" index="courseId.monthlyFee" title="Fee" width="100"/>
+                                    <sjg:gridColumn name="cardType" index="cardType" title="Card Type" width="130"/>
+                                    <sjg:gridColumn name="lastpayment" index="lastpayment" title="Last Payment" width="150"/>
                                     
                                     
 
@@ -155,7 +174,19 @@
                         </div>
                     </div>
                                 
-                                
+                    <div style="width: 40%; float:right">
+                            <s:form id="payList"  theme="simple" >
+                                <table>
+                                    <tr>
+                                        <td class="formLable">Payment List</td> 
+                                    </tr>
+                                     <tr>
+                                       <sj:submit button="true" value="PAYMENT"  onclick="" cssClass="button_aback"/>
+                                    </tr>
+                                </table>
+
+                            </s:form>
+                    </div>            
                     <div style="width: 40%; float:right">
                             <s:form id="attHistory"  theme="simple" >
                                 <table>
