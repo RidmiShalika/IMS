@@ -281,5 +281,11 @@
         <action name="loadandattendence" class="Atten.action.AttenAction" method="loadandattendence"> 
              <result name="loadandattendence" type="json"></result>
         </action>
+        <action name="loadhistorylist" class="Atten.action.AttenAction" method="loadhistorylist"> 
+             <result name="loadhistorylist" type="json"></result>
+        </action>
+        <action name="liststatt" class="Atten.action.AttenAction" method="list"> 
+             <result name="list" type="json"></result>
+        </action>
     </package>
 </struts>

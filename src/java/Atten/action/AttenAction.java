@@ -6,9 +6,11 @@
 package Atten.action;
 
 import Atten.bean.AttenBean;
+import Atten.service.AttenService;
 import Util.AccessControlService;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.apache.struts2.ServletActionContext;
 
@@ -19,6 +21,7 @@ import org.apache.struts2.ServletActionContext;
 public class AttenAction extends ActionSupport implements ModelDriven<AttenBean>, AccessControlService{
     
     AttenBean inputBean = new AttenBean();
+    AttenService service = new AttenService();
     
     @Override
     public String execute(){
@@ -27,10 +30,10 @@ public class AttenAction extends ActionSupport implements ModelDriven<AttenBean>
     }
     public String findSt(){
         try {
-            String stuid = inputBean.getAttenid();
+            int stuid = Integer.parseInt(inputBean.getAttenid());
             System.out.println("-- "+stuid);
             HttpSession session = ServletActionContext.getRequest().getSession(false);
-            session.setAttribute("assToCourse", stuid);
+            session.setAttribute("stcourselist", stuid);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -48,10 +51,49 @@ public class AttenAction extends ActionSupport implements ModelDriven<AttenBean>
     }
     public String loadandattendence(){
         try {
-          
+          //load data from service
         } catch (Exception e) {
             e.printStackTrace();
         }
         return "loadandattendence";
     }
+    public String loadhistorylist(){
+         try {
+          //load data from service
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "loadhistorylist";
+    }
+    public String list() {
+        System.out.println("list method");
+        List<AttenBean> dataList;
+        try {
+            int rows = inputBean.getRows();
+            int page = inputBean.getPage();
+            int to = (rows * page);
+            int from = to - rows;
+            long records;
+            String orderBy = "";
+
+            dataList = service.loadStudent(inputBean, to, from, orderBy);
+            if (!dataList.isEmpty()) {
+                records = dataList.get(0).getFullCount();
+                System.out.println("recode " + records);
+                inputBean.setRecords(records);
+                inputBean.setGridModel(dataList);
+                int total = (int) Math.ceil((double) records / (double) rows);
+                inputBean.setTotal(total);
+            } else {
+                inputBean.setRecords(0L);
+                inputBean.setTotal(0);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "list";
+    }
+            
 }
