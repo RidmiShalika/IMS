@@ -83,11 +83,11 @@
                                     </tr>
                                     <tr>
                                         <td class="formLable">Card Type</td> <td >:</td>
-                                        <td><s:textfield id="cardType" name="cardType" cssClass="textField" disabled="true"/></td>
+                                        <td><s:textfield id="addcardType" name="addcardType" cssClass="textField" disabled="true"/></td>
                                     </tr>
                                     <tr>
                                         <td class="formLable">Payments</td> <td >:</td>
-                                        <td><s:textfield id="payments" name="payments" cssClass="textField" disabled="true"/></td>
+                                        <td><s:textfield id="addpayments" name="addpayments" cssClass="textField" disabled="true"/></td>
                                     </tr>
                                     <tr>
                                         <td>
