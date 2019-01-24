@@ -52,6 +52,7 @@ public class AttenAction extends ActionSupport implements ModelDriven<AttenBean>
     public String loadandattendence(){
         try {
           //load data from service
+          service.loadData(inputBean);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -11,17 +11,25 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.servlet.http.HttpSession;
+import mapping.Attendence;
 import mapping.Student;
 import mapping.StudentCourse;
 import org.apache.struts2.ServletActionContext;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
  * @author ridmi_g
  */
 public class AttenService {
+    
+    
+    HttpSession sess = ServletActionContext.getRequest().getSession(false);
+    int st_id= (int) sess.getAttribute("stcourselist");
+    
     public List<AttenBean> loadStudent(AttenBean inputBean, int max, int first, String orderBy) throws Exception {
         List<AttenBean> dataList = new ArrayList<AttenBean>();
         Session session = null;
@@ -31,9 +39,6 @@ public class AttenService {
             session = (Session) HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
         
-             HttpSession sess = ServletActionContext.getRequest().getSession(false);
-            int st_id= (int) sess.getAttribute("stcourselist");
-            
             System.out.println("--------------- "+st_id);
             
             String sqlCount = "select count(s.id) from StudentCourse s where s.studentId.sId LIKE :sId";
@@ -106,6 +111,47 @@ public class AttenService {
             }
         }
         return dataList;
+    }
+    public void loadData(AttenBean attenBean) throws Exception{
+        Session session = null;
+        try {
+            session = HibernateInit.getSessionFactory().openSession();
+            session.beginTransaction();
+            
+            //load student details
+            StudentCourse sc = (StudentCourse) session.createCriteria(Student.class, "studentcourse")
+                    .add(Restrictions.eq("studentcourse.studentId.sId", st_id))
+                    .uniqueResult();
+            
+            if(sc != null){
+                attenBean.setName(sc.getStudentId().getSName());
+                attenBean.setRegID(sc.getStudentId().getSId().toString());
+                attenBean.setSchool(sc.getStudentId().getSSchool().getSchool());
+                attenBean.setRegDate(sc.getRegistrationDate().toString());
+                attenBean.setAddcardType(sc.getCardType().toString());
+              
+            }
+            
+            //get today paticular a class
+            //get 
+                    
+            
+        } catch (Exception e) {
+             if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            e.printStackTrace();
+        }finally {
+            if (session != null) {
+                session.flush();
+                session.clear();
+                session.getTransaction().commit();
+                session.close();
+                session = null;
+            }
+        }
     }
     
 }

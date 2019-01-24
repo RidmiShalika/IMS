@@ -31,6 +31,62 @@ public class AttenBean {
     private String cardType;
     private String lastpayment;
 
+    
+    private String name;
+    private String regID;
+    private String school;
+    private String regDate;
+    private String addcardType;
+    private String addpayments;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRegID() {
+        return regID;
+    }
+
+    public void setRegID(String regID) {
+        this.regID = regID;
+    }
+
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
+    public String getRegDate() {
+        return regDate;
+    }
+
+    public void setRegDate(String regDate) {
+        this.regDate = regDate;
+    }
+
+    public String getAddcardType() {
+        return addcardType;
+    }
+
+    public void setAddcardType(String addcardType) {
+        this.addcardType = addcardType;
+    }
+
+    public String getAddpayments() {
+        return addpayments;
+    }
+
+    public void setAddpayments(String addpayments) {
+        this.addpayments = addpayments;
+    }
+    
     public String getId() {
         return Id;
     }
