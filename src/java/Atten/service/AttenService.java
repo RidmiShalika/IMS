@@ -31,10 +31,6 @@ import org.hibernate.criterion.Restrictions;
  */
 public class AttenService {
     
-    
-    HttpSession sess = ServletActionContext.getRequest().getSession(false);
-    int st_id= (int) sess.getAttribute("stcourselist");
-    
     public List<AttenBean> loadStudent(AttenBean inputBean, int max, int first, String orderBy) throws Exception {
         List<AttenBean> dataList = new ArrayList<AttenBean>();
         Session session = null;
@@ -43,6 +39,8 @@ public class AttenService {
             long count = 0;
             session = (Session) HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
+            HttpSession sess = ServletActionContext.getRequest().getSession(false);
+            int st_id= (int) sess.getAttribute("stcourselist");
         
             System.out.println("--------------- "+st_id);
             
@@ -123,8 +121,11 @@ public class AttenService {
             session = HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
             
+            HttpSession sess = ServletActionContext.getRequest().getSession(false);
+            int st_id= (int) sess.getAttribute("stcourselist");
+            
             //load student details
-            StudentCourse sc = (StudentCourse) session.createCriteria(Student.class, "studentcourse")
+            StudentCourse sc = (StudentCourse) session.createCriteria(StudentCourse.class, "studentcourse")
                     .add(Restrictions.eq("studentcourse.studentId.sId", st_id))
                     .uniqueResult();
             
@@ -156,12 +157,12 @@ public class AttenService {
             }else if(day.equals("thursday")){
                 day = "satday";
             }else if(day.equals("sunday")){
-                day = "	sunday";
+                day = "sunday";
             }
             Criteria criteria = session.createCriteria(StudentCourse.class,"stc")
                     .createAlias("stc.studentId", "st")
                     .createAlias("stc.courseId", "cr")
-                    .add(Restrictions.not(Restrictions.eq("st.sId", st_id)));
+                    .add(Restrictions.eq("st.sId", st_id));
 //                    .add(Restrictions.not(Restrictions.eq("coursedate."+day+"", "-")));
 
             Iterator i = criteria.list()
@@ -170,16 +171,17 @@ public class AttenService {
             while (i.hasNext()) {
                 StudentCourse studentCourse = (StudentCourse) i.next();
                 Set<CourseDates> studentCoursesSet = studentCourse.getCourseId().getCourseDatesSet();
+                List<CourseDates> siteIdList=new ArrayList<>(studentCoursesSet);
                 
-                System.out.println("course dates "+studentCoursesSet.toString());
+                System.out.println("course dates "+siteIdList.get(0));
                 
             }
             
             
             //class ekata related payment status eka gannwa me current mmonth ekata payment table eken
             //attendance table ekta insert ekak wadina one ada apu class ekata adalawa
+            //ada dawasata adala class eke lectuterge details load
                     
-            
         } catch (Exception e) {
              if (session != null) {
                 session.getTransaction().rollback();
