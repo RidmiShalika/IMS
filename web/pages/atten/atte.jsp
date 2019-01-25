@@ -16,7 +16,12 @@
                     dataType: "json",
                     type: "GET",
                     success: function (data) {
-                       $('#name').val("data.pay_status");
+                       $('#name').val(data.name);
+                       $('#regID').val(data.regID);
+                       $('#school').val(data.school);
+                       $('#regDate').val(data.regDate);
+                       $('#addcardType').val(data.addcardType);
+                       $('#addpayments').val(data.addpayments);
                     },
                     error: function (data) {
                        
