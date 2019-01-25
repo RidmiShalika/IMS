@@ -7,11 +7,16 @@ package Atten.service;
 
 import Atten.bean.AttenBean;
 import Util.HibernateInit;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import javax.servlet.http.HttpSession;
 import mapping.Attendence;
+import mapping.CourseDates;
 import mapping.Student;
 import mapping.StudentCourse;
 import org.apache.struts2.ServletActionContext;
@@ -132,8 +137,47 @@ public class AttenService {
               
             }
             
-            //get today paticular a class
-            //get 
+            //get today paticular a class.ada dawsata adala class tiken lamaya apu welawath ekka aduma diff eka tiyna class eka  (cousrse_date , exctra class table)
+            DateFormat dateFormat = new SimpleDateFormat("EEEE");
+            Date date = new Date();
+            String day = dateFormat.format(date).toLowerCase();
+            System.out.println(day);
+            
+            if(day.equals("monday")){
+                day = "monday";
+            }else if(day.equals("tuesday")){
+                day = "tueday";
+            }else if(day.equals("wednesday")){
+                day = "wedday";
+            }else if(day.equals("thursday")){
+                day = "thurday";
+            }else if(day.equals("friday")){
+                day = "friday";
+            }else if(day.equals("thursday")){
+                day = "satday";
+            }else if(day.equals("sunday")){
+                day = "	sunday";
+            }
+            Criteria criteria = session.createCriteria(StudentCourse.class,"stc")
+                    .createAlias("stc.studentId", "st")
+                    .createAlias("stc.courseId", "cr")
+                    .add(Restrictions.not(Restrictions.eq("st.sId", st_id)));
+//                    .add(Restrictions.not(Restrictions.eq("coursedate."+day+"", "-")));
+
+            Iterator i = criteria.list()
+                    .iterator();
+            
+            while (i.hasNext()) {
+                StudentCourse studentCourse = (StudentCourse) i.next();
+                Set<CourseDates> studentCoursesSet = studentCourse.getCourseId().getCourseDatesSet();
+                
+                System.out.println("course dates "+studentCoursesSet.toString());
+                
+            }
+            
+            
+            //class ekata related payment status eka gannwa me current mmonth ekata payment table eken
+            //attendance table ekta insert ekak wadina one ada apu class ekata adalawa
                     
             
         } catch (Exception e) {
