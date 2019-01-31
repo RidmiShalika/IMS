@@ -17,8 +17,10 @@ import java.util.List;
 import java.util.Set;
 import javax.servlet.http.HttpSession;
 import mapping.Attendence;
+import mapping.Course;
 import mapping.CourseDates;
 import mapping.ExtraClasses;
+import mapping.Payments;
 import mapping.Student;
 import mapping.StudentCourse;
 import org.apache.struts2.ServletActionContext;
@@ -260,9 +262,77 @@ public class AttenService {
                     count++;
             }
 
+            int cid=8;
             //class ekata related payment status eka gannwa me current mmonth ekata payment table eken
+            Criteria c1 = session.createCriteria(Payments.class, "payment")
+                    .createAlias("payment.studentId", "sid")
+                    .createAlias("payment.courseId", "cid")
+                    .add(Restrictions.eq("sid.sId", st_id))
+                    .add(Restrictions.eq("cid.id", cid));
+            Iterator i2 = c1.list().iterator();
+            while (i2.hasNext()) {
+               Payments p=  (Payments) i2.next();
+               
+               attenBean.setAddpayments(p.getMonth());
+            }
+            
+            
             //attendance table ekta insert ekak wadina one ada apu class ekata adalawa
+            Date date1 = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd|HH:mm:ss");
+            String dd = sdf.format(date1);
+            String datTime[] = dd.split("\\|");
+            String dateonly[] = datTime[0].split("\\-");
+         
+            Attendence attendence = new Attendence();
+            attendence.setAtten(true);
+            attendence.setCompleteDate(new Date());
+            Course c2 = new Course();
+            c2.setId(cid);
+            attendence.setCourseId(c2);
+            Student s = new Student();
+            s.setSId(st_id);
+            attendence.setStudentId(s);
+            attendence.setDate(Integer.parseInt(dateonly[2]));
+            attendence.setDay(dateFormat.format(date).toLowerCase());
+            attendence.setMonth(Integer.parseInt(dateonly[1]));
+            attendence.setTime(datTime[1]);
+            attendence.setYear(Integer.parseInt(dateonly[0]));
+            attendence.setCompleteDate(new Date());
+            session.save(attendence);
+            
+            
             //ada dawasata adala class eke lectuterge details load
+            Criteria c3 = session.createCriteria(StudentCourse.class,"stcr")
+                    .createAlias("stcr.studentId", "stu")
+                    .createAlias("stcr.courseId", "crs")
+                    .add(Restrictions.eq("stu.sId", st_id))
+                    .add(Restrictions.eq("crs.id", cid));
+                    
+            Iterator i3 = c3.list().iterator();
+            while (i3.hasNext()) {
+                StudentCourse studentCourse = (StudentCourse) i3.next();
+                
+                attenBean.setLname(studentCourse.getCourseId().getLectureId().getName());
+                if(studentCourse.getCourseId().getClassType() == 1){
+                    attenBean.setExtra_normal("Theory Class");
+                }else if(studentCourse.getCourseId().getClassType() == 2){
+                    attenBean.setExtra_normal("Revision Class");
+                }else if(studentCourse.getCourseId().getClassType() == 3){
+                    attenBean.setExtra_normal("Paper Class");
+                }
+                attenBean.setCourseId(studentCourse.getCourseId().getCourseDescription());
+                if(studentCourse.getCardType() == 1){
+                    attenBean.setCrdType("Normal Card");
+                }else if(studentCourse.getCardType() == 2){
+                    attenBean.setCrdType("Half Card");
+                }else if(studentCourse.getCardType() == 3){
+                    attenBean.setCrdType("Free Card");
+                }
+                attenBean.setCrdType(day);
+                
+            }
+            
         } catch (Exception e) {
             if (session != null) {
                 session.getTransaction().rollback();

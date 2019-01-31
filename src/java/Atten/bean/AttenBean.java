@@ -13,7 +13,8 @@ import java.util.List;
  * @author ridmi_g
  */
 public class AttenBean {
-      //Table data
+    //Table data
+
     private List<AttenBean> gridModel = new ArrayList<AttenBean>();
     private Integer rows = 0;
     private Integer page = 0;
@@ -22,22 +23,67 @@ public class AttenBean {
     private String sord;
     private String sidx;
     private long fullCount;
-    
+
     private String attenid;
-    
+
     private String Id;
     private String courseid;
     private String payments;
     private String cardType;
     private String lastpayment;
 
-    
     private String name;
     private String regID;
     private String school;
     private String regDate;
     private String addcardType;
     private String addpayments;
+
+    private String lname;
+    private String crdType;
+    private String time;
+    private String courseId;
+    private String extra_normal;
+
+    public String getLname() {
+        return lname;
+    }
+
+    public void setLname(String lname) {
+        this.lname = lname;
+    }
+
+    public String getCrdType() {
+        return crdType;
+    }
+
+    public void setCrdType(String crdType) {
+        this.crdType = crdType;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
+    }
+
+    public String getExtra_normal() {
+        return extra_normal;
+    }
+
+    public void setExtra_normal(String extra_normal) {
+        this.extra_normal = extra_normal;
+    }
 
     public String getName() {
         return name;
@@ -86,7 +132,7 @@ public class AttenBean {
     public void setAddpayments(String addpayments) {
         this.addpayments = addpayments;
     }
-    
+
     public String getId() {
         return Id;
     }
@@ -95,7 +141,6 @@ public class AttenBean {
         this.Id = Id;
     }
 
-   
     public String getCourseid() {
         return courseid;
     }
@@ -128,7 +173,6 @@ public class AttenBean {
         this.lastpayment = lastpayment;
     }
 
-    
     public long getFullCount() {
         return fullCount;
     }
@@ -193,7 +237,6 @@ public class AttenBean {
         this.sidx = sidx;
     }
 
-    
     public String getAttenid() {
         return attenid;
     }
@@ -201,5 +244,5 @@ public class AttenBean {
     public void setAttenid(String attenid) {
         this.attenid = attenid;
     }
-    
+
 }
