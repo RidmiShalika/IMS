@@ -22,6 +22,12 @@
                        $('#regDate').val(data.regDate);
                        $('#addcardType').val(data.addcardType);
                        $('#addpayments').val(data.addpayments);
+                       
+                       $('#lname').val(data.lname);
+                       $('#crdType').val(data.crdType);
+                       $('#time').val(data.time);
+                       $('#courseId').val(data.courseId);
+                       $('#extra_normal').val(data.extra_normal);
                     },
                     error: function (data) {
                        
@@ -113,8 +119,8 @@
                                         <td class="formLable">Lecture Name</td> <td >:</td>
                                         <td><s:textfield id="lname" name="lname" cssClass="textField" disabled="true"/></td>
                                     </tr>
-                                        <td class="formLable">Class Type</td> <td >:</td>
-                                        <td><s:textfield id="classType" name="classType" cssClass="textField" disabled="true"/></td>
+                                        <td class="formLable">Card Type</td> <td >:</td>
+                                        <td><s:textfield id="crdType" name="crdype" cssClass="textField" disabled="true"/></td>
                                     <tr>
                                         <td class="formLable">Time</td> <td >:</td>
                                         <td><s:textfield id="time" name="time" cssClass="textField" disabled="true"/></td>
