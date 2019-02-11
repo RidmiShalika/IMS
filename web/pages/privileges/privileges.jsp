@@ -55,12 +55,12 @@
 //                 alert(cellvalue);
                 return "<a href='#' onClick='javascript:assineTaskNow(&#34;" + cellvalue + "&#34;)'><img src ='${pageContext.request.contextPath}/resources/images/iconEdit.png' /></a>";
             }
-           
+
             function resetData() {
 
                 jQuery("#gridtable").trigger("reloadGrid");
             }
-            function assineTaskNow(keyval){
+            function assineTaskNow(keyval) {
                 $.ajax({
                     url: '${pageContext.request.contextPath}/Findprivileges',
                     data: {userRoleId: keyval},
@@ -75,6 +75,23 @@
                         $('#userRoleId').val(data.userRoleId);
                         $('#description').attr('readOnly', true);
                         $('#description').val(data.description);
+                        $('#newBox2').val(data.alreadyAcsessPageMap);
+
+                        alert(JSON.stringify(data.alreadyAcsessPageMap);
+                        $("#newBox2").append($('<option>', {
+                            value: $(data.alreadyAcsessPageMap).val(),
+                            text: $(this).text()
+                        }));
+
+
+                        $.each(data, function (i, data) {      // bind the dropdown list using json result              
+                            $('<option>',
+                                    {
+                                        value: data.alreadyAcsessPageMap.keys(),
+                                        text: data.alreadyAcsessPageMap.valueOf()
+                                    }).html(data.alreadyAcsessPageMap).appendTo("#newBox2");
+                        });
+                        $('#newBox2').trigger("chosen:updated");
                     },
                     error: function (data) {
                         window.location = "${pageContext.request.contextPath}/LogoutloginCall";
@@ -82,20 +99,20 @@
                 }
                 );
             }
-            function ResetTaskAsinForm(){
-                 $('#divmsg').hide();
+            function ResetTaskAsinForm() {
+                $('#divmsg').hide();
 //                 $('#description').val("");
-                 $('#pageId').val(-1);
+                $('#pageId').val(-1);
             }
-           
+
             $.subscribe('onclicksearch', function (event, data) {
                 var searchname = $('#searchname').val();
                 $("#gridtable").jqGrid('setGridParam', {postData: {searchname: searchname, search: true}});
 //                $("#gridtable").jqGrid('setGridParam', {page: 1});
                 jQuery("#gridtable").trigger("reloadGrid");
             });
-             function addPrivilage(){
-                 var pageId = $('#pageId').val();
+            function addPrivilage() {
+                var pageId = $('#pageId').val();
 //                 alert(pageId);
                 $.ajax({
                     url: '${pageContext.request.contextPath}/Addprivileges',
@@ -104,27 +121,37 @@
                     type: "POST",
                     success: function (data) {
 
-                       $('#divmsg').show();
-                      if(data.success){
-                          document.getElementById("divmsg").innerHTML = "Successfully Updated";
-                      }else{
-                           document.getElementById("divmsg").innerHTML = "Updated Error ";
+                        $('#divmsg').show();
+                        if (data.success) {
+                            document.getElementById("divmsg").innerHTML = "Successfully Updated";
+                        } else {
+                            document.getElementById("divmsg").innerHTML = "Updated Error ";
                             $("divmsg").css("background-color", "red");
-                      }
-                           
-                        
+                        }
+
+
                     },
                     error: function (data) {
-                          
+
                         window.location = "${pageContext.request.contextPath}/LogoutloginCall";
-                         
+
                     }
                 }
                 );
             }
 
+            function toright2() {
+                $("#currentBox2 option:selected").each(function () {
 
-           
+                    $("#newBox2").append($('<option>', {
+                        value: $(this).val(),
+                        text: $(this).text()
+                    }));
+                    (this).remove();
+
+                })
+            }
+
         </script>
     </head>
 
@@ -161,58 +188,58 @@
 
 
                                             <sj:a     button="true"    onClickTopics="onclicksearch"  cssClass="button_aback"  role="button" >Search</sj:a>
-                                                                                     
+
                                             <sj:a     button="true"    onClickTopics="loadAddForm" onclick="loadAddForm()"  cssClass="button_aback"  role="button" >Add</sj:a>
                                             <sj:a     button="true"  onclick="ResetSearchForm1()"  cssClass="button_aback"  role="button" >Reset</sj:a>
-                                           
-                                                                                   </td>
-                                                                               </tr>
-                                                                           </table>
-                                        </s:form>
-                                        <s:form  id="addForm"  theme="simple" method="post"  cssStyle="display:none">
-                                            <table >
-                                                <tr>
-                                                    <td class="formLable">Name<span class="mandatory">*</span></td> <td >:</td>
-                                                    <td><s:textfield id="addname" name="addname" cssClass="textField" /></td>                                    
-                                                    <td width="25px;"></td>
-                                                    <td class="formLable">Gender<span class="mandatory">*</span></td> <td>:</td>
-                                                    <!--<td><s:textfield id="addgender" name="addgender" cssClass="textField" /></td>-->
-                                                     <td><s:select  name="addgender" id="addgender" list="%{genderlList}" 
-                                                     listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
-                                                </tr> 
-                                                <tr>
-                                                    <td class="formLable">Address<span class="mandatory">*</span></td> <td >:</td>
-                                                    <td><s:textfield id="addaddress" name="addaddress" cssClass="textField" /></td>                                    
-                                                    <td width="25px;"></td>
-                                                    <td class="formLable">NIC<span class="mandatory">*</span></td> <td>:</td>
-                                                    <td><s:textfield id="addnic" name="addnic" cssClass="textField" /></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="formLable">Contact<span class="mandatory">*</span></td> <td >:</td>
-                                                    <td><s:textfield id="addcontact" name="addcontact" cssClass="textField" /></td>                                    
-                                                    <td width="25px;"></td>
-                                                </tr>
-                                                 <tr>
-                                                    <td class="formLable">User Name<span class="mandatory">*</span></td> <td >:</td>
-                                                    <td><s:textfield id="addusername" name="addusername" cssClass="textField" /></td>                                    
-                                                    <td width="25px;"></td>
-                                                    <td class="formLable">User Role<span class="mandatory">*</span></td> <td>:</td>
-                                                    <!--<td><s:textfield id="adduserrole" name="adduserrole" cssClass="textField" /></td>-->
-                                                     <td><s:select  name="adduserrole" id="adduserrole" list="%{userroleList}" 
-                                               listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td>                           
-                                                 </tr>
-                                                 <tr>
-                                                    <td class="formLable">Password<span class="mandatory">*</span></td> <td >:</td>
-                                                    <td><s:textfield id="addpassword" name="addpassword" cssClass="textField" /></td>                                    
-                                                    <td width="25px;"></td>
-                                                    <td class="formLable">Confirm Password<span class="mandatory">*</span></td> <td>:</td>
-                                                    <td><s:textfield id="addconfirmpassword" name="addconfirmpassword" cssClass="textField" /></td>
-                                                </tr>
-                                           
-                                            </table>
-                                            <table>
-                                                <tr>
-                                                    <td>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                            </s:form>
+                            <s:form  id="addForm"  theme="simple" method="post"  cssStyle="display:none">
+                                <table >
+                                    <tr>
+                                        <td class="formLable">Name<span class="mandatory">*</span></td> <td >:</td>
+                                        <td><s:textfield id="addname" name="addname" cssClass="textField" /></td>                                    
+                                        <td width="25px;"></td>
+                                        <td class="formLable">Gender<span class="mandatory">*</span></td> <td>:</td>
+                                        <!--<td><s:textfield id="addgender" name="addgender" cssClass="textField" /></td>-->
+                                        <td><s:select  name="addgender" id="addgender" list="%{genderlList}" 
+                                                   listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
+                                    </tr> 
+                                    <tr>
+                                        <td class="formLable">Address<span class="mandatory">*</span></td> <td >:</td>
+                                        <td><s:textfield id="addaddress" name="addaddress" cssClass="textField" /></td>                                    
+                                        <td width="25px;"></td>
+                                        <td class="formLable">NIC<span class="mandatory">*</span></td> <td>:</td>
+                                        <td><s:textfield id="addnic" name="addnic" cssClass="textField" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="formLable">Contact<span class="mandatory">*</span></td> <td >:</td>
+                                        <td><s:textfield id="addcontact" name="addcontact" cssClass="textField" /></td>                                    
+                                        <td width="25px;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="formLable">User Name<span class="mandatory">*</span></td> <td >:</td>
+                                        <td><s:textfield id="addusername" name="addusername" cssClass="textField" /></td>                                    
+                                        <td width="25px;"></td>
+                                        <td class="formLable">User Role<span class="mandatory">*</span></td> <td>:</td>
+                                        <!--<td><s:textfield id="adduserrole" name="adduserrole" cssClass="textField" /></td>-->
+                                        <td><s:select  name="adduserrole" id="adduserrole" list="%{userroleList}" 
+                                                   listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td>                           
+                                    </tr>
+                                    <tr>
+                                        <td class="formLable">Password<span class="mandatory">*</span></td> <td >:</td>
+                                        <td><s:textfield id="addpassword" name="addpassword" cssClass="textField" /></td>                                    
+                                        <td width="25px;"></td>
+                                        <td class="formLable">Confirm Password<span class="mandatory">*</span></td> <td>:</td>
+                                        <td><s:textfield id="addconfirmpassword" name="addconfirmpassword" cssClass="textField" /></td>
+                                    </tr>
+
+                                </table>
+                                <table>
+                                    <tr>
+                                        <td>
                                             <s:url var="addurl" action="Adduser" />
                                             <!--<button type="button" id="addbtn" onclick= "javascript:location.href='Addstudent.action';" class="btn btn-primary">Add</button>-->
                                             <sj:submit  id="addbtn" button="true" href="%{addurl}" value="Add"   targets="divmsg" cssClass="button_aback"/> 
@@ -222,40 +249,57 @@
                                     </tr>
                                 </table>
                             </s:form>
-                            
-                    <s:form id="taskasinForm"  theme="simple" method="post" cssStyle="display:none" >
-                            <table class="form_table">
-                                <s:hidden id="userRoleId" name="userRoleId" />     
-                                <tr>
-                                    <td class="formLable">Profile Name</td> <td >:</td>
-                                    <td><s:textfield id="description" name="description" cssClass="textField" /></td>                                    
-                                    <td width="25px;"></td>
-                                    <td class="formLable"></td> <td></td>
-                                    <td></td>
-                                </tr>  
-                                <tr>
-                                    <td class="formLable">Select Page<span class="mandatory">*</span></td> <td>:</td>
-                                    <td><s:select  name="pageId" id="pageId" list="%{pageIdList}" 
-                                               listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td>                           
-                                    <td width="25px;"></td>
-                                    <!--onchange="addPrivilage(this.value)""--> 
-                                   
-                                </tr>   
-                            </table>
-                            <table class="form_table">
-                                <tr>
-                                    <td colspan="4" height="5px"></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <fieldset id="task" hidden="true" style="border-radius: 5px;width: 400px;">
-                                            
-                                            
-                                        </fieldset>
 
-                                    </td>
-                                </tr>
-                                     <tr>
+                            <s:form id="taskasinForm"  theme="simple" method="post" cssStyle="display:none" >
+                                <table class="form_table">
+                                    <s:hidden id="userRoleId" name="userRoleId" />     
+                                    <tr>
+                                        <td class="formLable">Profile Name</td> <td >:</td>
+                                        <td><s:textfield id="description" name="description" cssClass="textField" /></td>                                    
+                                        <td width="25px;"></td>
+                                        <td class="formLable"></td> <td></td>
+                                        <td></td>
+                                    </tr>  
+                                    <tr>
+                                        <td class="formLable">Select Page<span class="mandatory">*</span></td> <td>:</td>
+                                        <td><s:select  name="pageId" id="pageId" list="%{pageIdList}" 
+                                                   listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td>                           
+                                        <td width="25px;"></td>
+                                        <!--onchange="addPrivilage(this.value)""--> 
+
+                                    </tr>  
+                                    <tr>
+                                    <div class="d-row">
+                                        <label class="col-1 form-label">Task<sup class="required">*</sup></label>
+                                        <div class="right-col form-field move-items">
+                                            <s:select multiple="true" name="currentBox2" id="currentBox2" list="pageIdList" ondblclick="toright2()"  cssClass="ddl-input width-15" size="10" />
+                                            <div class="inline-fields">
+                                                <button type="button" id="left2" onClick="toleft2()" class="btn default-button"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
+                                                <button type="button" id="leftall2" onClick="toleftall2()" class="btn default-button"><i class="fa fa-angle-double-left" aria-hidden="true"></i></button>
+                                                <button type="button" id="right2" onClick="toright2()" class="btn default-button"><i class="fa fa-angle-right" aria-hidden="true"></i></button>
+                                                <button type="button" id="rightall2" onClick="torightall2()" class="btn default-button lnk"><i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
+                                            </div>
+                                            <s:select multiple="true"  name="newBox2" id="newBox2" list="%{alreadyAcsessPageMap}" ondblclick="toleft2()" cssClass="ddl-input width-15" size="10" />
+                                        </div>
+                                    </div>
+
+                                    </tr>
+
+                                </table>
+                                <table class="form_table">
+                                    <tr>
+                                        <td colspan="4" height="5px"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <fieldset id="task" hidden="true" style="border-radius: 5px;width: 400px;">
+
+
+                                            </fieldset>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td class="content_td formLable" colspan="7"><span class="mandatory_text">Mandatory fields are marked with</span><span class="mandatory">*</span></td>
                                     </tr>
                                 </table>
@@ -263,52 +307,52 @@
                                     </br>
                                     <tr>                                
                                         <td> 
-                                        <s:url var="updateuserurl" action="UpdateTaskusrprofileMng"/>                                   
-                                        <sj:submit id="assignbut"  href="%{updateuserurl}"  targets="divmsg"  value="Add"  button="true"  cssStyle="display: none; visibility: hidden;"  />
-                                        <sj:a button="true"  onclick="addPrivilage()" cssClass="button_sadd"  >Update</sj:a></td>
-                                    </td> <td>  
+                                            <s:url var="updateuserurl" action="UpdateTaskusrprofileMng"/>                                   
+                                            <sj:submit id="assignbut"  href="%{updateuserurl}"  targets="divmsg"  value="Add"  button="true"  cssStyle="display: none; visibility: hidden;"  />
+                                            <sj:a button="true"  onclick="addPrivilage()" cssClass="button_sadd"  >Update</sj:a></td>
+                                        </td> <td>  
 
-                                <sj:submit button="true" value="Reset" onClick="ResetTaskAsinForm()" cssClass="button_sreset"/>
-                                <sj:a href="#" name="back" button="true" onclick="BackToMain()"  cssClass="button_aback" >Back</sj:a>    
-                                </td>
-                            </tr>
-                        </table>
-                </s:form> 
-
-                        </div>
-                        <div class="viewuser_tbl">
-                            <div id="tablediv">
-                                <s:url var="listurl" action="listpriviles"/>
-                                <sjg:grid
-                                    id="gridtable"
-                                    caption="Registered Users"
-                                    cssStyle=""
-                                    dataType="json"
-                                    href="%{listurl}"
-                                    pager="true"
-                                    gridModel="gridModel"
-                                    rowList="10,15,20"
-                                    rowNum="10"
-                                    autowidth="true"
-                                    shrinkToFit = "false"
-                                    rownumbers="true"
-                                    onCompleteTopics="completetopics"
-                                    rowTotal="false"
-                                    viewrecords="true"
-                                    >
-
-                                    <sjg:gridColumn name="userRoleId" index="Id" title="userRoleId" hidden="true"/>
-                                    <sjg:gridColumn name="role" index="role" title="Role" />
-                                  
-                                    <sjg:gridColumn name="userRoleId" index="userRoleId" title="Edit" formatter="editformatter" align="center"/>
-
-                                </sjg:grid> 
-                            </div>
-                        </div>
-                    </div>
-                    </section>
+                                    <sj:submit button="true" value="Reset" onClick="ResetTaskAsinForm()" cssClass="button_sreset"/>
+                                    <sj:a href="#" name="back" button="true" onclick="BackToMain()"  cssClass="button_aback" >Back</sj:a>    
+                                    </td>
+                                </tr>
+                            </table>
+                    </s:form> 
 
                 </div>
+                <div class="viewuser_tbl">
+                    <div id="tablediv">
+                        <s:url var="listurl" action="listpriviles"/>
+                        <sjg:grid
+                            id="gridtable"
+                            caption="Registered Users"
+                            cssStyle=""
+                            dataType="json"
+                            href="%{listurl}"
+                            pager="true"
+                            gridModel="gridModel"
+                            rowList="10,15,20"
+                            rowNum="10"
+                            autowidth="true"
+                            shrinkToFit = "false"
+                            rownumbers="true"
+                            onCompleteTopics="completetopics"
+                            rowTotal="false"
+                            viewrecords="true"
+                            >
 
-                </body>
-                </html>
+                            <sjg:gridColumn name="userRoleId" index="Id" title="userRoleId" hidden="true"/>
+                            <sjg:gridColumn name="role" index="role" title="Role" />
+
+                            <sjg:gridColumn name="userRoleId" index="userRoleId" title="Edit" formatter="editformatter" align="center"/>
+
+                        </sjg:grid> 
+                    </div>
+                </div>
+            </div>
+            </section>
+
+        </div>
+
+        </body>
+        </html>
