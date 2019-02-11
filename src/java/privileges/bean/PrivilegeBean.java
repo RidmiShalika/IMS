@@ -50,8 +50,18 @@ public class PrivilegeBean {
      private String addpassword;
      private String addconfirmpassword;
      private Map<Integer, String> userroleList = new HashMap<Integer, String>();
-      private Map<Integer, String> genderlList = new HashMap<Integer, String>();
+     private Map<Integer, String> genderlList = new HashMap<Integer, String>();
+     private Map<Integer,String> alreadyAcsessPageMap = new HashMap<Integer, String>();
 
+    public Map<Integer, String> getAlreadyAcsessPageMap() {
+        return alreadyAcsessPageMap;
+    }
+
+    public void setAlreadyAcsessPageMap(Map<Integer, String> alreadyAcsessPageMap) {
+        this.alreadyAcsessPageMap = alreadyAcsessPageMap;
+    }
+
+    
     public Map<Integer, String> getGenderlList() {
         return genderlList;
     }
