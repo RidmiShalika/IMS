@@ -36,7 +36,7 @@
             });
             
              function paymentformatter(cellvalue, options, rowObject) {
-                return "<a href='#' onClick='javascript:pay(&#34;" + cellvalue + "&#34;,&#34;" + rowObject.sId + "&#34;)'><i class='fa fa-share-square-o' aria-hidden='true'></i></a>";
+                return "<a href='#' onClick='javascript:pay(&#34;" + cellvalue + "&#34;,&#34;" + rowObject.id + "&#34;)'><i class='fa fa-share-square-o' aria-hidden='true'></i></a>";
             }
             function pay(keyval){
                 alert(keyval);
@@ -92,10 +92,10 @@
                                         <td class="formLable">Reg Date</td> <td >:</td>
                                         <td><s:textfield id="regDate" name="regDate" cssClass="textField" disabled="true"/></td>
                                     </tr>
-                                    <tr>
+<!--                                    <tr>
                                         <td class="formLable">Card Type</td> <td >:</td>
                                         <td><s:textfield id="addcardType" name="addcardType" cssClass="textField" disabled="true"/></td>
-                                    </tr>
+                                    </tr>-->
                                     <tr>
                                         <td class="formLable">Payments</td> <td >:</td>
                                         <td><s:textfield id="addpayments" name="addpayments" cssClass="textField" disabled="true"/></td>
@@ -119,7 +119,7 @@
                                         <td class="formLable">Lecture Name</td> <td >:</td>
                                         <td><s:textfield id="lname" name="lname" cssClass="textField" disabled="true"/></td>
                                     </tr>
-                                        <td class="formLable">Card Type</td> <td >:</td>
+                                        <td class="formLable">Class Type</td> <td >:</td>
                                         <td><s:textfield id="crdType" name="crdype" cssClass="textField" disabled="true"/></td>
                                     <tr>
                                         <td class="formLable">Time</td> <td >:</td>
@@ -134,10 +134,10 @@
                                          <td class="formLable">Extra/Normal</td> <td >:</td>
                                         <td><s:textfield id="extra_normal" name="extra_normal" cssClass="textField" disabled="true"/></td>
                                     </tr>
-                                     <tr>
+<!--                                     <tr>
                                          <td class="formLable"></td> <td ></td>
                                          <td ><s:textfield id="" name="" cssClass="textField" disabled="true"/></td>
-                                    </tr>
+                                    </tr>-->
                                   
                                    <tr>
                                         <td>
@@ -169,14 +169,16 @@
                                     onCompleteTopics="completetopics"
                                     rowTotal="false"
                                     viewrecords="true"
+                                    multiselect="true"
                                     >
                                    
-                                    <sjg:gridColumn name="Id" index="Id" title="StudentId" hidden="true" width="10"/>
-                                    <sjg:gridColumn name="Id" index="Id" title="Pay" width="50" formatter="paymentformatter"/>
-                                    <sjg:gridColumn name="courseid" index="courseId.courseDescription" title="Course Id" width="150"/>
-                                    <sjg:gridColumn name="payments" index="courseId.monthlyFee" title="Fee" width="100"/>
-                                    <sjg:gridColumn name="cardType" index="cardType" title="Card Type" width="130"/>
-                                    <sjg:gridColumn name="lastpayment" index="lastpayment" title="Last Payment" width="150"/>
+                                    <sjg:gridColumn name="id" index="id" title="id" hidden="true" width="10"/>
+                                    <%--<sjg:gridColumn name="id" index="id" title="Pay" width="50" formatter="paymentformatter"/>--%>
+                                    <sjg:gridColumn name="sid" index="sid" title="Student Id" width="80"/>
+                                    <sjg:gridColumn name="cid" index="cid" title="Course Id" width="80"/>
+                                    <sjg:gridColumn name="year" index="v" title="Year" width="100"/>
+                                    <sjg:gridColumn name="month" index="month" title="Month" width="130"/>
+                                    <sjg:gridColumn name="status" index="status" title="Status" width="100"/>
                                     
                                     
 
