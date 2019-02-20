@@ -53,6 +53,19 @@
                     }
                 });
             }
+            function test() {
+                $.ajax({
+                    url: '${pageContext.request.contextPath}/paymentmark',
+                    dataType: "json",
+                    type: "GET",
+                    success: function (data) {
+                       $('#name').val("data.pay_status");
+                    },
+                    error: function (data) {
+                       
+                    }
+                });
+            }
 
         </script>
     </head>
@@ -147,6 +160,13 @@
                                 </table>
 
                             </s:form>
+                     <table>
+                        <tr>
+                            <td>
+                                <sj:submit  id="stopbtn" button="true" onclick="test()" value="STOP"  cssClass="button_aback"/> 
+                            </td>
+                        </tr>
+                     </table>
                         </div>
                         <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
                     <div style="width: 50%; float:left">    
