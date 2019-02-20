@@ -96,5 +96,13 @@ public class AttenAction extends ActionSupport implements ModelDriven<AttenBean>
 
         return "list";
     }
+    public String paymentmark(){
+        try {
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "paymentmark";
+    }
             
 }
