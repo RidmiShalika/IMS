@@ -26,12 +26,19 @@ public class AttenBean {
 
     private String attenid;
 
-    private String Id;
-    private String courseid;
-    private String payments;
-    private String cardType;
-    private String lastpayment;
-
+//    private String Id;
+//    private String courseid;
+//    private String payments;
+//    private String cardType;
+//    private String lastpayment;
+    private String id;
+    private String sid;
+    private String cid;
+    private String year;
+    private String month;
+    private String status;
+    
+    
     private String name;
     private String regID;
     private String school;
@@ -133,46 +140,6 @@ public class AttenBean {
         this.addpayments = addpayments;
     }
 
-    public String getId() {
-        return Id;
-    }
-
-    public void setId(String Id) {
-        this.Id = Id;
-    }
-
-    public String getCourseid() {
-        return courseid;
-    }
-
-    public void setCourseid(String courseid) {
-        this.courseid = courseid;
-    }
-
-    public String getPayments() {
-        return payments;
-    }
-
-    public void setPayments(String payments) {
-        this.payments = payments;
-    }
-
-    public String getCardType() {
-        return cardType;
-    }
-
-    public void setCardType(String cardType) {
-        this.cardType = cardType;
-    }
-
-    public String getLastpayment() {
-        return lastpayment;
-    }
-
-    public void setLastpayment(String lastpayment) {
-        this.lastpayment = lastpayment;
-    }
-
     public long getFullCount() {
         return fullCount;
     }
@@ -244,5 +211,54 @@ public class AttenBean {
     public void setAttenid(String attenid) {
         this.attenid = attenid;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getSid() {
+        return sid;
+    }
+
+    public void setSid(String sid) {
+        this.sid = sid;
+    }
+
+    public String getCid() {
+        return cid;
+    }
+
+    public void setCid(String cid) {
+        this.cid = cid;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+    
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
 
 }

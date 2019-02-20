@@ -21,6 +21,7 @@ import mapping.Course;
 import mapping.CourseDates;
 import mapping.ExtraClasses;
 import mapping.Payments;
+import mapping.PendingPayments;
 import mapping.Student;
 import mapping.StudentCourse;
 import org.apache.struts2.ServletActionContext;
@@ -49,8 +50,9 @@ public class AttenService {
 
             System.out.println("--------------- " + st_id);
 
-            String sqlCount = "select count(s.id) from StudentCourse s where s.studentId.sId LIKE :sId";
+            String sqlCount = "select count(p.id) from PendingPayments p where p.status =:status and p.sid =:sId";
             Query queryCount = session.createQuery(sqlCount);
+            queryCount.setString("status", "Pending");
             queryCount.setInteger("sId", st_id);
             Iterator itCount = queryCount.iterate();
             count = (Long) itCount.next();
@@ -58,9 +60,10 @@ public class AttenService {
             System.out.println("count " + count);
 
             if (count > 0) {
-                String sqlSearch = "from StudentCourse s where s.studentId.sId LIKE :sId";
+                String sqlSearch = "from PendingPayments p where p.status =:status and p.sid =:sId";
                 Query querySearch = session.createQuery(sqlSearch);
                 querySearch.setInteger("sId", st_id);
+                querySearch.setString("status", "Pending");
 
                 querySearch.setMaxResults(max);
                 querySearch.setFirstResult(first);
@@ -68,7 +71,7 @@ public class AttenService {
                 Iterator it = querySearch.iterate();
                 while (it.hasNext()) {
                     AttenBean databean = new AttenBean();
-                    StudentCourse objBean = (StudentCourse) it.next();
+                    PendingPayments objBean = (PendingPayments) it.next();
 
                     try {
                         databean.setId(objBean.getId().toString());
@@ -76,24 +79,29 @@ public class AttenService {
                         databean.setId("--");
                     }
                     try {
-                        databean.setCourseid(objBean.getCourseId().getCourseDescription());
+                        databean.setSid(objBean.getSid()+"");
                     } catch (NullPointerException e) {
-                        databean.setCourseid("--");
+                        databean.setSid("--");
                     }
                     try {
-                        databean.setPayments(objBean.getCourseId().getMonthlyFee().toString());
+                        databean.setCid(objBean.getCid()+"");
                     } catch (NullPointerException e) {
-                        databean.setPayments("--");
+                        databean.setCid("--");
                     }
                     try {
-                        databean.setCardType(objBean.getCardType().toString());
+                        databean.setYear(objBean.getYear());
                     } catch (NullPointerException e) {
-                        databean.setCardType("--");
+                        databean.setYear("--");
                     }
                     try {
-                        databean.setLastpayment(objBean.getCardType().toString());
+                        databean.setMonth(objBean.getMonth());
                     } catch (NullPointerException e) {
-                        databean.setLastpayment("--");
+                        databean.setMonth("--");
+                    }
+                    try {
+                        databean.setStatus(objBean.getStatus());
+                    } catch (NullPointerException e) {
+                        databean.setStatus("--");
                     }
 
                     databean.setFullCount(count);
@@ -182,87 +190,113 @@ public class AttenService {
                     .createAlias("stc.courseId", "cr")
                     .createAlias("cr.courseDatesSet", "coursedate")
                     .add(Restrictions.eq("st.sId", st_id))
-                    .add(Restrictions.not(Restrictions.eq("coursedate." + day + "", "-")));
-//                    .setProjection(Projections.distinct(Projections.property("cr.id")));
-            
+                    .add(Restrictions.not(Restrictions.eq("coursedate." + day + "", "-")))
+                    .setProjection(Projections.distinct(Projections.projectionList()
+                            .add(Projections.property("cr.id"))
+                            .add(Projections.property("coursedate." + day))));
 
             Iterator i = criteria.list()
                     .iterator();
 
-            List<String> list= new ArrayList<String>();
+            List<String[]> list = new ArrayList<String[]>();
             while (i.hasNext()) {
-                StudentCourse studentCourse = (StudentCourse) i.next();
-                Set<CourseDates> studentCoursesSet = studentCourse.getCourseId().getCourseDatesSet();
-                List<CourseDates> siteIdList = new ArrayList<>(studentCoursesSet);
-                
-                
-                if (day.equals("monday")) {
-                    list.add(siteIdList.get(0).getMonday());
-                } else if (day.equals("tueday")) {
-                    list.add(siteIdList.get(0).getTueday());
-                } else if (day.equals("wedday")) {
-                    list.add(siteIdList.get(0).getWedday());
-                } else if (day.equals("thurday")) {
-                    list.add(siteIdList.get(0).getThurday());
-                } else if (day.equals("friday")) {
-                    list.add(siteIdList.get(0).getFriday());
-                } else if (day.equals("satday")) {
-                    list.add(siteIdList.get(0).getSatday());
-                } else if (day.equals("sunday")) {
-                    list.add(siteIdList.get(0).getSunday());
-                }
+                Object[] ob = (Object[]) i.next();
 
+                String[] classaArray = new String[3];
+                classaArray[0] = ob[0].toString();
+                classaArray[1] = ob[1].toString();
+                classaArray[2] = "Normal";
+
+                list.add(classaArray);
+
+//                StudentCourse studentCourse = (StudentCourse) i.next();
+//                Set<CourseDates> studentCoursesSet = studentCourse.getCourseId().getCourseDatesSet();
+//                List<CourseDates> siteIdList = new ArrayList<>(studentCoursesSet);
+//                
+//                if (day.equals("monday")) {
+//                    list.add(siteIdList.get(0).getMonday());
+////                    classArray[0] = studentCourse.getCourseId().getId().toString();
+////                    classArray[1] = studentCourse.getCourseId().getId().toString();
+//                } else if (day.equals("tueday")) {
+//                    list.add(siteIdList.get(0).getTueday());
+//                } else if (day.equals("wedday")) {
+//                    list.add(siteIdList.get(0).getWedday());
+//                } else if (day.equals("thurday")) {
+//                    list.add(siteIdList.get(0).getThurday());
+//                } else if (day.equals("friday")) {
+//                    list.add(siteIdList.get(0).getFriday());
+//                } else if (day.equals("satday")) {
+//                    list.add(siteIdList.get(0).getSatday());
+//                } else if (day.equals("sunday")) {
+//                    list.add(siteIdList.get(0).getSunday());
+//                }
             }
-            
+
             //from extra class table
             Date sdate = new Date();
             SimpleDateFormat sdf1 = new SimpleDateFormat("MM/dd/yyyy");
-                    
-            Criteria c = session.createCriteria(ExtraClasses.class,"ex")
+
+            Criteria c = session.createCriteria(ExtraClasses.class, "ex")
                     .add(Restrictions.eq("ex.date", sdf1.format(sdate)));
             Iterator i1 = c.list()
                     .iterator();
-             while (i1.hasNext()) {
-                 ExtraClasses extraClasses = (ExtraClasses) i1.next();
-                 list.add(extraClasses.getStartTime()+"-"+extraClasses.getEndTime());
-             }
-            
-            Set<String> set = new HashSet<>(list);
-            list.clear();
-            list.addAll(set);
-            
-            long dif = 0;
-            int count = 0;
-            for(int x = 0 ; x<list.size();x++){
-                System.out.println("8888 "+list.get(x));
-                String st_date[]  = list.get(x).split("\\-");
-                
-                DateFormat sdf = new SimpleDateFormat("HH:mm");
-                Date sysdate = new Date();  
-                String time1 = st_date[0];
-                String time2 = sdf.format(sysdate);
+            while (i1.hasNext()) {
+                ExtraClasses extraClasses = (ExtraClasses) i1.next();
 
-                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-                Date date1 = format.parse(time1);
-                Date date2 = format.parse(time2);
-                long difference = date2.getTime() - date1.getTime(); 
-                
-                System.out.println(difference); 
-                
-                 if (difference < 0) {
-                        difference = difference * (-1);
-                    }
-                    if (count == 0) {
-                        dif = difference;
-                    }
-                    if (difference <= dif) {
-                        dif = difference;
+                String[] exclassaArray = new String[3];
 
-                    }
-                    count++;
+                exclassaArray[0] = extraClasses.getCourseId().getId().toString();
+                exclassaArray[1] = extraClasses.getStartTime() + "-" + extraClasses.getEndTime();
+                exclassaArray[2] = "Extra";
+
+                list.add(exclassaArray);
             }
 
-            int cid=8;
+//            Set<String> set = new HashSet<>(list);
+//            list.clear();
+//            list.addAll(set);
+            int selected_index = -1;
+            if (list.size() == 1) {
+//                return list.get(0);
+                selected_index = 0;
+            } else {
+                long dif = 0;
+                int count = 0;
+                for (int x = 0; x < list.size(); x++) {
+                    System.out.println("8888 " + list.get(x));
+                    String courseid = list.get(x)[0];
+                    String c_time = list.get(x)[1].split("-")[0];
+
+                    DateFormat sdf = new SimpleDateFormat("HH:mm");
+                    Date sysdate = new Date();
+                    Date time1 = sdf.parse(c_time);
+                    Date time2 = sdf.parse(sdf.format(sysdate));
+
+                    long curr_difference = time1.getTime() - time2.getTime();
+
+                    System.out.println(curr_difference);
+
+                    if (curr_difference < 0) {
+                        curr_difference = curr_difference * (-1);
+                    }
+                    if (count == 0) {
+                        dif = curr_difference;
+                    }
+                    if (curr_difference <= dif) {
+                        dif = curr_difference;
+                        selected_index = x;
+                    }
+                    count++;
+                }
+            }
+
+            String[] outList = new String[3];
+            if (selected_index > -1) {
+                outList = list.get(selected_index);
+            }
+
+//            int cid = 8;
+            int cid = Integer.parseInt(outList[0]);
             //class ekata related payment status eka gannwa me current mmonth ekata payment table eken
             Criteria c1 = session.createCriteria(Payments.class, "payment")
                     .createAlias("payment.studentId", "sid")
@@ -270,69 +304,71 @@ public class AttenService {
                     .add(Restrictions.eq("sid.sId", st_id))
                     .add(Restrictions.eq("cid.id", cid));
             Iterator i2 = c1.list().iterator();
+
+            attenBean.setAddpayments("NO");
             while (i2.hasNext()) {
-               Payments p=  (Payments) i2.next();
-               
-               attenBean.setAddpayments(p.getMonth());
+                Payments p = (Payments) i2.next();
+
+                attenBean.setAddpayments("YES");
             }
-            
-            
+
             //attendance table ekta insert ekak wadina one ada apu class ekata adalawa
             Date date1 = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd|HH:mm:ss");
             String dd = sdf.format(date1);
             String datTime[] = dd.split("\\|");
             String dateonly[] = datTime[0].split("\\-");
-         
-            Attendence attendence = new Attendence();
-            attendence.setAtten(true);
-            attendence.setCompleteDate(new Date());
-            Course c2 = new Course();
-            c2.setId(cid);
-            attendence.setCourseId(c2);
-            Student s = new Student();
-            s.setSId(st_id);
-            attendence.setStudentId(s);
-            attendence.setDate(Integer.parseInt(dateonly[2]));
-            attendence.setDay(dateFormat.format(date).toLowerCase());
-            attendence.setMonth(Integer.parseInt(dateonly[1]));
-            attendence.setTime(datTime[1]);
-            attendence.setYear(Integer.parseInt(dateonly[0]));
-            attendence.setCompleteDate(new Date());
-            session.save(attendence);
-            
-            
+
+            if (!alreadyAtte(st_id, cid, datTime[0])) {
+                Attendence attendence = new Attendence();
+                attendence.setAtten(true);
+                attendence.setCompleteDate(new Date());
+                Course c2 = new Course();
+                c2.setId(cid);
+                attendence.setCourseId(c2);
+                Student s = new Student();
+                s.setSId(st_id);
+                attendence.setStudentId(s);
+                attendence.setDate(Integer.parseInt(dateonly[2]));
+                attendence.setDay(dateFormat.format(date).toLowerCase());
+                attendence.setMonth(Integer.parseInt(dateonly[1]));
+                attendence.setTime(datTime[1]);
+                attendence.setYear(Integer.parseInt(dateonly[0]));
+                attendence.setCompleteDate(new Date());
+                session.save(attendence);
+            }
+
             //ada dawasata adala class eke lectuterge details load
-            Criteria c3 = session.createCriteria(StudentCourse.class,"stcr")
+            Criteria c3 = session.createCriteria(StudentCourse.class, "stcr")
                     .createAlias("stcr.studentId", "stu")
                     .createAlias("stcr.courseId", "crs")
                     .add(Restrictions.eq("stu.sId", st_id))
                     .add(Restrictions.eq("crs.id", cid));
-                    
+
             Iterator i3 = c3.list().iterator();
             while (i3.hasNext()) {
                 StudentCourse studentCourse = (StudentCourse) i3.next();
-                
+
                 attenBean.setLname(studentCourse.getCourseId().getLectureId().getName());
-                if(studentCourse.getCourseId().getClassType() == 1){
+                if (studentCourse.getCourseId().getClassType() == 1) {
                     attenBean.setExtra_normal("Theory Class");
-                }else if(studentCourse.getCourseId().getClassType() == 2){
+                } else if (studentCourse.getCourseId().getClassType() == 2) {
                     attenBean.setExtra_normal("Revision Class");
-                }else if(studentCourse.getCourseId().getClassType() == 3){
+                } else if (studentCourse.getCourseId().getClassType() == 3) {
                     attenBean.setExtra_normal("Paper Class");
                 }
                 attenBean.setCourseId(studentCourse.getCourseId().getCourseDescription());
-                if(studentCourse.getCardType() == 1){
+                if (studentCourse.getCardType() == 1) {
                     attenBean.setCrdType("Normal Card");
-                }else if(studentCourse.getCardType() == 2){
+                } else if (studentCourse.getCardType() == 2) {
                     attenBean.setCrdType("Half Card");
-                }else if(studentCourse.getCardType() == 3){
+                } else if (studentCourse.getCardType() == 3) {
                     attenBean.setCrdType("Free Card");
                 }
                 attenBean.setCrdType(day);
-                
+
             }
-            
+
         } catch (Exception e) {
             if (session != null) {
                 session.getTransaction().rollback();
@@ -349,6 +385,44 @@ public class AttenService {
                 session = null;
             }
         }
+    }
+
+    public boolean alreadyAtte(int sid, int cid, String date) throws Exception {
+        boolean isatte = false;
+        Session session = null;
+        try {
+            session = HibernateInit.getSessionFactory().openSession();
+            session.beginTransaction();
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+            Attendence attendence = (Attendence) session.createCriteria(Attendence.class, "attendance")
+                    .createAlias("attendance.studentId", "sid")
+                    .createAlias("attendance.courseId", "cid")
+                    .add(Restrictions.eq("sid.sId", sid))
+                    .add(Restrictions.eq("cid.id", cid))
+                    .add(Restrictions.eq("attendance.completeDate", sdf.parse(date) )).uniqueResult();
+            if (attendence != null) {
+                isatte = true;
+            }
+
+        } catch (Exception e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.flush();
+                session.clear();
+                session.getTransaction().commit();
+                session.close();
+                session = null;
+            }
+        }
+        return isatte;
     }
 
 }
