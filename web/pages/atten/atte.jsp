@@ -11,61 +11,72 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 //load student and lecture details and mark attendence
-                 $.ajax({
+                $.ajax({
                     url: '${pageContext.request.contextPath}/loadandattendence',
                     dataType: "json",
                     type: "GET",
                     success: function (data) {
-                       $('#name').val(data.name);
-                       $('#regID').val(data.regID);
-                       $('#school').val(data.school);
-                       $('#regDate').val(data.regDate);
-                       $('#addcardType').val(data.addcardType);
-                       $('#addpayments').val(data.addpayments);
-                       
-                       $('#lname').val(data.lname);
-                       $('#crdType').val(data.crdType);
-                       $('#time').val(data.time);
-                       $('#courseId').val(data.courseId);
-                       $('#extra_normal').val(data.extra_normal);
+                        $('#name').val(data.name);
+                        $('#regID').val(data.regID);
+                        $('#school').val(data.school);
+                        $('#regDate').val(data.regDate);
+                        $('#addcardType').val(data.addcardType);
+                        $('#addpayments').val(data.addpayments);
+
+                        $('#lname').val(data.lname);
+                        $('#crdType').val(data.crdType);
+                        $('#time').val(data.time);
+                        $('#courseId').val(data.courseId);
+                        $('#extra_normal').val(data.extra_normal);
                     },
                     error: function (data) {
-                       
+
                     }
                 });
             });
-            
-             function paymentformatter(cellvalue, options, rowObject) {
+
+            function paymentformatter(cellvalue, options, rowObject) {
                 return "<a href='#' onClick='javascript:pay(&#34;" + cellvalue + "&#34;,&#34;" + rowObject.id + "&#34;)'><i class='fa fa-share-square-o' aria-hidden='true'></i></a>";
             }
-            function pay(keyval){
+            function pay(keyval) {
                 alert(keyval);
                 //load history lists
-                 $.ajax({
+                $.ajax({
                     url: '${pageContext.request.contextPath}/loadhistorylist',
+                    data: {attenid: keyval},
                     dataType: "json",
                     type: "GET",
                     success: function (data) {
-                       $('#name').val("data.pay_status");
+                        alert("suces");
+                        $('#testid').val("ridmi");
+//                         $('#testid').html('changed value');
                     },
                     error: function (data) {
-                       
+                         alert("error");
                     }
                 });
             }
             function test() {
+
+                var selected_data = $('#gridtable').jqGrid('getGridParam', 'selarrrow');
+                alert('selected rows:' + selected_data);
+
                 $.ajax({
                     url: '${pageContext.request.contextPath}/paymentmark',
+                    data: {selected_data: selected_data},
                     dataType: "json",
                     type: "GET",
                     success: function (data) {
-                       $('#name').val("data.pay_status");
+//                       $('#name').val("data.pay_status");
                     },
                     error: function (data) {
-                       
+
                     }
                 });
             }
+            $('#gridtable.id').change(function () {
+                alert('changed');
+            });
 
         </script>
     </head>
@@ -105,10 +116,10 @@
                                         <td class="formLable">Reg Date</td> <td >:</td>
                                         <td><s:textfield id="regDate" name="regDate" cssClass="textField" disabled="true"/></td>
                                     </tr>
-<!--                                    <tr>
-                                        <td class="formLable">Card Type</td> <td >:</td>
-                                        <td><s:textfield id="addcardType" name="addcardType" cssClass="textField" disabled="true"/></td>
-                                    </tr>-->
+                                    <!--                                    <tr>
+                                                                            <td class="formLable">Card Type</td> <td >:</td>
+                                                                            <td><s:textfield id="addcardType" name="addcardType" cssClass="textField" disabled="true"/></td>
+                                                                        </tr>-->
                                     <tr>
                                         <td class="formLable">Payments</td> <td >:</td>
                                         <td><s:textfield id="addpayments" name="addpayments" cssClass="textField" disabled="true"/></td>
@@ -132,8 +143,8 @@
                                         <td class="formLable">Lecture Name</td> <td >:</td>
                                         <td><s:textfield id="lname" name="lname" cssClass="textField" disabled="true"/></td>
                                     </tr>
-                                        <td class="formLable">Class Type</td> <td >:</td>
-                                        <td><s:textfield id="crdType" name="crdype" cssClass="textField" disabled="true"/></td>
+                                    <td class="formLable">Class Type</td> <td >:</td>
+                                    <td><s:textfield id="crdType" name="crdype" cssClass="textField" disabled="true"/></td>
                                     <tr>
                                         <td class="formLable">Time</td> <td >:</td>
                                         <td><s:textfield id="time" name="time" cssClass="textField" disabled="true"/></td>
@@ -142,17 +153,17 @@
                                         <td class="formLable">Course Id</td> <td >:</td>
                                         <td><s:textfield id="courseId" name="courseId" cssClass="textField" disabled="true"/></td>
                                     </tr>
-                                       
+
                                     <tr>
-                                         <td class="formLable">Extra/Normal</td> <td >:</td>
+                                        <td class="formLable">Extra/Normal</td> <td >:</td>
                                         <td><s:textfield id="extra_normal" name="extra_normal" cssClass="textField" disabled="true"/></td>
                                     </tr>
-<!--                                     <tr>
-                                         <td class="formLable"></td> <td ></td>
-                                         <td ><s:textfield id="" name="" cssClass="textField" disabled="true"/></td>
-                                    </tr>-->
-                                  
-                                   <tr>
+                                    <!--                                     <tr>
+                                                                             <td class="formLable"></td> <td ></td>
+                                                                             <td ><s:textfield id="" name="" cssClass="textField" disabled="true"/></td>
+                                                                        </tr>-->
+
+                                    <tr>
                                         <td>
                                             <%--<sj:submit button="true" value="Atten"  onclick="keyPress()" cssClass="button_aback"/>--%>
                                         </td>
@@ -160,76 +171,77 @@
                                 </table>
 
                             </s:form>
-                     <table>
-                        <tr>
-                            <td>
-                                <sj:submit  id="stopbtn" button="true" onclick="test()" value="STOP"  cssClass="button_aback"/> 
-                            </td>
-                        </tr>
-                     </table>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <sj:submit  id="stopbtn" button="true" onclick="test()" value="PAY"  cssClass="button_aback"/> 
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                         <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-                    <div style="width: 50%; float:left">    
-                        <div class="viewuser_tbl">
-                            <div id="tablediv">
-                                <s:url var="listurl" action="liststatt"/>
-                                <sjg:grid
-                                    id="gridtable"
-                                    caption="Student Attendance"
-                                    cssStyle=""
-                                    dataType="json"
-                                    href="%{listurl}"
-                                    pager="true"
-                                    gridModel="gridModel"
-                                    rowList="10,15,20"
-                                    rowNum="10"
-                                    autowidth="true"
-                                    shrinkToFit = "false"
-                                    rownumbers="true"
-                                    onCompleteTopics="completetopics"
-                                    rowTotal="false"
-                                    viewrecords="true"
-                                    multiselect="true"
-                                    >
-                                   
-                                    <sjg:gridColumn name="id" index="id" title="id" hidden="true" width="10"/>
-                                    <%--<sjg:gridColumn name="id" index="id" title="Pay" width="50" formatter="paymentformatter"/>--%>
-                                    <sjg:gridColumn name="sid" index="sid" title="Student Id" width="80"/>
-                                    <sjg:gridColumn name="cid" index="cid" title="Course Id" width="80"/>
-                                    <sjg:gridColumn name="year" index="v" title="Year" width="100"/>
-                                    <sjg:gridColumn name="month" index="month" title="Month" width="130"/>
-                                    <sjg:gridColumn name="status" index="status" title="Status" width="100"/>
-                                    
-                                    
+                        <div style="width: 50%; float:left">    
+                            <div class="viewuser_tbl">
+                                <div id="tablediv">
+                                    <s:url var="listurl" action="liststatt"/>
+                                    <sjg:grid
+                                        id="gridtable"
+                                        caption="Student Attendance"
+                                        cssStyle=""
+                                        dataType="json"
+                                        href="%{listurl}"
+                                        pager="true"
+                                        gridModel="gridModel"
+                                        rowList="10,15,20"
+                                        rowNum="10"
+                                        autowidth="true"
+                                        shrinkToFit = "false"
+                                        rownumbers="true"
+                                        onCompleteTopics="completetopics"
+                                        rowTotal="false"
+                                        viewrecords="true"
+                                        multiselect="true"
+                                        >
 
-                                </sjg:grid> 
+                                        <sjg:gridColumn name="id" index="id" title="id" hidden="true" width="10"/>
+                                        <sjg:gridColumn name="id" index="id" title="Pay" width="50" formatter="paymentformatter"/>
+                                        <sjg:gridColumn name="sid" index="sid" title="Student Id" width="80"/>
+                                        <sjg:gridColumn name="cid" index="cid" title="Course Id" width="80"/>
+                                        <sjg:gridColumn name="year" index="v" title="Year" width="100"/>
+                                        <sjg:gridColumn name="month" index="month" title="Month" width="130"/>
+                                        <sjg:gridColumn name="status" index="status" title="Status" width="100"/>
+
+
+
+                                    </sjg:grid> 
+                                </div>
                             </div>
                         </div>
-                    </div>
-                                
-                    <div style="width: 40%; float:right">
+
+                        <div style="width: 40%; float:right">
                             <s:form id="payList"  theme="simple" >
-                                <table>
+<!--                                <table>
                                     <tr>
                                         <td class="formLable">Payment List</td> 
                                     </tr>
-                                     <tr>
-                                       <sj:submit button="true" value="PAYMENT"  onclick="" cssClass="button_aback"/>
+                                    <tr>
+                                        <sj:submit button="true" value="PAYMENT"  onclick="" cssClass="button_aback"/>
                                     </tr>
-                                </table>
+                                </table>-->
 
                             </s:form>
-                    </div>            
-                    <div style="width: 40%; float:right">
+                        </div>            
+                        <div style="width: 40%; float:right">
                             <s:form id="attHistory"  theme="simple" >
                                 <table>
                                     <tr>
-                                        <td class="formLable">Attendance History</td> 
+                                        <td class="formLable" >Attendance History</td> 
+                                        <td><s:textarea id="testid" />
                                     </tr>
                                 </table>
 
                             </s:form>
-                    </div><div style="width: 40%; float:right">
+                        </div><div style="width: 40%; float:right">
                             <s:form id="payHistory"  theme="simple" >
                                 <table>
                                     <tr>
@@ -238,8 +250,8 @@
                                 </table>
 
                             </s:form>
+                        </div>
                     </div>
-            </div>
                     </section>
 
 
