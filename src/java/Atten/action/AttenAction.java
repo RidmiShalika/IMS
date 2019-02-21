@@ -98,7 +98,8 @@ public class AttenAction extends ActionSupport implements ModelDriven<AttenBean>
     }
     public String paymentmark(){
         try {
-            
+            System.out.println(" selected data "+inputBean.getSelected_data());
+            service.paymentdetails(inputBean);
         } catch (Exception e) {
             e.printStackTrace();
         }

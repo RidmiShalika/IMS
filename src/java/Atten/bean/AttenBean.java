@@ -51,7 +51,18 @@ public class AttenBean {
     private String time;
     private String courseId;
     private String extra_normal;
+    
+    private String selected_data;
 
+    public String getSelected_data() {
+        return selected_data;
+    }
+
+    public void setSelected_data(String selected_data) {
+        this.selected_data = selected_data;
+    }
+
+    
     public String getLname() {
         return lname;
     }
