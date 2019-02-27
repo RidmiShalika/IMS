@@ -53,7 +53,18 @@ public class AttenBean {
     private String extra_normal;
     
     private String selected_data;
+    
+    ArrayList<String> attandance_history = new ArrayList<String>();
 
+    public ArrayList<String> getAttandance_history() {
+        return attandance_history;
+    }
+
+    public void setAttandance_history(ArrayList<String> attandance_history) {
+        this.attandance_history = attandance_history;
+    }
+
+    
     public String getSelected_data() {
         return selected_data;
     }

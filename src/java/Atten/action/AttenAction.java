@@ -61,6 +61,9 @@ public class AttenAction extends ActionSupport implements ModelDriven<AttenBean>
     public String loadhistorylist(){
          try {
           //load data from service
+             System.out.println("atteid "+inputBean.getAttenid());
+             int cid = service.getcorseid(inputBean);
+            service.historyData(inputBean,cid);
         } catch (Exception e) {
             e.printStackTrace();
         }

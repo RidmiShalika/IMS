@@ -29,6 +29,7 @@ import org.apache.struts2.ServletActionContext;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
@@ -38,6 +39,7 @@ import org.hibernate.criterion.Restrictions;
  */
 public class AttenService {
 
+    
     public List<AttenBean> loadStudent(AttenBean inputBean, int max, int first, String orderBy) throws Exception {
         List<AttenBean> dataList = new ArrayList<AttenBean>();
         Session session = null;
@@ -524,32 +526,42 @@ public class AttenService {
         }
     }
     
-    public void historyData(AttenBean inputbean) throws Exception{
-        ArrayList<String> attandance_history = new ArrayList<String>();
+    public void historyData(AttenBean inputbean, int relv_cid) throws Exception{
+//        ArrayList<String> attandance_history = new ArrayList<String>();
         Session session = null;
         
         try {
             session = HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
             
-            Criteria criteria = session.createCriteria(PendingPayments.class, "pendingpayments")
-                        .add(Restrictions.eq("pendingpayments.id", Integer.parseInt(inputbean.getAttenid())))
-                        .setProjection(Projections.distinct(Projections.projectionList()
-                                .add(Projections.property("pendingpayments.sid"))));
+             HttpSession sess = ServletActionContext.getRequest().getSession(false);
+            int st_id = (int) sess.getAttribute("stcourselist");
+            
+            Criteria criteria = session.createCriteria(Attendence.class, "attendance")
+                        .createAlias("attendance.studentId", "studentId")
+                        .createAlias("attendance.courseId", "courseId")
+                    .add(Restrictions.eq("studentId.sId",st_id))
+                    .add(Restrictions.eq("courseId.id", relv_cid));
+            criteria.addOrder(Order.desc("attendance.completeDate"));
+            criteria.setMaxResults(20);
+                    
              Iterator iterator = criteria.list()
                         .iterator();
 
-             int studentid = 0;
-            while (iterator.hasNext()) {
-                Object[] ob = (Object[]) iterator.next();
-                studentid = (int) ob[0];
-            }
             
-//            Criteria c = session.createCriteria(Attendence.class , "attendence")
-//                    .createAlias("attendence.studentId", "studentId")
-//                    .createAlias("attendence.courseId", "courseId")
-//                    .add(Restrictions.eq("studentId.sId", Integer.parseInt(s)))
-//                    .add(Restrictions.eq("courseId.id", Integer.parseInt(s)))
+            while (iterator.hasNext()) {
+                Attendence attendence = (Attendence) iterator.next();
+                String datee = attendence.getCompleteDate().toString();
+                boolean Status = attendence.getAtten();
+                String Statuss;
+                if (Status == true) {
+                    Statuss = "attend";
+                } else {
+                    Statuss = "not attend";
+                }
+                inputbean.getAttandance_history().add(datee + "     - " + Statuss);// 5 spaces before - and 1 space after -
+            }
+
             
         } catch (Exception e) {
             if (session != null) {
@@ -567,6 +579,36 @@ public class AttenService {
                 session = null;
             }
         }
+    }
+    
+    public int getcorseid(AttenBean inputhbean){
+        Session session = null;
+        int courseid = 0;
+        try {
+            session = HibernateInit.getSessionFactory().openSession();
+            session.beginTransaction();
+            PendingPayments payments = (PendingPayments) session.createCriteria(PendingPayments.class, "p")
+                     .add(Restrictions.eq("p.id",Integer.parseInt(inputhbean.getAttenid()))).uniqueResult();
+             
+            courseid = payments.getCid();
+            
+        } catch (Exception e) {
+             if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            e.printStackTrace();
+        }finally {
+            if (session != null) {
+                session.flush();
+                session.clear();
+                session.getTransaction().commit();
+                session.close();
+                session = null;
+            }
+        }
+        return courseid;
     }
 
 }
