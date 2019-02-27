@@ -48,7 +48,8 @@
                     type: "GET",
                     success: function (data) {
                         alert("suces");
-                        $('#testid').val("ridmi");
+                        alert(data.attandance_history);
+                        $('#testid').val(data.attandance_history);
 //                         $('#testid').html('changed value');
                     },
                     error: function (data) {
