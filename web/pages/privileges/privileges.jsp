@@ -77,7 +77,6 @@
                         $('#description').val(data.description);
                         $('#newBox2').val(data.alreadyAcsessPageMap);
 
-                        alert(JSON.stringify(data.alreadyAcsessPageMap);
                         $("#newBox2").append($('<option>', {
                             value: $(data.alreadyAcsessPageMap).val(),
                             text: $(this).text()
@@ -182,7 +181,7 @@
                                     </tr>
                                 </table>
                                 <table>
-                                    </br>
+                                    <br/>
                                     <tr>                                
                                         <td> 
 
@@ -292,10 +291,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <fieldset id="task" hidden="true" style="border-radius: 5px;width: 400px;">
-
-
-                                            </fieldset>
+                                  
 
                                         </td>
                                     </tr>
@@ -352,7 +348,7 @@
             </div>
             </section>
 
-        </div>
+   
 
         </body>
         </html>

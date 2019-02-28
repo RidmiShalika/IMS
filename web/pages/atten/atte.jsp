@@ -39,7 +39,6 @@
                 return "<a href='#' onClick='javascript:pay(&#34;" + cellvalue + "&#34;,&#34;" + rowObject.id + "&#34;)'><i class='fa fa-share-square-o' aria-hidden='true'></i></a>";
             }
             function pay(keyval) {
-                alert(keyval);
                 //load history lists
                 $.ajax({
                     url: '${pageContext.request.contextPath}/loadhistorylist',
@@ -47,10 +46,8 @@
                     dataType: "json",
                     type: "GET",
                     success: function (data) {
-                        alert("suces");
-                        alert(data.attandance_history);
                         $('#testid').val(data.attandance_history);
-//                         $('#testid').html('changed value');
+                        $('#phisid').val(data.payment_history);
                     },
                     error: function (data) {
                          alert("error");
@@ -172,6 +169,11 @@
                                 </table>
 
                             </s:form>
+                          
+                        </div>
+                          
+                        <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                        <div style="width: 50%; float:left">  
                             <table>
                                 <tr>
                                     <td>
@@ -179,9 +181,6 @@
                                     </td>
                                 </tr>
                             </table>
-                        </div>
-                        <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-                        <div style="width: 50%; float:left">    
                             <div class="viewuser_tbl">
                                 <div id="tablediv">
                                     <s:url var="listurl" action="liststatt"/>
@@ -237,7 +236,7 @@
                                 <table>
                                     <tr>
                                         <td class="formLable" >Attendance History</td> 
-                                        <td><s:textarea id="testid" />
+                                        <td><s:textarea id="testid" cssStyle="width : 250px"/>
                                     </tr>
                                 </table>
 
@@ -247,6 +246,7 @@
                                 <table>
                                     <tr>
                                         <td class="formLable">Payment History</td> 
+                                        <td><s:textarea id="phisid" cssStyle="width : 290px"/>
                                     </tr>
                                 </table>
 
