@@ -55,6 +55,15 @@ public class AttenBean {
     private String selected_data;
     
     ArrayList<String> attandance_history = new ArrayList<String>();
+    ArrayList<String> payment_history = new ArrayList<String>();
+
+    public ArrayList<String> getPayment_history() {
+        return payment_history;
+    }
+
+    public void setPayment_history(ArrayList<String> payment_history) {
+        this.payment_history = payment_history;
+    }
 
     public ArrayList<String> getAttandance_history() {
         return attandance_history;

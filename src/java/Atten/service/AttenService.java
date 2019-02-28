@@ -534,7 +534,7 @@ public class AttenService {
             session = HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
             
-             HttpSession sess = ServletActionContext.getRequest().getSession(false);
+            HttpSession sess = ServletActionContext.getRequest().getSession(false);
             int st_id = (int) sess.getAttribute("stcourselist");
             
             Criteria criteria = session.createCriteria(Attendence.class, "attendance")
@@ -562,6 +562,48 @@ public class AttenService {
                 inputbean.getAttandance_history().add(datee + "     - " + Statuss);// 5 spaces before - and 1 space after -
             }
 
+            
+        } catch (Exception e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            e.printStackTrace();
+        }finally {
+            if (session != null) {
+                session.flush();
+                session.clear();
+                session.getTransaction().commit();
+                session.close();
+                session = null;
+            }
+        }
+    }
+    
+    public void getpaymenthistory(AttenBean inputbean, int couid){
+        Session session = null;
+        try {
+            session = HibernateInit.getSessionFactory().openSession();
+            session.beginTransaction();
+            
+            HttpSession sess = ServletActionContext.getRequest().getSession(false);
+            int st_id = (int) sess.getAttribute("stcourselist");
+            
+            Criteria criteria = session.createCriteria(PendingPayments.class,"p")
+                     .add(Restrictions.eq("p.sid",st_id))
+                    .add(Restrictions.eq("p.cid", couid));
+            criteria.setMaxResults(20);
+            
+            Iterator iterator = criteria.list()
+                        .iterator();
+            while (iterator.hasNext()) {
+                PendingPayments pendingPayments = (PendingPayments) iterator.next();
+                String month = pendingPayments.getMonth();
+                String Status = pendingPayments.getStatus();
+               
+                inputbean.getPayment_history().add(month + "   - " + Status);
+            }
             
         } catch (Exception e) {
             if (session != null) {
