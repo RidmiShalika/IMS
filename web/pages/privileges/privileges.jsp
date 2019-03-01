@@ -77,20 +77,13 @@
                         $('#description').val(data.description);
                         $('#newBox2').val(data.alreadyAcsessPageMap);
 
-                        $("#newBox2").append($('<option>', {
-                            value: $(data.alreadyAcsessPageMap).val(),
-                            text: $(this).text()
-                        }));
 
+                        alert(JSON.stringify(data.alreadyAcsessPageMap));
+                        for ( var i = 0; i < data.alreadyAcsessPageMap.length; i++) {
+                                 $('#newBox2').append( '<option value=' + data.alreadyAcsessPageMap[i] + '>' + data.alreadyAcsessPageMap[i] + '</option>');
 
-                        $.each(data, function (i, data) {      // bind the dropdown list using json result              
-                            $('<option>',
-                                    {
-                                        value: data.alreadyAcsessPageMap.keys(),
-                                        text: data.alreadyAcsessPageMap.valueOf()
-                                    }).html(data.alreadyAcsessPageMap).appendTo("#newBox2");
-                        });
-                        $('#newBox2').trigger("chosen:updated");
+                            }
+                      
                     },
                     error: function (data) {
                         window.location = "${pageContext.request.contextPath}/LogoutloginCall";
@@ -150,7 +143,54 @@
 
                 })
             }
+            function toleft2() {
+                $("#newBox2 option:selected").each(function () {
+                        $("#currentBox2").append($('<option>', {
+                            value: $(this).val(),
+                            text: $(this).text()
+                        }));
+                        $(this).remove();
+                })
+            }
+            function toleftall2() {
+                $("#newBox2 option").each(function () {
 
+                    $("#currentBox2").append($('<option>', {
+                        value: $(this).val(),
+                        text: $(this).text()
+                    }));
+                    $(this).remove();
+
+                });
+            }
+            function torightall2() {
+                $("#currentBox2 option").each(function () {
+
+                    $("#newBox2").append($('<option>', {
+                        value: $(this).val(),
+                        text: $(this).text()
+                    }));
+                    $(this).remove();
+                });
+            }
+            function test() {
+                $.ajax({
+                    url: '${pageContext.request.contextPath}/getalreaypages',
+                    data: {pageId: pageId, description: $("#description").val()},
+                    dataType: "text",
+                    type: "POST",
+                    success: function (data) {
+                        alert("success");
+                    },
+                    error: function (data) {
+                         alert("fail");
+
+                    }
+                }
+                );
+            }
+            
+            
         </script>
     </head>
 
@@ -278,7 +318,7 @@
                                                 <button type="button" id="right2" onClick="toright2()" class="btn default-button"><i class="fa fa-angle-right" aria-hidden="true"></i></button>
                                                 <button type="button" id="rightall2" onClick="torightall2()" class="btn default-button lnk"><i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
                                             </div>
-                                            <s:select multiple="true"  name="newBox2" id="newBox2" list="%{alreadyAcsessPageMap}" ondblclick="toleft2()" cssClass="ddl-input width-15" size="10" />
+                                            <s:select multiple="true"  name="newBox2" id="newBox2" list="alreadyAcsessPageMap" cssClass="ddl-input width-15" size="10" />
                                         </div>
                                     </div>
 
