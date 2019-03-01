@@ -159,7 +159,9 @@ public class PrivilegeService {
                 inputBean.setDescription(privilegeses.get(0).getRoleId().getDescription());
                 
                 inputBean.getAlreadyAcsessPageMap().put(privilegeses.get(i).getPageId().getPageId(), privilegeses.get(i).getPageId().getPageDescription());
-            }
+            
+                 System.out.println("privilges "+inputBean.getAlreadyAcsessPageMap().get(i));
+             }
          
          }catch (Exception e) {
             if (session != null) {
@@ -315,36 +317,36 @@ public class PrivilegeService {
          
     }
     
-    public void getalreaypages(PrivilegeBean inputbean) throws Exception{
-        Session session = null;
-        List<Privileges> privilegeses = null;
-        try {
-            session = HibernateInit.getSessionFactory().openSession();
-            session.beginTransaction();
-            String sql = "from Privileges pp where pp.roleId.userRoleId=:userRoleId";
-            Query query = session.createQuery(sql);
-            query.setString("userRoleId", inputbean.getDescription());
-
-            privilegeses = query.list();
-            
-            for (int i = 0; i < privilegeses.size(); i++) {
-                System.out.println(privilegeses.get(0));
-//                inputbean.getUserroleList().put(privilegeses.get(i).getUserRoleId(), privilegeses.get(i).getDescription());
-            }
-            
-        } catch (Exception e) {
-             if (session != null) {
-                 session.getTransaction().rollback();
-                session.close();
-                session = null;
-            }
-            throw e;
-        }finally {
-            if (session != null) {
-                session.getTransaction().commit();
-                session.close();
-                session = null;
-            }
-        }
-    }
+//    public void getalreaypages(PrivilegeBean inputbean) throws Exception{
+//        Session session = null;
+//        List<Privileges> privilegeses = null;
+//        try {
+//            session = HibernateInit.getSessionFactory().openSession();
+//            session.beginTransaction();
+//            String sql = "from Privileges pp where pp.roleId.userRoleId=:userRoleId";
+//            Query query = session.createQuery(sql);
+//            query.setString("userRoleId", inputbean.getDescription());
+//
+//            privilegeses = query.list();
+//            
+//            for (int i = 0; i < privilegeses.size(); i++) {
+//                System.out.println(privilegeses.get(0));
+////                inputbean.getUserroleList().put(privilegeses.get(i).getUserRoleId(), privilegeses.get(i).getDescription());
+//            }
+//            
+//        } catch (Exception e) {
+//             if (session != null) {
+//                 session.getTransaction().rollback();
+//                session.close();
+//                session = null;
+//            }
+//            throw e;
+//        }finally {
+//            if (session != null) {
+//                session.getTransaction().commit();
+//                session.close();
+//                session = null;
+//            }
+//        }
+//    }
 }

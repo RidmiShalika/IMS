@@ -213,6 +213,9 @@
             <interceptor-ref name="defaultStack"></interceptor-ref>
             <result name="add">/pages/msgFrag.jsp</result>
         </action>
+        <action name="getalreaypages" class="privileges.action.PrivilegeAction" method="getalreayaccesspages">
+            <result name="getalreaypages" type="json"></result>
+        </action>
     </package>
     
     <package name="Report" extends="pglobal" namespace="/">
