@@ -207,15 +207,13 @@
         </action>
       <action name="Addprivileges" class="privileges.action.PrivilegeAction" method="AddPrivilage">
             <interceptor-ref name="defaultStack"></interceptor-ref>
-            <result name="addPriviles">/pages/msgFrag.jsp</result>
+            <result name="addPriviles" type="json"></result>
         </action>
         <action name="Adduser" class="privileges.action.PrivilegeAction" method="Add">
             <interceptor-ref name="defaultStack"></interceptor-ref>
             <result name="add">/pages/msgFrag.jsp</result>
         </action>
-        <action name="getalreaypages" class="privileges.action.PrivilegeAction" method="getalreayaccesspages">
-            <result name="getalreaypages" type="json"></result>
-        </action>
+        
     </package>
     
     <package name="Report" extends="pglobal" namespace="/">

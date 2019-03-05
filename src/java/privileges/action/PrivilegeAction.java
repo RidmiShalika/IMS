@@ -99,7 +99,10 @@ public class PrivilegeAction extends ActionSupport implements ModelDriven<Privil
     public String AddPrivilage(){
         try {
 //            System.out.println("add pri method");
+
+            service.deleteexsitingpri(inputbean);
             service.addPri(inputbean);
+              
            
             inputbean.setMessage("Successfully Updated");
             inputbean.setSuccess(true);
@@ -126,12 +129,5 @@ public class PrivilegeAction extends ActionSupport implements ModelDriven<Privil
         }
         return "add";
     }
-    public String getalreayaccesspages(){
-        System.out.println("dsdsdsdds");
-        try {
-//            service.getalreaypages(inputbean);
-        } catch (Exception e) {
-        }
-        return "getalreaypages";
-    }
+   
 }
