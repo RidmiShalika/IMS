@@ -75,16 +75,14 @@
                         $('#userRoleId').val(data.userRoleId);
                         $('#description').attr('readOnly', true);
                         $('#description').val(data.description);
-                        $('#newBox2').val(data.alreadyAcsessPageMap);
+                        $('#newBox2').empty();
 
+                        $.each(data.alreadyAcsessPageMap, function (key, value) {
+                            $('#newBox2').append($('<option></option>').val(key).html(value));
+                        });
 
-                        alert(JSON.stringify(data.alreadyAcsessPageMap));
-                        for ( var i = 0; i < data.alreadyAcsessPageMap.length; i++) {
-                                 $('#newBox2').append( '<option value=' + data.alreadyAcsessPageMap[i] + '>' + data.alreadyAcsessPageMap[i] + '</option>');
-
-                            }
-                      
                     },
+                            
                     error: function (data) {
                         window.location = "${pageContext.request.contextPath}/LogoutloginCall";
                     }
@@ -93,7 +91,6 @@
             }
             function ResetTaskAsinForm() {
                 $('#divmsg').hide();
-//                 $('#description').val("");
                 $('#pageId').val(-1);
             }
 
@@ -104,19 +101,29 @@
                 jQuery("#gridtable").trigger("reloadGrid");
             });
             function addPrivilage() {
-                var pageId = $('#pageId').val();
-//                 alert(pageId);
+ 
+                var pageId = [];
+                $('#newBox2 option').each(function() { 
+                pageId.push( $(this).attr('value') );
+//                alert(pageId)
+                });
+                var userRoleId=$("#description").val()
+//                alert(userRoleId);
+                
                 $.ajax({
                     url: '${pageContext.request.contextPath}/Addprivileges',
                     data: {pageId: pageId, description: $("#description").val()},
-                    dataType: "text",
+                    dataType: "json",
                     type: "POST",
                     success: function (data) {
-
+                        alert(JSON.stringify(data));
                         $('#divmsg').show();
+                        alert(data.success);
                         if (data.success) {
+                            alert("data sucess");
                             document.getElementById("divmsg").innerHTML = "Successfully Updated";
                         } else {
+                            alert("data not sucess");
                             document.getElementById("divmsg").innerHTML = "Updated Error ";
                             $("divmsg").css("background-color", "red");
                         }
@@ -124,7 +131,7 @@
 
                     },
                     error: function (data) {
-
+                        alert("error");
                         window.location = "${pageContext.request.contextPath}/LogoutloginCall";
 
                     }
@@ -173,22 +180,7 @@
                     $(this).remove();
                 });
             }
-            function test() {
-                $.ajax({
-                    url: '${pageContext.request.contextPath}/getalreaypages',
-                    data: {pageId: pageId, description: $("#description").val()},
-                    dataType: "text",
-                    type: "POST",
-                    success: function (data) {
-                        alert("success");
-                    },
-                    error: function (data) {
-                         alert("fail");
-
-                    }
-                }
-                );
-            }
+      
             
             
         </script>
@@ -299,27 +291,31 @@
                                         <td class="formLable"></td> <td></td>
                                         <td></td>
                                     </tr>  
+                                  
                                     <tr>
-                                        <td class="formLable">Select Page<span class="mandatory">*</span></td> <td>:</td>
-                                        <td><s:select  name="pageId" id="pageId" list="%{pageIdList}" 
-                                                   listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td>                           
-                                        <td width="25px;"></td>
-                                        <!--onchange="addPrivilage(this.value)""--> 
-
-                                    </tr>  
-                                    <tr>
+                                       
                                     <div class="d-row">
-                                        <label class="col-1 form-label">Task<sup class="required">*</sup></label>
+                                        <label class="col-1 form-label">Pages<sup class="required">*</sup></label>
                                         <div class="right-col form-field move-items">
-                                            <s:select multiple="true" name="currentBox2" id="currentBox2" list="pageIdList" ondblclick="toright2()"  cssClass="ddl-input width-15" size="10" />
-                                            <div class="inline-fields">
+                                            <td>
+                                                <s:select multiple="true" name="currentBox2" id="currentBox2" list="pageIdList" ondblclick="toright2()"  cssClass="ddl-input width-15" size="10" />
+                                            </td>
+                                            <td>
+                                                <div class="inline-fields">
                                                 <button type="button" id="left2" onClick="toleft2()" class="btn default-button"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
                                                 <button type="button" id="leftall2" onClick="toleftall2()" class="btn default-button"><i class="fa fa-angle-double-left" aria-hidden="true"></i></button>
                                                 <button type="button" id="right2" onClick="toright2()" class="btn default-button"><i class="fa fa-angle-right" aria-hidden="true"></i></button>
                                                 <button type="button" id="rightall2" onClick="torightall2()" class="btn default-button lnk"><i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
                                             </div>
-                                            <s:select multiple="true"  name="newBox2" id="newBox2" list="alreadyAcsessPageMap" cssClass="ddl-input width-15" size="10" />
+                                            </td>
+                                            <td>
+                                                <s:select multiple="true"  name="newBox2" id="newBox2" list="alreadyAcsessPageMap" cssClass="ddl-input width-15" size="10" />
+                                            </td>
+                                           
                                         </div>
+                                    </div>
+                                   <div class="d-row">
+                                                
                                     </div>
 
                                     </tr>
