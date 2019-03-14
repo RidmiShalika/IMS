@@ -16,7 +16,7 @@
             function pay(keyval) {
                 //load history lists
                 $.ajax({
-                    url: '${pageContext.request.contextPath}/loadhistorylist',
+                    url: '${pageContext.request.contextPath}/loadhistorylistp',
                     data: {pid: keyval},
                     dataType: "json",
                     type: "GET",
@@ -35,7 +35,7 @@
                 alert('selected rows:' + selected_data);
 
                 $.ajax({
-                    url: '${pageContext.request.contextPath}/paymentmark',
+                    url: '${pageContext.request.contextPath}/paymentmarkp',
                     data: {selected_data: selected_data},
                     dataType: "json",
                     type: "GET",
@@ -76,7 +76,7 @@
                             </table>
                             <div class="viewuser_tbl">
                                 <div id="tablediv">
-                                    <s:url var="listurl" action="liststpay"/>
+                                    <s:url var="listurl" action="liststpayp"/>
                                     <sjg:grid
                                         id="gridtable"
                                         caption="Student Payments"

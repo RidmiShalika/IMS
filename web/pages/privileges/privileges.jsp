@@ -24,17 +24,17 @@
 
             }
             function ResetAddForm() {
-                $('#name').val("");
-                $('#firstname').val("");
-                $('#address').val("");
-                $('#email').val("");
-                $('#gender').val("");
-                $('#yearOfRegistration').val("");
-                $('#telephone').val("");
-                $('#school').val("");
-                $('#birthday').val("");
-                $('#parentContactNo').val("");
-                $('#cardno').val("");
+                $('#addname').val("");
+                $('#addgender').val("-1");
+                $('#addaddress').val("");
+                $('#addnic').val("");
+                $('#addcontact').val("");
+                $('#addusername').val("");
+                $('#adduserrole').val("-1");
+                $('#addpassword').val("");
+                $('#addconfirmpassword').val("");
+                 $('#divmsg').hide();
+                
                 jQuery("#gridtable").trigger("reloadGrid");
 
             }
@@ -192,7 +192,7 @@
             <div class="wrapper">
                 <div class="body_content" id="includedContent" >
                     <div class="watermark"></div>
-                    <div class="heading">Register New User</div>
+                    <div class="heading">Privileges Assigning</div>
                     <div class="AddUser_box ">
                         <div class="message">         
                             <s:div id="divmsg">
@@ -202,7 +202,7 @@
                         </div>
                         <div class="contentcenter">
                             <s:form id="searchForm"  theme="simple">         
-                                <table >              
+<!--                                <table >              
                                     <tr>
                                         <td style="font-size: 15px">User Name</td>
                                         <td>:</td>
@@ -211,17 +211,17 @@
 
                                         </td>
                                     </tr>
-                                </table>
+                                </table>-->
                                 <table>
                                     <br/>
                                     <tr>                                
                                         <td> 
 
 
-                                            <sj:a     button="true"    onClickTopics="onclicksearch"  cssClass="button_aback"  role="button" >Search</sj:a>
+                                            <%--<sj:a     button="true"    onClickTopics="onclicksearch"  cssClass="button_aback"  role="button" >Search</sj:a>--%>
 
                                             <sj:a     button="true"    onClickTopics="loadAddForm" onclick="loadAddForm()"  cssClass="button_aback"  role="button" >Add</sj:a>
-                                            <sj:a     button="true"  onclick="ResetSearchForm1()"  cssClass="button_aback"  role="button" >Reset</sj:a>
+                                            <%--<sj:a     button="true"  onclick="ResetSearchForm1()"  cssClass="button_aback"  role="button" >Reset</sj:a>--%>
 
                                             </td>
                                         </tr>
@@ -239,14 +239,14 @@
                                                    listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
                                     </tr> 
                                     <tr>
-                                        <td class="formLable">Address<span class="mandatory">*</span></td> <td >:</td>
+                                        <td class="formLable">Address</td> <td >:</td>
                                         <td><s:textfield id="addaddress" name="addaddress" cssClass="textField" /></td>                                    
                                         <td width="25px;"></td>
-                                        <td class="formLable">NIC<span class="mandatory">*</span></td> <td>:</td>
+                                        <td class="formLable">NIC</td> <td>:</td>
                                         <td><s:textfield id="addnic" name="addnic" cssClass="textField" /></td>
                                     </tr>
                                     <tr>
-                                        <td class="formLable">Contact<span class="mandatory">*</span></td> <td >:</td>
+                                        <td class="formLable">Contact</td> <td >:</td>
                                         <td><s:textfield id="addcontact" name="addcontact" cssClass="textField" /></td>                                    
                                         <td width="25px;"></td>
                                     </tr>

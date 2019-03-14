@@ -204,7 +204,7 @@
                                         >
 
                                         <sjg:gridColumn name="id" index="id" title="id" hidden="true" width="10"/>
-                                        <sjg:gridColumn name="id" index="id" title="Pay" width="50" formatter="paymentformatter"/>
+                                        <sjg:gridColumn name="id" index="id" title="His" width="50" formatter="paymentformatter"/>
                                         <sjg:gridColumn name="sid" index="sid" title="Student Id" width="80"/>
                                         <sjg:gridColumn name="cid" index="cid" title="Course Id" width="80"/>
                                         <sjg:gridColumn name="year" index="v" title="Year" width="100"/>

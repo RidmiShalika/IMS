@@ -19,7 +19,7 @@
                 var keyval = $('#payid').val();
                 
                  $.ajax({
-                    url: '${pageContext.request.contextPath}/findSt',
+                    url: '${pageContext.request.contextPath}/findStp',
                     data: {payid: keyval},
                     dataType: "json",
                     type: "POST",
