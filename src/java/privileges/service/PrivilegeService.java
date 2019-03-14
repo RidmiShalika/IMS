@@ -43,7 +43,7 @@ public class PrivilegeService {
             session = (Session) HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
 
-            String sqlCount = "select count(id) from UserRole";
+            String sqlCount = "select count(id) from UserRole ";
 //            String sqlCount = "select count(ID) from "
             Query queryCount = session.createQuery(sqlCount);
             Iterator itCount = queryCount.iterate();
@@ -157,16 +157,16 @@ public class PrivilegeService {
 
             System.out.println("usr size " + privilegeses.size());
             if (privilegeses.isEmpty()) {
-                if(inputBean.getUserRoleId().equals("1")){
+                if (inputBean.getUserRoleId().equals("1")) {
                     inputBean.setDescription("Super Admin");
-                }else if(inputBean.getUserRoleId().equals("2")){
+                } else if (inputBean.getUserRoleId().equals("2")) {
                     inputBean.setDescription("Admin");
-                }else if(inputBean.getUserRoleId().equals("3")){
+                } else if (inputBean.getUserRoleId().equals("3")) {
                     inputBean.setDescription("Manager");
-                }else if(inputBean.getUserRoleId().equals("4")){
+                } else if (inputBean.getUserRoleId().equals("4")) {
                     inputBean.setDescription("User");
                 }
-                
+
             } else {
                 for (int i = 0; i < privilegeses.size(); i++) {
                     inputBean.setUserRoleId("" + privilegeses.get(0).getRoleId().getUserRoleId());
@@ -325,16 +325,25 @@ public class PrivilegeService {
                 System.out.println("role des " + inputbean.getDescription());
                 System.out.println("role id " + inputbean.getUserRoleId());
 
-                Privileges criteria = (Privileges) session.createCriteria(Privileges.class, "privilages")
-                        .createAlias("privilages.roleId", "user_role")
-                        .createAlias("privilages.pageId", "pageId")
-                        .add(Restrictions.eq("user_role.userRoleId", Integer.parseInt(inputbean.getUserRoleId())))
-                        .add(Restrictions.eq("pageId.pageId", Integer.parseInt(pages[i].trim()))).uniqueResult();
-                if (criteria != null) {
-                    session.delete(criteria);
-                }
+//                Privileges criteria = (Privileges) session.createCriteria(Privileges.class, "privilages")
+//                        .createAlias("privilages.roleId", "user_role")
+//                        .createAlias("privilages.pageId", "pageId")
+//                        .add(Restrictions.eq("user_role.userRoleId", Integer.parseInt(inputbean.getUserRoleId())))
+//                        .add(Restrictions.eq("pageId.pageId", Integer.parseInt(pages[i].trim()))).uniqueResult();
+//                if (criteria != null) {
+//                    session.delete(criteria);
+//                    session.getTransaction().commit();
+//                }
 
+                String sql1 = "delete from Privileges wu where wu.roleId.userRoleId=:roleId";
+                Query query1 = session.createQuery(sql1);
+                query1.setInteger("roleId", Integer.parseInt(inputbean.getUserRoleId()));
+                int result = query1.executeUpdate();
+//                if (1 == result) {
+//                    isAddPri = true;
+//                }
                 session.getTransaction().commit();
+
             }
 
             isAddPri = true;

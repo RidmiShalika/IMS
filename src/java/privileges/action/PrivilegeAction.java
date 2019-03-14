@@ -35,8 +35,9 @@ public class PrivilegeAction extends ActionSupport implements ModelDriven<Privil
         }
         return inputbean;
     }
-     public void genderList(PrivilegeBean inputbean){
-            try {
+
+    public void genderList(PrivilegeBean inputbean) {
+        try {
             inputbean.getGenderlList().put(1, "Female");
             inputbean.getGenderlList().put(2, "Male");
 
@@ -96,38 +97,78 @@ public class PrivilegeAction extends ActionSupport implements ModelDriven<Privil
 
         return "find";
     }
-    public String AddPrivilage(){
+
+    public String AddPrivilage() {
         try {
 //            System.out.println("add pri method");
 
-            service.deleteexsitingpri(inputbean);
-            service.addPri(inputbean);
-              
-           
-            inputbean.setMessage("Successfully Updated");
-            inputbean.setSuccess(true);
+            if (service.deleteexsitingpri(inputbean)) {
+                service.addPri(inputbean);
+                inputbean.setMessage("Successfully Updated");
+                inputbean.setSuccess(true);
+            } else {
+                inputbean.setMessage("Updated Error");
+                inputbean.setSuccess(false);
+            }
+
         } catch (Exception e) {
-           
+
             inputbean.setMessage("Updated Error");
-             inputbean.setSuccess(false);
+            inputbean.setSuccess(false);
             e.printStackTrace();
         }
         return "addPriviles";
     }
-    
-    public String Add(){
+
+    public String Add() {
         try {
-            if(service.addUsr(inputbean)){
-                addActionMessage("User add successfully");
-            }else{
-                addActionError("User add fail");
+            if (doValidation(inputbean)) {
+                if (service.addUsr(inputbean)) {
+                    addActionMessage("User add successfully");
+                } else {
+                    addActionError("User add fail");
+                }
             }
-            
+
         } catch (Exception e) {
             addActionError("User add fail");
             e.printStackTrace();
         }
         return "add";
     }
-   
+
+    public boolean doValidation(PrivilegeBean inputbean) throws Exception {
+        boolean ok = false;
+        try {
+            if (inputbean.getAddname() == null || inputbean.getAddname().isEmpty()) {
+                addActionError("Name can not be empty");
+                return ok;
+            } else if (inputbean.getAddgender().equals("-1")) {
+                addActionError("Please select gender");
+                return ok;
+            } else if (inputbean.getAddusername() == null || inputbean.getAddusername().isEmpty()) {
+                addActionError("Username can not be empty");
+                return ok;
+            } else if (inputbean.getAdduserrole().equals("-1")) {
+                addActionError("Please select user role");
+                return ok;
+            } else if (inputbean.getAddpassword() == null || inputbean.getAddpassword().isEmpty()) {
+                addActionError("Password can not be empty");
+                return ok;
+            } else if (inputbean.getAddconfirmpassword() == null || inputbean.getAddconfirmpassword().isEmpty()) {
+                addActionError("Password comfirm can not be empty");
+                return ok;
+            } else if (!inputbean.getAddpassword().equals(inputbean.getAddconfirmpassword())) {
+                addActionError("Password mismatch");
+                return ok;
+            } else {
+                ok = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return ok;
+    }
+
 }
