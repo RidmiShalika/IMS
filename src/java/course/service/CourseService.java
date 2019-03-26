@@ -42,14 +42,16 @@ public class CourseService {
             session = (Session) HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
 
-            String sqlCount = "select count(id) from Course";
+            String sqlCount = "select count(id) from Course s where s.courseDescription LIKE :courseDescription";
             Query queryCount = session.createQuery(sqlCount);
+            queryCount.setString("courseDescription", "%"+inputBean.getSearchname()+"%");
             Iterator itCount = queryCount.iterate();
             count = (Long) itCount.next();
             if (count > 0) {
-                String sqlSearch = "from Course ";
+                String sqlSearch = "from Course s where s.courseDescription LIKE :courseDescription";
                 Query querySearch = session.createQuery(sqlSearch);
 //                querySearch.setParameter("courseDescription", "%" + inputBean.getSearchname() + "%");
+                querySearch.setString("courseDescription", "%"+inputBean.getSearchname()+"%");
 
                 querySearch.setMaxResults(max);
                 querySearch.setFirstResult(first);
@@ -518,7 +520,7 @@ public class CourseService {
                 course.setBatchNo(Integer.parseInt(inputbean.getUpbatchNo()));
                 course.setClassType(Integer.parseInt(inputbean.getUpclassType()));
                 course.setCourseDescription(inputbean.getUpcourseDescription());
-                course.setCourseDuration(inputbean.getUpcourseDuration());
+//                course.setCourseDuration(inputbean.getUpcourseDuration());
                 course.setGrade(Integer.parseInt(inputbean.getUpgrade()));
                 course.setLecHallId(Integer.parseInt(inputbean.getUplectureHall()));
                 course.setLecPaymentPercentage(Double.parseDouble(inputbean.getUplecturerPayment()));
@@ -534,7 +536,7 @@ public class CourseService {
                 s.setSubjectId(Integer.parseInt(inputbean.getUpsubject()));
                 course.setSubjectId(s);
                 
-                course.setTotalCourseFee(Double.parseDouble(inputbean.getUptotalCoursefee()));
+//                course.setTotalCourseFee(Double.parseDouble(inputbean.getUptotalCoursefee()));
 
 
                 session.update(course);
@@ -863,5 +865,38 @@ public class CourseService {
 
         return ok;
 
+    }
+    public boolean checkdublicateDes(CourseBean inputbean){
+        boolean ok = false;
+
+        Session session = HibernateInit.getSessionFactory().openSession();
+        try {
+
+            session.beginTransaction();
+            Course at = (Course) session.createCriteria(Course.class)
+                    .add(Restrictions.eq("courseDescription", inputbean.getAddcourseDescription()))
+                    .uniqueResult();
+
+            if (at != null) {
+                ok = true;
+            }
+
+        } catch (Exception ex) {
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            throw ex;
+        } finally {
+            if (session != null) {
+                session.getTransaction().commit();
+                session.flush();
+                session.close();
+                session = null;
+            }
+        }
+
+        return ok;
     }
 }

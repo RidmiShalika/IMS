@@ -174,7 +174,10 @@ public class CourseAction extends ActionSupport implements ModelDriven<CourseBea
          if(inputbean.getAddcourseDescription() == null || inputbean.getAddcourseDescription().isEmpty()){
              addActionError("Description can not be empty");
              ok = false;
-         }else if(inputbean.getAddlecturer().equals("-1")){
+         }else if(service.checkdublicateDes(inputbean)){
+             addActionError("Course description already defined");
+             ok = false;
+        }else if(inputbean.getAddlecturer().equals("-1")){
              addActionError("Please select lecture");
              ok = false;
         }else if(inputbean.getAddconductingMedium().equals("-1")){
@@ -231,7 +234,10 @@ public class CourseAction extends ActionSupport implements ModelDriven<CourseBea
          if(inputbean.getUpcourseDescription() == null || inputbean.getUpcourseDescription().isEmpty()){
              addActionError("Description can not be empty");
              ok = false;
-         }else if(inputbean.getUplecturer().equals("-1")){
+         }else if(service.checkdublicateDes(inputbean)){
+             addActionError("Course description already defined");
+             ok = false;
+        }else if(inputbean.getUplecturer().equals("-1")){
              addActionError("Please select lecture");
              ok = false;
         }else if(inputbean.getUpconductingMedium().equals("-1")){

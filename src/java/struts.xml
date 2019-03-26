@@ -79,7 +79,7 @@
         <action name="PayAddmission" class="student.action.StudentRegister" method="pay">
             <result name="pay">/pages/student/payAdd.jsp</result>
         </action>
-        <action name="payment" class="student.action.StudentRegister" method="paymentAdd">
+        <action name="paymentAdm" class="student.action.StudentRegister" method="paymentAdd">
             <result name="payment">/pages/msgFrag.jsp</result>
         </action>
         <action name="getadmissionInfo" class="student.action.StudentRegister" method="getInfo" > 
