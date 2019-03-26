@@ -61,7 +61,7 @@
                                     <table>
                                     <tr>
                                         <td>
-                                            <s:url var="paymentaddurl" action="payment" />
+                                            <s:url var="paymentaddurl" action="paymentAdm" />
 
                                             <sj:submit  id="assAddbtn" button="true" href="%{paymentaddurl}" value="Add"   targets="divmsg2" cssClass="button_aback"/> 
                                             </td>

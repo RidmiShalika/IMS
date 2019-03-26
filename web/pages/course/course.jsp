@@ -89,7 +89,6 @@
                     dataType: "json",
                     type: "POST",
                     success: function (data) {
-                        alert(JSON.stringify(data));
                         $('#searchForm').hide();
 //                         $('#addForm').hide()();
                         $('#upcourseid').val(data.upcourseid);
@@ -127,7 +126,6 @@
 
                     },
                     error: function (data) {
-                        alert("error");
                         window.location = "${pageContext.request.contextPath}/logOut.action";
                     }
                 });
@@ -138,30 +136,52 @@
                 jQuery("#gridtable").trigger("reloadGrid");
             }
             function resetUpdateForm() {
-                var keyval = $('#upname').val();
+                var keyval = $('#upcourseid').val();
+                $('#divmsg').empty();
                 $.ajax({
-                    url: '${pageContext.request.contextPath}/findStudent',
-                    data: {upname: keyval},
+                    url: '${pageContext.request.contextPath}/findCourse',
+                    data: {courseID: keyval},
                     dataType: "json",
                     type: "POST",
                     success: function (data) {
 
                         $('#searchForm').hide();
-                        $('#upname').val(data.upname);
-                        $('#upfirstname').val(data.upfirstname);
-                        $('#upaddress').val(data.upaddress);
-                        $('#upemail').val(data.upemail);
-                        $('#upgender').val(data.upgender);
-                        $('#upyearOfRegistration').val(data.upyearOfRegistration);
-                        $('#uptelephone').val(data.uptelephone);
-                        $('#upschool').val(data.upschool);
-                        $('#upbirthday').val(data.upbirthday);
-                        $('#upparentContactNo').val(data.upparentContactNo);
-                        $('#upcardno').val(data.upcardno);
+//                         $('#addForm').hide()();
+                        $('#upcourseid').val(data.upcourseid);
+                        $('#upcourseDescription').val(data.upcourseDescription);
+                        $('#uplecturer').val(data.uplecturer);
+                        $('#upconductingMedium').val(data.upconductingMedium);
+                        $('#upsubject').val(data.upsubject);
+                        $('#uptotalCoursefee').val(data.uptotalCoursefee);
+                        $('#upgrade').val(data.upgrade);
+                        $('#upcourseDuration').val(data.upcourseDuration);
+                        $('#upmonthlyFee').val(data.upmonthlyFee);
+                        $('#upclassType').val(data.upclassType);
+                        $('#uplectureHall').val(data.uplectureHall);
+                        $('#upbatchNo').val(data.upbatchNo);
+                        $('#uplecturerPayment').val(data.uplecturerPayment);
+                        $('#upclassDays').val(data.upclassDays);
+                        $('#upstartTime').val(data.upstartTime);
+                        $('#upendTime').val(data.upendTime);
+                        
+                        $('#upstarttimeM').val(data.upstarttimeM);
+                        $('#upstarttimeTu').val(data.upstarttimeTu);
+                        $('#upstarttimeW').val(data.upstarttimeW);
+                        $('#upstarttimeTh').val(data.upstarttimeTh);
+                        $('#upstarttimeF').val(data.upstarttimeF);
+                        $('#upstarttimeSa').val(data.upstarttimeSa);
+                        $('#upstarttimeSu').val(data.upstarttimeSu);
+                        
+                        $('#upendtimeM').val(data.upendtimeM);
+                        $('#upendtimeTu').val(data.upendtimeTu);
+                        $('#upendtimeW').val(data.upendtimeW);
+                        $('#upendtimeTh').val(data.upendtimeTh);
+                        $('#upendtimeF').val(data.upendtimeF);
+                        $('#upendtimeSa').val(data.upendtimeSa);
+                        $('#upendtimeSu').val(data.upendtimeSu);
 
                     },
                     error: function (data) {
-                        alert("error");
                         window.location = "${pageContext.request.contextPath}/logOut.action";
                     }
                 });
@@ -221,7 +241,7 @@
                         <s:form id="searchForm"  theme="simple">         
                             <table >              
                                 <tr>
-                                    <td style="font-size: 15px">Course Name</td>
+                                    <td style="font-size: 15px">Course Description</td>
                                     <td>:</td>
                                     <td colspan="2"><s:textfield name="searchname"  id="searchname" cssClass="textField" /> </td>
                                     <td class="content_td formLable">
@@ -268,17 +288,16 @@
                                                listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
                                 </tr>
                                 <tr>
-                                    <td class="formLable">Total Course Fee</td> <td >:</td>
-                                    <td><s:textfield id="addtotalCoursefee" name="addtotalCoursefee" cssClass="textField" /></td>                                    
-                                    <td width="25px;"></td>
+<!--                                    <td class="formLable">Total Course Fee</td> <td >:</td>
+                                    <td><s:textfield id="addtotalCoursefee" name="addtotalCoursefee" cssClass="textField" /></td>                                    -->
+                                    <!--<td width="25px;"></td>-->
                                     <td class="formLable">Grade<span class="mandatory">*</span></td> <td>:</td>
-                                    <!--<td><s:textfield id="addgrade" name="addgrade" cssClass="textField" /></td>-->
                                     <td><s:select  name="addgrade" id="addgrade" list="%{gradeList}" 
                                                listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
-                                </tr>
-                                <tr>
-                                    <td class="formLable">Course Duration</td> <td >:</td>
-                                    <td><s:textfield id="addcourseDuration" name="addcourseDuration" cssClass="textField" /></td>                                    
+<!--                                </tr>
+                                <tr>-->
+<!--                                    <td class="formLable">Course Duration</td> <td >:</td>
+                                    <td><s:textfield id="addcourseDuration" name="addcourseDuration" cssClass="textField" /></td>                                    -->
                                     <td width="25px;"></td>
                                     <td class="formLable">Monthly Fee</td> <td>:</td>
                                     <td><s:textfield id="addmonthlyFee" name="addmonthlyFee" cssClass="textField" /></td>  
@@ -406,16 +425,16 @@
                                                listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
                                 </tr>
                                 <tr>
-                                    <td class="formLable">Total Course Fee</td> <td >:</td>
+<!--                                    <td class="formLable">Total Course Fee</td> <td >:</td>
                                     <td><s:textfield id="uptotalCoursefee" name="uptotalCoursefee" cssClass="textField" /></td>                                    
-                                    <td width="25px;"></td>
+                                    <td width="25px;"></td>-->
                                     <td class="formLable">Grade<span class="mandatory">*</span></td> <td>:</td>
                                     <td><s:select  name="upgrade" id="upgrade" list="%{gradeList}" 
                                                listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
-                                </tr>
+<!--                                </tr>
                                 <tr>
                                     <td class="formLable">Course Duration</td> <td >:</td>
-                                    <td><s:textfield id="upcourseDuration" name="upcourseDuration" cssClass="textField" /></td>                                    
+                                    <td><s:textfield id="upcourseDuration" name="upcourseDuration" cssClass="textField" /></td>                                    -->
                                     <td width="25px;"></td>
                                     <td class="formLable">Monthly Fee</td> <td>:</td>
                                     <td><s:textfield id="upmonthlyFee" name="upmonthlyFee" cssClass="textField" /></td>  

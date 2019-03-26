@@ -71,7 +71,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="formLable">Date<span class="mandatory">*</span></td><td>:</td>
+                                        <td class="formLable">End Time<span class="mandatory">*</span></td><td>:</td>
                                         <td class="formLable">
                                         <sj:datepicker id="extraEndTime" name="extraEndTime" timepicker="true" timepickerOnly="true" cssStyle="width : 100px"/>
                                         </td>

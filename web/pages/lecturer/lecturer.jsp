@@ -189,7 +189,7 @@
                             <s:form  id="addForm"  theme="simple" method="post"  cssStyle="display:none">
                                 <table >
                                     <tr>
-                                        <td class="formLable">Title</td> <td>:</td>
+                                        <td class="formLable">Title<span class="mandatory">*</span></td> <td>:</td>
 
                                         <!--<td><s:textfield id="addtitle" name="addtitle" cssClass="textField" /></td>-->
                                         <td><s:select  name="addtitle" id="addtitle" list="%{titleList}" 

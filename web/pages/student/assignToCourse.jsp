@@ -140,9 +140,8 @@
                                                listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
                                     <td width="25px;"></td>
 
-                                    <td class="formLable">Course Duration</td> <td >:</td>
-                                    <td><s:textfield id="course_duration" name="course_duration"></s:textfield></td> 
-                                        <td width="25px;"></td>
+                                    <td class="formLable">Course Fee</td> <td >:</td>
+                                    <td><s:textfield id="course_fee" name="course_fee" disabled="true"></s:textfield></td> 
 
                                     </tr>
                                     <tr>
@@ -152,8 +151,7 @@
                                                listValue="name"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" onchange="test(this.value)" /></td> 
 
                                     <td width="25px;"></td>
-                                    <td class="formLable">Course Fee</td> <td >:</td>
-                                    <td><s:textfield id="course_fee" name="course_fee"></s:textfield></td> 
+                                    
 
                                     </tr>
 
