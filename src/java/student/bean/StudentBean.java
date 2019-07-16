@@ -75,6 +75,7 @@ public class StudentBean {
     private String upbirthday;
     private String upparentContactNo;
     private String upcardno;
+    private byte[] upimage;
 
     private String id;
     private String upId;
@@ -117,6 +118,15 @@ public class StudentBean {
     //search data
     private String searchname;
 
+    public byte[] getUpimage() {
+        return upimage;
+    }
+
+    public void setUpimage(byte[] upimage) {
+        this.upimage = upimage;
+    }
+
+    
     public String getCard_id() {
         return card_id;
     }

@@ -30,6 +30,7 @@ import org.jfree.chart.axis.SubCategoryAxis;
 import student.bean.CoData;
 import student.bean.StudentBean;
 
+
 /**
  *
  * @author ridmi_g
@@ -346,6 +347,10 @@ public class StudentService {
                 inputBean.setUptelephone(studentlist.get(0).getSTelephone());
                 inputBean.setUpyearOfRegistration(studentlist.get(0).getSYor());
                 inputBean.setUpId(studentlist.get(0).getSId().toString());
+                
+                byte[] im = studentlist.get(0).getSImage();
+//                Bitmap bitmap = BitmapFactory.decodeByteArray(im, 0, im.length);
+                
 
             }
           

@@ -223,7 +223,7 @@
                                                                                </tr>
                                                                            </table>
                                         </s:form>
-                                        <s:form  id="addForm"  theme="simple" method="post"  cssStyle="display:none">
+                                        <s:form  id="addForm"  theme="simple" method="post" enctype="multipart/form-data" cssStyle="display:none">
                                             <table >
                                                 <tr>
                                                     <td class="formLable">Name<span class="mandatory">*</span></td> <td >:</td>
