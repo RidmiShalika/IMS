@@ -121,10 +121,7 @@ public class SubjectRegister extends ActionSupport implements ModelDriven<Subjec
             if (inputbean.getSubjectname() == null || inputbean.getSubjectname().isEmpty()) {
                 addActionError("Subject name can not be empty");
                 return ok;
-            } else if (inputbean.getSubjectmedium() == null || inputbean.getSubjectmedium().isEmpty()) {
-                addActionError("Subject medium can not be empty");
-                return ok;
-            } else {
+            }  else {
                 ok = true;
             }
 
