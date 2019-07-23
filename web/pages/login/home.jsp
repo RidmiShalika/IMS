@@ -90,7 +90,7 @@
                                     <div class="panel-body">
                                         <div class="row" style="margin : 20px 0px 0px 20px">
                                             <div class="col-xs-2 col-md-2">
-                                                <a href="#" class="btn btn-default btn-lg"  role="button"><i class="glyphicon glyphicon-list-alt"></i> <br/>&nbsp&nbsp&nbsp&nbspEnd Course&nbsp&nbsp&nbsp&nbsp</a>
+                                                <a href="load.action" class="btn btn-default btn-lg"  role="button"><i class="glyphicon glyphicon-list-alt"></i> <br/>&nbsp&nbsp&nbsp&nbspEnd Course&nbsp&nbsp&nbsp&nbsp</a>
                                             </div>
                                             <div class="col-xs-2 col-md-2">
                                                 <a href="#" class="btn btn-default btn-lg"  role="button"><i class="glyphicon glyphicon-file"></i> <br/>&nbsp&nbspBackup Data&nbsp&nbsp</a>

@@ -68,13 +68,9 @@
 
                                     <sjg:gridColumn name="id" index="id" title="id" hidden="true"/>
                                     <sjg:gridColumn name="stopcourseDescription" index="courseId.courseDescription" title="Course Description" />
-                                    <sjg:gridColumn name="monday" index="monday" title="Monday" />
-                                    <sjg:gridColumn name="tueday" index="tueday" title="Tuesday" />
-                                    <sjg:gridColumn name="wedday" index="wedday" title="Wednesday" />
-                                    <sjg:gridColumn name="thurday" index="thurday" title="Thursday" />
-                                    <sjg:gridColumn name="friday" index="friday" title="Friday" />
-                                    <sjg:gridColumn name="satday" index="satday" title="Saturday" />
-                                    <sjg:gridColumn name="sunday" index="sunday" title="Sunday" />
+                                    <sjg:gridColumn name="StartEnd" index="StartEnd" title="Start/End" width="300"/>
+                                    <sjg:gridColumn name="EndedTime" index="EndedTime" title="Ended Time" width="300"/>
+                                    <sjg:gridColumn name="tt" index="tt" title="Class Type" width="200"/>
                                     <sjg:gridColumn name="id" index="id" title="Select" />
                                     
                                 </sjg:grid> 
