@@ -7,7 +7,10 @@ package course.service;
 
 import Util.HibernateInit;
 import course.bean.CourseBean;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -169,6 +172,7 @@ public class CourseService {
             } catch (Exception e) {
                 cor.setMonthlyFee(0.0);
             }
+            cor.setStatus("ACT");
             session.save(cor);
 
             isAddCor = true;
@@ -630,7 +634,34 @@ public class CourseService {
             Iterator itCount = queryCount.iterate();
             count = (Long) itCount.next();
             if (count > 0) {
-                String sqlSearch = "from CourseDates ";
+                
+                DateFormat dateFormat = new SimpleDateFormat("EEEE");
+            Date date = new Date();
+            String day = dateFormat.format(date).toLowerCase();
+            System.out.println(day);
+
+            if (day.equals("monday")) {
+                day = "monday";
+            } else if (day.equals("tuesday")) {
+                day = "tueday";
+            } else if (day.equals("wednesday")) {
+                day = "wedday";
+            } else if (day.equals("thursday")) {
+                day = "thurday";
+            } else if (day.equals("friday")) {
+                day = "friday";
+            } else if (day.equals("saturday")) {
+                day = "satday";
+            } else if (day.equals("sunday")) {
+                day = "sunday";
+            }
+                
+                
+                
+                
+                
+                String sqlSearch = "select cd.courseId.id as course_id,cd." + day + " FROM CourseDates cd WHERE  cd." + day + "<> '' "
+                    + "and course_id not in (select c.courseId.id from ClassConductDetails c where date = "+new Date()+") ";
                 Query querySearch = session.createQuery(sqlSearch);
                 querySearch.setMaxResults(max);
                 querySearch.setFirstResult(first);

@@ -10,12 +10,14 @@ import Util.HibernateInit;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import javax.servlet.http.HttpSession;
+import login.bean.SessionBean;
 import mapping.Attendence;
 import mapping.Course;
 import mapping.CourseDates;
@@ -39,7 +41,8 @@ import org.hibernate.criterion.Restrictions;
  */
 public class AttenService {
 
-    
+    SessionBean sub = (SessionBean) ServletActionContext.getRequest().getSession(false).getAttribute("SessionObject");
+
     public List<AttenBean> loadStudent(AttenBean inputBean, int max, int first, String orderBy) throws Exception {
         List<AttenBean> dataList = new ArrayList<AttenBean>();
         Session session = null;
@@ -300,6 +303,7 @@ public class AttenService {
 
 //            int cid = 8;
             int cid = Integer.parseInt(outList[0]);
+            attenBean.setCid(cid + "");
             //class ekata related payment status eka gannwa me current mmonth ekata payment table eken
             Criteria c1 = session.createCriteria(Payments.class, "payment")
                     .createAlias("payment.studentId", "sid")
@@ -435,6 +439,9 @@ public class AttenService {
             session = HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
 
+            //generate bill ifd
+            String bill_id_post = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+
             String data[] = inputhbean.getSelected_data().split("\\,");
 
             for (int i = 0; i < data.length; i++) {
@@ -445,7 +452,8 @@ public class AttenService {
                                 .add(Projections.property("pendingpayments.sid"))
                                 .add(Projections.property("pendingpayments.cid"))
                                 .add(Projections.property("pendingpayments.month"))
-                                .add(Projections.property("pendingpayments.year"))));
+                                .add(Projections.property("pendingpayments.year"))
+                                .add(Projections.property("pendingpayments.status"))));
 
                 Iterator iterator = criteria.list()
                         .iterator();
@@ -453,59 +461,142 @@ public class AttenService {
                 while (iterator.hasNext()) {
                     Object[] ob = (Object[]) iterator.next();
                     int studentid = (int) ob[0];
-                    int courseid  = (int) ob[1];
-                    String month  = ob[2].toString();
-                    String year   = ob[3].toString();
-                    
-                    Course course = (Course) session.createCriteria(Course.class, "c")
-                        .add(Restrictions.eq("c.id", courseid))
-                        .setProjection(Projections.distinct(Projections.projectionList()
-                                .add(Projections.property("c.monthlyFee"))
-                                .add(Projections.property("c.lecPaymentPercentage"))))
-                            .uniqueResult();
-                    
+                    int courseid = (int) ob[1];
+                    String month = ob[2].toString();
+                    String year = ob[3].toString();
+
+                    Criteria course = session.createCriteria(Course.class, "c")
+                            .add(Restrictions.eq("c.id", courseid));
+//                        .setProjection(Projections.distinct(Projections.projectionList()
+//                                .add(Projections.property("c.monthlyFee"))
+//                                .add(Projections.property("c.lecPaymentPercentage"))));
+
                     double monthlyFee = 0.0;
                     double lec_percentage = 0.0;
-                    if(course!=null){
-                        monthlyFee = course.getMonthlyFee();
-                        lec_percentage = course.getLecPaymentPercentage();
-                        
+
+                    Iterator iterator1 = course.list()
+                            .iterator();
+                    while (iterator1.hasNext()) {
+                        Course cc = (Course) iterator1.next();
+                        monthlyFee = cc.getMonthlyFee();
+                        lec_percentage = cc.getLecPaymentPercentage();
+
                     }
-                    
+
+                    String bill_id = studentid + "_" + bill_id_post;
+
+                    StudentCourse scourse = (StudentCourse) session.createCriteria(StudentCourse.class, "sc")
+                            .createAlias("sc.studentId", "sid")
+                            .createAlias("sc.courseId", "cid")
+                            .add(Restrictions.eq("sid.sId", studentid))
+                            .add(Restrictions.eq("cid.id", courseid))
+                            .uniqueResult();
+
                     //insert payment table
                     Payments payments = new Payments();
-                    
+
                     Student s = new Student();
                     s.setSId(studentid);
                     payments.setStudentId(s);
-                    
+
                     Course c = new Course();
                     c.setId(courseid);
                     payments.setCourseId(c);
-                    
+
                     payments.setMonth(month);
                     payments.setYear(year);
                     payments.setAmount(monthlyFee);
                     payments.setDate(new Date().toString());
-//                    payments.setPaidToLecture(Boolean.TRUE);
-                    //card typ[e ???
+                    payments.setPaidToLecture(Boolean.FALSE);
+                    payments.setCardType(scourse.getCardType());
                     session.save(payments);
-                    
+
                     //insert payment bill table
                     PaymentBillDetails billDetails = new PaymentBillDetails();
                     //line id
                     billDetails.setStudentId(s);
                     billDetails.setCourseId(c);
                     //bill id
+                    billDetails.setBillId(bill_id);
                     //bill amount
+                    billDetails.setBillAmount(monthlyFee);
                     //payment month
+                    billDetails.setPaymentMonth(month + "-" + year);
                     //comment
+                    billDetails.setComments("Full payment");
                     //card type
-                    
+
+                    billDetails.setCardType(scourse.getCardType());
+                    billDetails.setIssuedBy(sub.getUserName());
+                    billDetails.setCreatedDate(new Date());
+
                     session.save(billDetails);
-                    
-                    
+
+                    Query query = null;
+                    PendingPayments refProfile = null;
+                    String sql = "from PendingPayments wu where wu.id =:ID";
+                    query = session.createQuery(sql);
+                    query.setInteger("ID", Integer.parseInt(data[i]));
+                    refProfile = (PendingPayments) query.uniqueResult();
+                    if (refProfile != null) {
+                        refProfile.setStatus("Completed");
+
+                        session.update(refProfile);
+                    }
                 }
+                session.getTransaction().commit();
+            }
+
+        } catch (Exception e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.flush();
+                session.clear();
+                session.close();
+                session = null;
+            }
+        }
+    }
+
+    public void historyData(AttenBean inputbean, int relv_cid) throws Exception {
+//        ArrayList<String> attandance_history = new ArrayList<String>();
+        Session session = null;
+
+        try {
+            session = HibernateInit.getSessionFactory().openSession();
+            session.beginTransaction();
+
+            HttpSession sess = ServletActionContext.getRequest().getSession(false);
+            int st_id = (int) sess.getAttribute("stcourselist");
+
+            Criteria criteria = session.createCriteria(Attendence.class, "attendance")
+                    .createAlias("attendance.studentId", "studentId")
+                    .createAlias("attendance.courseId", "courseId")
+                    .add(Restrictions.eq("studentId.sId", st_id))
+                    .add(Restrictions.eq("courseId.id", relv_cid));
+            criteria.addOrder(Order.desc("attendance.completeDate"));
+            criteria.setMaxResults(20);
+
+            Iterator iterator = criteria.list()
+                    .iterator();
+
+            while (iterator.hasNext()) {
+                Attendence attendence = (Attendence) iterator.next();
+                String datee = attendence.getCompleteDate().toString();
+                boolean Status = attendence.getAtten();
+                String Statuss;
+                if (Status == true) {
+                    Statuss = "attend";
+                } else {
+                    Statuss = "not attend";
+                }
+                inputbean.getAttandance_history().add(datee + "     - " + Statuss + System.lineSeparator());// 5 spaces before - and 1 space after -
             }
 
         } catch (Exception e) {
@@ -525,86 +616,31 @@ public class AttenService {
             }
         }
     }
-    
-    public void historyData(AttenBean inputbean, int relv_cid) throws Exception{
-//        ArrayList<String> attandance_history = new ArrayList<String>();
-        Session session = null;
-        
-        try {
-            session = HibernateInit.getSessionFactory().openSession();
-            session.beginTransaction();
-            
-            HttpSession sess = ServletActionContext.getRequest().getSession(false);
-            int st_id = (int) sess.getAttribute("stcourselist");
-            
-            Criteria criteria = session.createCriteria(Attendence.class, "attendance")
-                        .createAlias("attendance.studentId", "studentId")
-                        .createAlias("attendance.courseId", "courseId")
-                    .add(Restrictions.eq("studentId.sId",st_id))
-                    .add(Restrictions.eq("courseId.id", relv_cid));
-            criteria.addOrder(Order.desc("attendance.completeDate"));
-            criteria.setMaxResults(20);
-                    
-             Iterator iterator = criteria.list()
-                        .iterator();
 
-            
-            while (iterator.hasNext()) {
-                Attendence attendence = (Attendence) iterator.next();
-                String datee = attendence.getCompleteDate().toString();
-                boolean Status = attendence.getAtten();
-                String Statuss;
-                if (Status == true) {
-                    Statuss = "attend";
-                } else {
-                    Statuss = "not attend";
-                }
-                inputbean.getAttandance_history().add(datee + "     - " + Statuss);// 5 spaces before - and 1 space after -
-            }
-
-            
-        } catch (Exception e) {
-            if (session != null) {
-                session.getTransaction().rollback();
-                session.close();
-                session = null;
-            }
-            e.printStackTrace();
-        }finally {
-            if (session != null) {
-                session.flush();
-                session.clear();
-                session.getTransaction().commit();
-                session.close();
-                session = null;
-            }
-        }
-    }
-    
-    public void getpaymenthistory(AttenBean inputbean, int couid){
+    public void getpaymenthistory(AttenBean inputbean, int couid) {
         Session session = null;
         try {
             session = HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
-            
+
             HttpSession sess = ServletActionContext.getRequest().getSession(false);
             int st_id = (int) sess.getAttribute("stcourselist");
-            
-            Criteria criteria = session.createCriteria(PendingPayments.class,"p")
-                     .add(Restrictions.eq("p.sid",st_id))
+
+            Criteria criteria = session.createCriteria(PendingPayments.class, "p")
+                    .add(Restrictions.eq("p.sid", st_id))
                     .add(Restrictions.eq("p.cid", couid));
             criteria.setMaxResults(20);
-            
+
             Iterator iterator = criteria.list()
-                        .iterator();
+                    .iterator();
             while (iterator.hasNext()) {
                 PendingPayments pendingPayments = (PendingPayments) iterator.next();
                 String month = pendingPayments.getMonth();
                 String Status = pendingPayments.getStatus();
-               
+
                 inputbean.getPayment_history().add(month + "   - " + Status);
             }
-            
+
         } catch (Exception e) {
             if (session != null) {
                 session.getTransaction().rollback();
@@ -612,7 +648,7 @@ public class AttenService {
                 session = null;
             }
             e.printStackTrace();
-        }finally {
+        } finally {
             if (session != null) {
                 session.flush();
                 session.clear();
@@ -622,26 +658,26 @@ public class AttenService {
             }
         }
     }
-    
-    public int getcorseid(AttenBean inputhbean){
+
+    public int getcorseid(AttenBean inputhbean) {
         Session session = null;
         int courseid = 0;
         try {
             session = HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
             PendingPayments payments = (PendingPayments) session.createCriteria(PendingPayments.class, "p")
-                     .add(Restrictions.eq("p.id",Integer.parseInt(inputhbean.getAttenid()))).uniqueResult();
-             
+                    .add(Restrictions.eq("p.id", Integer.parseInt(inputhbean.getAttenid()))).uniqueResult();
+
             courseid = payments.getCid();
-            
+
         } catch (Exception e) {
-             if (session != null) {
+            if (session != null) {
                 session.getTransaction().rollback();
                 session.close();
                 session = null;
             }
             e.printStackTrace();
-        }finally {
+        } finally {
             if (session != null) {
                 session.flush();
                 session.clear();

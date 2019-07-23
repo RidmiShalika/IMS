@@ -372,5 +372,8 @@ public class CourseAction extends ActionSupport implements ModelDriven<CourseBea
          }
          return "deleteex";
      }
+     public String load(){
+         return "load";
+     }
 
 }
