@@ -14,84 +14,92 @@
         <jsp:include page="../../Styles.jsp" /> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link href="${pageContext.request.contextPath}/resources/new_home/css/main.css" rel="stylesheet" type="text/css">
+        <link href="${pageContext.request.contextPath}/resources/new_home/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="${pageContext.request.contextPath}/resources/new_home/fonts/icomoon/icomoon.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/resources/new_home/js/barIndicator/barIndicator.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/resources/new_home/css/datepicker.css" rel="stylesheet" type="text/css">
+        <link href="${pageContext.request.contextPath}/resources/new_home/css/c3/c3.css" rel="stylesheet" type="text/css">
 
-        <script type="text/javascript">
-            function showClass(){
-                var keyval = 1;
-                window.location.href = "${pageContext.request.contextPath}/pages/course/stopClass.jsp";
-//                $.ajax({
-//                    url: '${pageContext.request.contextPath}/load.action',
-//                    data: {id: keyval},
-//                    dataType: "json",
-//                    type: "POST",
-//                    success: function (data) {
-//                        alert("");
-//                    },
-//                    error: function (data) {
-//                        alert("error");
-//                      
-//                    }
-//                });
 
-           
-//               
-            }
-
-        </script>
+       
     </head>
     <!--<body oncontextmenu="return false;" style="overflow:hidden" onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">-->
 
-       <body oncontextmenu="return false;" style="overflow:hidden" onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
+    <body oncontextmenu="return false;" style="overflow:hidden" onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
 
         <section class="app-content">
             <jsp:include page="../../header.jsp" /> 
-             <div class="body_content" id="includedContent">
+            <div class="body_content" id="includedContent">
                 <div class="AddUser_box">
                     <!--                    <div class="watermark"></div>-->
                     <div class="contentcenter">
-                        <div class="table_center">
-                            <!--<form>-->
-                                 <table class="form_table" cellspacing="8" align="center">
-                                <tr>
-                                    <td><sj:submit  id="stopclass" button="true" value="STOP CLASSES" cssStyle="width:150px" onclick="showClass()"/> </td>
-                                </tr>
-                                 <tr>
-                                     <td ><img src="${pageContext.request.contextPath}/resources/images/images.jpg" ></td>
-                                </tr>
-                                
-                            </table>
-                         <!--</form>-->
-                           
-                        </div>
-                        <!--<div id="favorite" >-->
-                            <!--<h4 style="text-align: center;">Favorite Links</h4>-->
-                        <!--</div>-->
 
-
-
-
-                    </div>
-                                
-<!--                        <div class="viewuser_tbl">
-                            <div id="tablediv">        -->
-                                <sj:dialog 
-                                        id="viewdialog" 
-                                        buttons="{
-                                        'OK':function() { $( this ).dialog( 'close' );}                                    
-                                        }" 
-                                        autoOpen="false" 
-                                        modal="true"                            
-                                        width="1000"
-                                        height="500"
-                                        position="center"
-                                        title="Assign To Courses"
-                                        
-                                        loadingText="Loading .."
-                            />
+                        <div class="row gutter" style="margin-right: 2px">
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <div class="simple-widget">
+                                    <div class="growth">+12</div>
+                                    <h3 class="text-white">$9,521</h3>
+                                    <p class="text-white">Sales</p>
+                                    <div class="progress sm">
+                                        <div class="progress-bar" role="progressbar" style="width: 37%;" aria-valuenow="37" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <div class="simple-widget">
+                                    <div class="growth">-3</div>
+                                    <h3 class="text-white">$6,417</h3>
+                                    <p class="text-white">Expenses</p>
+                                    <div class="progress sm">
+                                        <div class="progress-bar" role="progressbar" style="width: 48%;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <div class="simple-widget">
+                                    <div class="growth">+25</div>
+                                    <h3 class="text-white">9,421</h3>
+                                    <p class="text-white">Visits</p>
+                                    <div class="progress sm">
+                                        <div class="progress-bar" role="progressbar" style="width: 65%;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <div class="simple-widget secondary">
+                                    <div class="growth">+19</div>
+                                    <h3 class="text-white">5429</h3>
+                                    <p class="text-white">Orders</p>
+                                    <div class="progress sm">
+                                        <div class="progress-bar" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-<!--                </div>
-            </div>-->
+                        
+                    </div>
+
+                    <!--                        <div class="viewuser_tbl">
+                                                <div id="tablediv">        -->
+                    <sj:dialog 
+                        id="viewdialog" 
+                        buttons="{
+                        'OK':function() { $( this ).dialog( 'close' );}                                    
+                        }" 
+                        autoOpen="false" 
+                        modal="true"                            
+                        width="1000"
+                        height="500"
+                        position="center"
+                        title="Assign To Courses"
+
+                        loadingText="Loading .."
+                        />
+                </div>
+            </div>
+            <!--                </div>
+                        </div>-->
         </section>
         <script src="js/jquery.js"></script>
 
