@@ -80,14 +80,37 @@
 
                 int secId = 1;
                 int pageId = 1000;
+                
                 for (List<TaskBean> key : sectionPageList.values()) {
-
+                    String x = null;
                     for (int i = 0; i < key.size(); i++) {
+                        if(i==0){
+                            x="glyphicon glyphicon-alert";
+                        }else if(i==1){
+                            x="icon-blur_on";
+                        }else if(i==2){
+                             x="glyphicon glyphicon-education";
+                        }else if(i==3){
+                            x="glyphicon glyphicon-book";
+                        }else if(i==4){
+                            x="glyphicon glyphicon-user";
+                        }else if(i==5){
+                            x="glyphicon glyphicon-th";
+                        }else if(i==6){
+                            x="glyphicon glyphicon-ok";
+                        }else if(i==7){
+                            x="glyphicon glyphicon-list-alt";
+                        }else if(i==8){
+                            x="glyphicon glyphicon-alert";
+                        }else if(i==9){
+                            x="glyphicon glyphicon-envelope";
+                        }
+
                         pageId++;
 //                        System.out.println(key.get(i).getTASK_NAME());
 //                        System.out.println(key.get(i).getURL());
                         out.println("<a id= " + pageId + " href=\'" + request.getContextPath() + "/" + key.get(i).getURL() + ".action\'>");
-                        out.println("<li class='parentnav'><i class='fa fa-chevron-right' aria-hidden='true'></i>" + key.get(i).getTASK_NAME());
+                        out.println("<li class='parentnav'><i class="+"'"+x+"'"+" aria-hidden='true'></i>" +"&nbsp&nbsp&nbsp&nbsp&nbsp"+ key.get(i).getTASK_NAME());
                         out.println("</a>");
 
                         out.println("</li>");
