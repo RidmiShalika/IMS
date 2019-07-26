@@ -375,5 +375,14 @@ public class CourseAction extends ActionSupport implements ModelDriven<CourseBea
      public String load(){
          return "load";
      }
-
+     
+     public String stopClass(){
+         try {
+             System.out.println("s>>>>>> "+inputbean.getSelecteddata());
+             service.stopClassess(inputbean);
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+         return "stopclases";
+     }
 }

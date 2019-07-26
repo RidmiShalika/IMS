@@ -9,10 +9,27 @@
         <jsp:include page="/Styles.jsp" />
         <script type="text/javascript">
 
-            function test() {
-                alert("");
-                var s = $('#gridtable').jqGrid('getGridParam','selarrrow');
-                alert('selected rows:'+s);
+            function test(courceid,endtime) {
+//                var s = $('#gridtable').jqGrid('getGridParam','selarrrow');
+//                 var s= ;
+                 var s = courceid+","+endtime;
+
+                $.ajax({
+                    url: '${pageContext.request.contextPath}/stopclases',
+                    data: {selecteddata: s},
+                    dataType: "json",
+                    type: "GET",
+                    success: function (data) {
+                     jQuery("#gridtable").trigger("reloadGrid");
+                      
+                    },
+                    error: function (data) {
+                    }
+                     
+                });
+            }
+            function stopformatter(cellvalue, options, rowObject) {
+                return "<a href='#' onClick='javascript:test(&#34;" + cellvalue + "&#34;,&#34;" + rowObject.endedTime + "&#34;)'><i class='fa fa-share-square-o' aria-hidden='true'></i></a>";
             }
         </script>
     </head>
@@ -63,15 +80,16 @@
                                     onCompleteTopics="completetopics"
                                     rowTotal="false"
                                     viewrecords="true"
-                                    multiselect="true"
                                     >
 
                                     <sjg:gridColumn name="id" index="id" title="id" hidden="true"/>
+                                     <sjg:gridColumn name="details" index="details" title="Stop" formatter="stopformatter" />
                                     <sjg:gridColumn name="stopcourseDescription" index="courseId.courseDescription" title="Course Description" />
-                                    <sjg:gridColumn name="StartEnd" index="StartEnd" title="Start/End" width="300"/>
-                                    <sjg:gridColumn name="EndedTime" index="EndedTime" title="Ended Time" width="300"/>
-                                    <sjg:gridColumn name="tt" index="tt" title="Class Type" width="200"/>
-                                    <sjg:gridColumn name="id" index="id" title="Select" />
+                                    <sjg:gridColumn name="startEnd" index="startEnd" title="Start/End" width="300"/>
+                                    <sjg:gridColumn name="endedTime" index="endedTime" title="Ended Time" width="300" editable="true" edittype="text"/>
+                                    <sjg:gridColumn name="classTypet" title="Class Type" width="200"/>
+                                    <%--<sjg:gridColumn name="details" index="details" title="Select" />--%>
+                                   
                                     
                                 </sjg:grid> 
                     

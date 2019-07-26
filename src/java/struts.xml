@@ -191,6 +191,9 @@
         <action name="Deletex" class="course.action.CourseAction" method="Deletex" > 
             <result name="deleteex" type="json"></result>
         </action>
+        <action name="stopclases" class="course.action.CourseAction" method="stopClass" > 
+            <result name="stopClass" type="json"></result>
+        </action>
     </package>
     
     <package name="Privilege" extends="pglobal" namespace="/">

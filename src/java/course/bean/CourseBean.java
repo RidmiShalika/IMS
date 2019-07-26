@@ -126,6 +126,10 @@ public class CourseBean {
     private String satday;
     private String sunday;
     
+    private String startEnd;
+    private String endedTime;
+    private String classTypet;
+    
     private int course_ID;
     
     //extra class
@@ -143,7 +147,27 @@ public class CourseBean {
     
     private String message;
     private boolean success;
+    public String selecteddata;
+    public String details;
 
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
+    
+    public String getSelecteddata() {
+        return selecteddata;
+    }
+
+    public void setSelecteddata(String selecteddata) {
+        this.selecteddata = selecteddata;
+    }
+
+    
     public String getMessage() {
         return message;
     }
@@ -969,5 +993,32 @@ public class CourseBean {
     public void setSunday(String sunday) {
         this.sunday = sunday;
     }
+
+    public String getStartEnd() {
+        return startEnd;
+    }
+
+    public void setStartEnd(String startEnd) {
+        this.startEnd = startEnd;
+    }
+
+    public String getEndedTime() {
+        return endedTime;
+    }
+
+    public void setEndedTime(String endedTime) {
+        this.endedTime = endedTime;
+    }
+
+    
+    public String getClassTypet() {
+        return classTypet;
+    }
+
+    public void setClassTypet(String classTypet) {
+        this.classTypet = classTypet;
+    }
+
+   
    
 }
