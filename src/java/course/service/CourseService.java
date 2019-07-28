@@ -691,7 +691,7 @@ public class CourseService {
                             .add(Restrictions.eq("ccd.date", sdf11.format(sdate1)));
                     Iterator it1 = criteria1.list()
                             .iterator();
-                    while (it1.hasNext()) {
+                    if (it1.hasNext()) {
                         isConducttable = true;
                     }
 
@@ -967,8 +967,11 @@ public class CourseService {
     public boolean stopClassess(CourseBean inputbean) {
         boolean isstop = false;
         Session session = HibernateInit.getSessionFactory().openSession();
+
         try {
             String arr[] = inputbean.getSelecteddata().split("\\,");
+            Date sdate1 = new Date();
+            SimpleDateFormat sdf11 = new SimpleDateFormat("yyyy/MM/dd");
             // add record to classconducted table
             session.beginTransaction();
             //get cource id . not id in cource date
@@ -977,26 +980,90 @@ public class CourseService {
             course.setId(Integer.parseInt(arr[0]));
 
             conductDetails.setCourseId(course);
-            conductDetails.setDate(new Date().toString());
-            conductDetails.setEndDate(arr[0]);
+            conductDetails.setDate(sdf11.format(sdate1));
+            conductDetails.setEndDate(arr[1]);
 
-            //get max id and set it to the id
-            Criteria criteria = session
-                    .createCriteria(ClassConductDetails.class)
-                    .setProjection(Projections.max("id"));
-            Integer id = (Integer) criteria.uniqueResult();
-            
-            if(id == null){
-                id = 1;
-            }else{
-                id=id+1;
+            List<ClassConductDetails> list = null;
+            String sql = "from ClassConductDetails";
+            Query query = session.createQuery(sql);
+            list = query.list();
+
+            if (0 < list.size()) {
+                //get max id and set it to the id
+                Criteria criteria = session
+                        .createCriteria(ClassConductDetails.class)
+                        .setProjection(Projections.max("id"));
+                Integer id = (Integer) criteria.uniqueResult();
+
+                if (id == null) {
+                    id = 1;
+                } else {
+                    id = id + 1;
+                }
+                System.out.println(">>>>>>>>> s" + id);
+                conductDetails.setId(id);
+            } else {
+                System.out.println(">>>>>>>>> s");
+                conductDetails.setId(1);
             }
-            System.out.println(">>>>>>>>> "+id);
-//            conductDetails.setId(id);
+
             session.save(conductDetails);
             session.getTransaction().commit();
 //            conductDetails.set
-              isstop = true;
+            isstop = true;
+
+        } catch (Exception e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            throw e;
+        } finally {
+            if (session != null) {
+                session.flush();
+                session.close();
+                session = null;
+            }
+        }
+        return isstop;
+    }
+
+    public boolean findstopClassess(CourseBean inputbean) {
+        boolean isstop = false;
+        Session session = HibernateInit.getSessionFactory().openSession();
+        String sql = "";
+        Query query = null;
+        try {
+            String arr[] = inputbean.getFselecteddata().split("\\,");
+            session.beginTransaction();
+
+            if (arr[1].trim().equals("Normal")) {
+                sql = "from CourseDates cd where cd.id =:id";
+            } else if (arr[1].trim().equals("Extra")) {
+                sql = "from ExtraClasses cd where cd.id =:id";
+            }
+
+            query = session.createQuery(sql);
+            query.setInteger("id", Integer.parseInt(arr[0]));
+            Iterator it = query.iterate();
+
+            while (it.hasNext()) {
+               
+                if (arr[1].trim().equals("Normal")) {
+                     CourseDates objBean = (CourseDates) it.next();
+                     inputbean.setHcid(objBean.getCourseId().getId().toString());
+//                inputbean.setHcendtime(objBean.get);
+                } else if (arr[1].trim().equals("Extra")) {
+                     ExtraClasses objBean = (ExtraClasses) it.next();
+                     inputbean.setHcid(objBean.getCourseId().getId().toString());
+//                    inputbean.setHcendtime(objBean.getEndDate());
+                }
+                
+
+            }
+
+            isstop = true;
 
         } catch (Exception e) {
             if (session != null) {

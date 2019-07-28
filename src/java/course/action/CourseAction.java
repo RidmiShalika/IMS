@@ -385,4 +385,15 @@ public class CourseAction extends ActionSupport implements ModelDriven<CourseBea
          }
          return "stopclases";
      }
+     public String findstopclases(){
+         try {
+             System.out.println("s>>>>>> "+inputbean.getFselecteddata());
+             if(service.findstopClassess(inputbean)){
+                 System.out.println("success "+inputbean.getHcid()+" , "+inputbean.getHcendtime());
+             }
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+         return "findstopclases";
+     }
 }

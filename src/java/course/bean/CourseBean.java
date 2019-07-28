@@ -149,7 +149,37 @@ public class CourseBean {
     private boolean success;
     public String selecteddata;
     public String details;
+    
+    public String hcid;
+    public String hcendtime;
+    public String fselecteddata;
 
+    public String getFselecteddata() {
+        return fselecteddata;
+    }
+
+    public void setFselecteddata(String fselecteddata) {
+        this.fselecteddata = fselecteddata;
+    }
+
+    
+    public String getHcid() {
+        return hcid;
+    }
+
+    public void setHcid(String hcid) {
+        this.hcid = hcid;
+    }
+
+    public String getHcendtime() {
+        return hcendtime;
+    }
+
+    public void setHcendtime(String hcendtime) {
+        this.hcendtime = hcendtime;
+    }
+
+    
     public String getDetails() {
         return details;
     }
