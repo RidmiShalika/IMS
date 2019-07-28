@@ -12,27 +12,31 @@
 <html>
     <head>
         <jsp:include page="/Styles.jsp" />
-        
+
         <script type="text/javascript">
-            
-            function ResetForm(){
+
+            function ResetForm() {
                 $('#attenid').val("");
             }
             function keyPress() {
-                
+
                 var keyval = $('#attenid').val();
-                
-                 $.ajax({
-                    url: '${pageContext.request.contextPath}/findSt',
-                    data: {attenid: keyval},
-                    dataType: "json",
-                    type: "POST",
-                    success: function (data) {
-                        window.location.href = "${pageContext.request.contextPath}/pages/atten/atte.jsp";
-                    },
-                    error: function (data) {
-                    }
-                });
+                if (keyval !== "") {
+                    $.ajax({
+                        url: '${pageContext.request.contextPath}/findSt',
+                        data: {attenid: keyval},
+                        dataType: "json",
+                        type: "POST",
+                        success: function (data) {
+                            window.location.href = "${pageContext.request.contextPath}/pages/atten/atte.jsp";
+                        },
+                        error: function (data) {
+                        }
+                    });
+                }else{
+                    alert("Please Enter Student ID");
+                }
+
             }
 //            function keyPress() {
 //                var keyval = $('#attenid').val();
@@ -86,24 +90,24 @@
                         </div>
                         <div class="viewuser_tbl">
                             <div id="tablediv">
-                                
+
 
                                 <sj:dialog 
-                                        id="viewdialog" 
-                                        buttons="{
-                                        'OK':function() { $( this ).dialog( 'close' );}                                    
-                                        }" 
-                                        autoOpen="false" 
-                                        modal="true"                            
-                                        width="1000"
-                                        height="500"
-                                        position="center"
-                                        title="Assign To Courses"
-                                        onOpenTopics="openview" 
-                                        loadingText="Loading .."
-                            />
-                                
-                               
+                                    id="viewdialog" 
+                                    buttons="{
+                                    'OK':function() { $( this ).dialog( 'close' );}                                    
+                                    }" 
+                                    autoOpen="false" 
+                                    modal="true"                            
+                                    width="1000"
+                                    height="500"
+                                    position="center"
+                                    title="Assign To Courses"
+                                    onOpenTopics="openview" 
+                                    loadingText="Loading .."
+                                    />
+
+
                             </div>
                         </div>
 
