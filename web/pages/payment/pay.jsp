@@ -12,15 +12,15 @@
         <script type="text/javascript">
             
             function ResetForm(){
-                $('#payid').val("");
+                $('#attenid').val("");
             }
             function keyPress() {
                 
-                var keyval = $('#payid').val();
+                var keyval = $('#attenid').val();
                 
                  $.ajax({
-                    url: '${pageContext.request.contextPath}/findStp',
-                    data: {payid: keyval},
+                    url: '${pageContext.request.contextPath}/findSt',
+                    data: {attenid: keyval},
                     dataType: "json",
                     type: "POST",
                     success: function (data) {
@@ -39,7 +39,7 @@
             <div class="wrapper">
                 <div class="body_content" id="includedContent" >
                     <div class="watermark"></div>
-                    <div class="heading">Payments</div>
+                    <div class="heading">Attendance</div>
                     <div class="AddUser_box ">
                         <div class="message">         
                             <s:div id="divmsg">
@@ -54,14 +54,15 @@
                                 <table class="form_table">
 
                                     <tr>
-                                        <td class="formLable">Student Id</td> <td >:</td>
-                                        <td><s:textfield id="payid" name="payid" cssClass="textField"/></td>
+                                        <td class="formLable">ID</td> <td >:</td>
+                                        <td><s:textfield id="attenid" name="attenid" cssClass="textField"/></td>
                                     </tr>
 
 
                                     <tr>
                                         <td>
-                                            <sj:submit button="true" value="Confirm"  onclick="keyPress()" cssClass="button_aback"/>
+                                            <sj:submit button="true" value="Atten"  onclick="keyPress()" cssClass="button_aback"/>
+                                            <%--<sj:submit button="true" value="Reset"  onclick="ResetForm()" cssClass="button_aback"/>--%>
                                         </td>
                                     </tr>
                                 </table>
