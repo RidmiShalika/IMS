@@ -31,6 +31,9 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "PendingPayments.findAll", query = "SELECT p FROM PendingPayments p")})
 public class PendingPayments implements Serializable {
 
+    @Column(name = "flag")
+    private Integer flag;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "card_type")
@@ -199,5 +202,13 @@ public class PendingPayments implements Serializable {
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
-    
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
+    }
+
 }

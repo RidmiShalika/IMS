@@ -23,5 +23,13 @@ public class MainPage extends ActionSupport implements AccessControlService{
 
         return SUCCESS;
     }
+    public String AccCreation(){
+        try {
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "accCreation";
+    }
     
 }
