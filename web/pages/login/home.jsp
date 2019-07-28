@@ -22,6 +22,11 @@
         <link href="${pageContext.request.contextPath}/resources/new_home/css/c3/c3.css" rel="stylesheet" type="text/css">
         
 
+        <script type="text/javascript">
+            function paymentCreate(){
+                alert("es");
+            }
+        </script>
 
     </head>
     <!--<body oncontextmenu="return false;" style="overflow:hidden" onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">-->
@@ -102,7 +107,7 @@
                                                 <a href="#" class="btn btn-default btn-lg"  role="button"><i class="glyphicon glyphicon-remove"></i> <br/>&nbsp&nbsp&nbspClass DACT&nbsp&nbsp&nbsp</a>
                                              </div>
                                             <div class="col-xs-2 col-md-2">
-                                                <a href="#" class="btn btn-default btn-lg"  role="button"><i class="glyphicon glyphicon-eye-open"></i> <br/>&nbspSupport Desk&nbsp</a>
+                                                <a href="AccCreation.action" onclick="paymentCreate()" class="btn btn-default btn-lg"  role="button"><i class="glyphicon glyphicon-eye-open"></i> <br/>&nbspPayment Account Creation&nbsp</a>
                                              </div>
                                         </div>
                                        
