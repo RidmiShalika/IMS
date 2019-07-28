@@ -9,10 +9,12 @@
         <jsp:include page="/Styles.jsp" />
         <script type="text/javascript">
 
-            function test(courceid,endtime) {
+            function test() {
 //                var s = $('#gridtable').jqGrid('getGridParam','selarrrow');
 //                 var s= ;
-                 var s = courceid+","+endtime;
+                 var courceid = $('#hcid').val();
+                 var endtime = $('#stopTime').val();
+                var s = courceid+","+endtime;
 
                 $.ajax({
                     url: '${pageContext.request.contextPath}/stopclases',
@@ -20,6 +22,7 @@
                     dataType: "json",
                     type: "GET",
                     success: function (data) {
+                        
                      jQuery("#gridtable").trigger("reloadGrid");
                       
                     },
@@ -28,8 +31,27 @@
                      
                 });
             }
+            function findc(courceid,classTypet){
+                $('#stopform').show();
+                var s = courceid+","+classTypet;
+                $('#hcid').val(courceid);
+//                $.ajax({
+//                    url: '${pageContext.request.contextPath}/findstopclases',
+//                    data: {fselecteddata: s},
+//                    dataType: "json",
+//                    type: "GET",
+//                    success: function (data) {
+//                     $('#hcid').val(data.hcid);
+//                     jQuery("#gridtable").trigger("reloadGrid");
+//                      
+//                    },
+//                    error: function (data) {
+//                    }
+//                     
+//                });
+            }
             function stopformatter(cellvalue, options, rowObject) {
-                return "<a href='#' onClick='javascript:test(&#34;" + cellvalue + "&#34;,&#34;" + rowObject.endedTime + "&#34;)'><i class='fa fa-share-square-o' aria-hidden='true'></i></a>";
+                return "<a href='#' onClick='javascript:findc(&#34;" + cellvalue + "&#34;,&#34;" + rowObject.classTypet + "&#34;)'><i class='fa fa-share-square-o' aria-hidden='true'></i></a>";
             }
         </script>
     </head>
@@ -49,17 +71,23 @@
                     </s:div>         
                 </div>
                 
-                <form>
+                <s:form id="stopform" theme="simple" method="post"  cssStyle="display:none">
                      <table>
                         <tr>
                             <td>
-                               <%--<s:url var="stopeurl" action="stopClz" />--%>
-                                <%--<sj:submit  id="stopbtn" button="true" href="%{stopeurl}" value="STOP"   targets="divmsg" cssClass="button_aback"/>--%> 
+                                <sj:datepicker id="stopTime" name="stopTime" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                            </td> 
+                        </tr>
+                         <tr>
+                            <td>
+                                
                                 <sj:submit  id="stopbtn" button="true" onclick="test()" value="STOP"  cssClass="button_aback"/> 
                             </td>
                         </tr>
                      </table>
-                </form>
+                </s:form>
+                <s:hidden id="hcid" name="hcid" />
+                <s:hidden id="hcendtime" name="hcendtime" />
                 
                 <div class="viewuser_tbl">
                     <div id="tablediv">
