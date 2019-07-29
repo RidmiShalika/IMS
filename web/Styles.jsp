@@ -30,6 +30,13 @@
         <script src="${pageContext.request.contextPath}/resources/js/moment.min.js" type="text/javascript"></script>
         <script src="${pageContext.request.contextPath}/resources/js/fullcalendar.min.js" type="text/javascript"></script>
         <script src="${pageContext.request.contextPath}/resources/js/blockUI.js" type="text/javascript"></script>
+        
+        <link href="${pageContext.request.contextPath}/resources/new_home/css/main.css" rel="stylesheet" type="text/css">
+        <link href="${pageContext.request.contextPath}/resources/new_home/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="${pageContext.request.contextPath}/resources/new_home/fonts/icomoon/icomoon.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/resources/new_home/js/barIndicator/barIndicator.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/resources/new_home/css/datepicker.css" rel="stylesheet" type="text/css">
+        <link href="${pageContext.request.contextPath}/resources/new_home/css/c3/c3.css" rel="stylesheet" type="text/css">
       
         <!-- End -->
 
