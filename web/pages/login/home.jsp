@@ -20,11 +20,38 @@
         <link href="${pageContext.request.contextPath}/resources/new_home/js/barIndicator/barIndicator.css" rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/resources/new_home/css/datepicker.css" rel="stylesheet" type="text/css">
         <link href="${pageContext.request.contextPath}/resources/new_home/css/c3/c3.css" rel="stylesheet" type="text/css">
-        
+
 
         <script type="text/javascript">
-            function paymentCreate(){
-                alert("es");
+            function paymentCreate() {
+//                 $("#confirmdialogbox").dialog('open');
+//                 $("#confirmdialogbox").html('<br><b><font size="3" color="red"><center>Please confirm to Payment Account Creation  : ');
+//                 return false;
+
+                var retVal = confirm("Please confirm to Payment Account Creation :");
+                if (retVal == true) {
+                    $.ajax({
+                        url: '${pageContext.request.contextPath}/AccCreation',
+                        data: {},
+                        dataType: "json",
+                        type: "POST",
+                        success: function (data) {
+                            if (data.success) {
+                                $("#dialogbox").dialog('open');
+                                $("#dialogbox").html('<br><b><font size="3" color="green"><center>' + data.message + ' ');
+                            } else {
+                                $("#dialogbox").dialog('open');
+                                $("#dialogbox").html('<br><b><font size="3" color="red"><center>' + data.message + ' ');
+                            }
+                        },
+                        error: function (data) {
+                            window.location = "${pageContext.request.contextPath}/LogoutloginCall";
+                        }
+                    });
+                    return true;
+                } else {
+                    return false;
+                }
             }
         </script>
 
@@ -90,57 +117,72 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12">
-                                
-                                   
-                                    <div class="panel-body">
-                                        <div class="row" style="margin : 20px 0px 0px 20px">
-                                            <div class="col-xs-2 col-md-2">
-                                                <a href="load.action" class="btn btn-default btn-lg"  role="button"><i class="glyphicon glyphicon-list-alt"></i> <br/>&nbsp&nbsp&nbsp&nbspEnd Course&nbsp&nbsp&nbsp&nbsp</a>
-                                            </div>
-                                            <div class="col-xs-2 col-md-2">
-                                                <a href="#" class="btn btn-default btn-lg"  role="button"><i class="glyphicon glyphicon-file"></i> <br/>&nbsp&nbspBackup Data&nbsp&nbsp</a>
-                                            </div>
-                                            <div class="col-xs-2 col-md-2">
-                                                <a href="#" class="btn btn-default btn-lg"  role="button"><i class="glyphicon glyphicon-comment"></i> <br/>&nbsp&nbsp&nbsp&nbspSend SMS&nbsp&nbsp&nbsp&nbsp</a>
-                                            </div>
-                                            <div class="col-xs-2 col-md-2">
-                                                <a href="#" class="btn btn-default btn-lg"  role="button"><i class="glyphicon glyphicon-remove"></i> <br/>&nbsp&nbsp&nbspClass DACT&nbsp&nbsp&nbsp</a>
-                                             </div>
-                                            <div class="col-xs-2 col-md-2">
-                                                <a href="AccCreation.action" onclick="paymentCreate()" class="btn btn-default btn-lg"  role="button"><i class="glyphicon glyphicon-eye-open"></i> <br/>&nbspPayment Account Creation&nbsp</a>
-                                             </div>
+
+
+                                <div class="panel-body">
+                                    <div class="row" style="margin : 20px 0px 0px 20px">
+                                        <div class="col-xs-2 col-md-2">
+                                            <a href="load.action" class="btn btn-default btn-lg"  role="button"><i class="glyphicon glyphicon-list-alt"></i> <br/>&nbsp&nbsp&nbsp&nbspEnd Course&nbsp&nbsp&nbsp&nbsp</a>
                                         </div>
-                                       
+                                        <div class="col-xs-2 col-md-2">
+                                            <a href="#" class="btn btn-default btn-lg"  role="button"><i class="glyphicon glyphicon-file"></i> <br/>&nbsp&nbspBackup Data&nbsp&nbsp</a>
+                                        </div>
+                                        <div class="col-xs-2 col-md-2">
+                                            <a href="#" class="btn btn-default btn-lg"  role="button"><i class="glyphicon glyphicon-comment"></i> <br/>&nbsp&nbsp&nbsp&nbspSend SMS&nbsp&nbsp&nbsp&nbsp</a>
+                                        </div>
+                                        <div class="col-xs-2 col-md-2">
+                                            <a href="#" class="btn btn-default btn-lg"  role="button"><i class="glyphicon glyphicon-remove"></i> <br/>&nbsp&nbsp&nbspClass DACT&nbsp&nbsp&nbsp</a>
+                                        </div>
+                                        <div class="col-xs-2 col-md-2">
+                                            <a href="#" onclick="paymentCreate()" class="btn btn-default btn-lg"  role="button"><i class="glyphicon glyphicon-eye-open"></i> <br/>&nbspPayment Account Creation&nbsp</a>
+                                        </div>
                                     </div>
-                                
+
+                                </div>
+
                             </div>
                         </div>
                     </div>
 
-                    <!--                        <div class="viewuser_tbl">
-                                                <div id="tablediv">        -->
-                    <sj:dialog 
-                        id="viewdialog" 
-                        buttons="{
-                        'OK':function() { $( this ).dialog( 'close' );}                                    
-                        }" 
-                        autoOpen="false" 
-                        modal="true"                            
-                        width="1000"
-                        height="500"
-                        position="center"
-                        title="Assign To Courses"
 
-                        loadingText="Loading .."
-                        />
                 </div>
             </div>
-            <!--                </div>
-                        </div>-->
+
+            <div class="viewuser_tbl">
+                <div id="tablediv">
+                    <sj:dialog 
+                        id="confirmdialogbox" 
+                        buttons="{ 
+                        'OK':function() { deleteNow1();$( this ).dialog( 'close' ); },
+                        'Cancel':function() { $( this ).dialog( 'close' );} 
+                        }" 
+                        autoOpen="false" 
+                        modal="true" 
+                        title="Confirm Message"
+                        width="400"
+                        height="150"
+                        position="center"
+                        />
+                    <sj:dialog 
+                        id="dialogbox" 
+                        buttons="{
+                        'OK':function() { $( this ).dialog( 'close' );}
+                        }"  
+                        autoOpen="false" 
+                        modal="true" 
+                        title="Delete Message" 
+                        width="400"
+                        height="150"
+                        position="center"
+                        />
+
+
+                </div>
+            </div>
         </section>
         <script src="js/jquery.js"></script>
 
-        <script src="js/bootstrap.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
 
 
     </body>
