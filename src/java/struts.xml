@@ -41,7 +41,7 @@
             <result name="success">/pages/login/home.jsp</result>
         </action>
         <action name="AccCreation" class="main.action.MainPage" method="AccCreation" >
-            <result name="accCreation">/pages/login/home.jsp</result>
+            <result name="accCreation" type="json"></result>
         </action>
     </package>
 

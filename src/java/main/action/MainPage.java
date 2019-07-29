@@ -7,29 +7,55 @@ package main.action;
 
 import Util.AccessControlService;
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
+import main.bean.MainBean;
+import main.service.MainService;
 
 /**
  *
  * @author Ridmi Shalika
  */
-public class MainPage extends ActionSupport implements AccessControlService{
+public class MainPage extends ActionSupport implements ModelDriven<MainBean>, AccessControlService {
+
+    MainService service = new MainService();
+    MainBean inputbean = new MainBean();
 
     @Override
     public boolean checkAccess(String method, int userRole) {
-        return  true;
+        return true;
     }
+
     @Override
     public String execute() {
 
         return SUCCESS;
     }
-    public String AccCreation(){
+
+    public String AccCreation() {
         try {
-            
+            if (!service.isAlreadycreated(inputbean)) {
+                if (service.addPaymentAccount(inputbean)) {
+                    inputbean.setSuccess(true);
+                    inputbean.setMessage("Payment Account Creaton Successfully");
+                } else {
+                    inputbean.setSuccess(false);
+                    inputbean.setMessage("Payment Account Creaton Fail");
+                }
+            }else{
+                inputbean.setSuccess(false);
+                inputbean.setMessage("Payment Account Creaton Already done for this month");
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
+            inputbean.setSuccess(false);
+            inputbean.setMessage("Payment Account Creaton Fail");
         }
         return "accCreation";
     }
-    
+
+    @Override
+    public MainBean getModel() {
+        return inputbean;
+    }
 }
