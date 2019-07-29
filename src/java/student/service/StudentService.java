@@ -767,6 +767,7 @@ public class StudentService {
             session.beginTransaction();
             Course course = (Course) session.createCriteria(Course.class, "course")
                     .add(Restrictions.eq("course.id", Integer.parseInt(bean.getS_c_id())))
+                    .add(Restrictions.eq("course.status", "ACT"))
                     .uniqueResult();
             if (course != null) {
                 bean.setCourse_fee(course.getMonthlyFee()+"");
@@ -801,7 +802,7 @@ public class StudentService {
             session = HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
             
-            String sql = "from StudentCourse wu where wu.id =:id";
+            String sql = "from StudentCourse wu where wu.id =:id and wu.status='ACT'";
             Query query = session.createQuery(sql);
             query.setInteger("id", Integer.parseInt(inputBean.getCard_id()));
             studentlist = query.list();
@@ -842,7 +843,7 @@ public class StudentService {
             session.beginTransaction();
             
             
-            String sql = "from StudentCourse wu where wu.id =:id";
+            String sql = "from StudentCourse wu where wu.id =:id and wu.status='ACT'";
             query = session.createQuery(sql);
             query.setInteger("id", Integer.parseInt(inputBean.getUpcardId()));
             studentCourses = query.list();

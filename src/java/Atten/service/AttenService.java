@@ -149,6 +149,7 @@ public class AttenService {
                     .createAlias("studentcourse.studentId", "st")
                     .createAlias("st.sSchool", "sc")
                     .add(Restrictions.eq("st.sId", st_id))
+                    .add(Restrictions.eq("studentcourse.status", "ACT"))
                     //                    .uniqueResult();
                     .setProjection(Projections.distinct(Projections.projectionList()
                             .add(Projections.property("st.sName"))
@@ -196,6 +197,7 @@ public class AttenService {
                     .createAlias("stc.courseId", "cr")
                     .createAlias("cr.courseDatesSet", "coursedate")
                     .add(Restrictions.eq("st.sId", st_id))
+                    .add(Restrictions.eq("stc.status", "ACT"))
                     .add(Restrictions.not(Restrictions.eq("coursedate." + day + "", "-")))
                     .setProjection(Projections.distinct(Projections.projectionList()
                             .add(Projections.property("cr.id"))
@@ -243,6 +245,7 @@ public class AttenService {
             SimpleDateFormat sdf1 = new SimpleDateFormat("MM/dd/yyyy");
 
             Criteria c = session.createCriteria(ExtraClasses.class, "ex")
+                    .add(Restrictions.eq("ex.status", "ACT"))
                     .add(Restrictions.eq("ex.date", sdf1.format(sdate)));
             Iterator i1 = c.list()
                     .iterator();
@@ -350,7 +353,8 @@ public class AttenService {
                     .createAlias("stcr.studentId", "stu")
                     .createAlias("stcr.courseId", "crs")
                     .add(Restrictions.eq("stu.sId", st_id))
-                    .add(Restrictions.eq("crs.id", cid));
+                    .add(Restrictions.eq("crs.id", cid))
+                    .add(Restrictions.eq("stcr.status", "ACT"));
 
             Iterator i3 = c3.list().iterator();
             while (i3.hasNext()) {
@@ -490,6 +494,7 @@ public class AttenService {
                             .createAlias("sc.courseId", "cid")
                             .add(Restrictions.eq("sid.sId", studentid))
                             .add(Restrictions.eq("cid.id", courseid))
+                            .add(Restrictions.eq("sc.status", "ACT"))
                             .uniqueResult();
 
                     //insert payment table

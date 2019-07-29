@@ -47,16 +47,18 @@ public class CourseService {
             session = (Session) HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
 
-            String sqlCount = "select count(id) from Course s where s.courseDescription LIKE :courseDescription";
+            String sqlCount = "select count(id) from Course s where s.courseDescription LIKE :courseDescription and s.status =:status";
             Query queryCount = session.createQuery(sqlCount);
             queryCount.setString("courseDescription", "%" + inputBean.getSearchname() + "%");
+            queryCount.setString("status", "ACT");
             Iterator itCount = queryCount.iterate();
             count = (Long) itCount.next();
             if (count > 0) {
-                String sqlSearch = "from Course s where s.courseDescription LIKE :courseDescription";
+                String sqlSearch = "from Course s where s.courseDescription LIKE :courseDescription and s.status =:status";
                 Query querySearch = session.createQuery(sqlSearch);
 //                querySearch.setParameter("courseDescription", "%" + inputBean.getSearchname() + "%");
                 querySearch.setString("courseDescription", "%" + inputBean.getSearchname() + "%");
+                querySearch.setString("status", "ACT");
 
                 querySearch.setMaxResults(max);
                 querySearch.setFirstResult(first);
@@ -630,7 +632,7 @@ public class CourseService {
         boolean isConducttable1 = false;
 
         try {
-            //2019-07-08
+            
             long count = 0;
             session = (Session) HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
@@ -719,6 +721,7 @@ public class CourseService {
 
                 //from extra class table
                 Criteria c = session.createCriteria(ExtraClasses.class, "ex")
+                        .add(Restrictions.eq("ex.status", "ACT"))
                         .add(Restrictions.eq("ex.date", sdf1.format(sdate)));
                 Iterator i1 = c.list()
                         .iterator();
@@ -823,13 +826,15 @@ public class CourseService {
             session = (Session) HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
 
-            String sqlCount = "select count(id) from ExtraClasses";
+            String sqlCount = "select count(id) from ExtraClasses ex where ex.status =:status";
             Query queryCount = session.createQuery(sqlCount);
+            queryCount.setString("status", "ACT");
             Iterator itCount = queryCount.iterate();
             count = (Long) itCount.next();
             if (count > 0) {
-                String sqlSearch = "from ExtraClasses ";
+                String sqlSearch = "from ExtraClasses ex where ex.status =:status";
                 Query querySearch = session.createQuery(sqlSearch);
+                querySearch.setString("status", "ACT");
                 querySearch.setMaxResults(max);
                 querySearch.setFirstResult(first);
 
