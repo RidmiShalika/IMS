@@ -58,4 +58,12 @@ public class MainPage extends ActionSupport implements ModelDriven<MainBean>, Ac
     public MainBean getModel() {
         return inputbean;
     }
+    public String getCoreDetails(){
+        try {
+            service.getHomeDetails(inputbean);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "getdetails";    
+    }
 }

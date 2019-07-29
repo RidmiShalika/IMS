@@ -43,6 +43,9 @@
         <action name="AccCreation" class="main.action.MainPage" method="AccCreation" >
             <result name="accCreation" type="json"></result>
         </action>
+        <action name="getCoreDetails" class="main.action.MainPage" method="getCoreDetails" >
+            <result name="getdetails" type="json"></result>
+        </action>
     </package>
 
     <package name="Student" extends="pglobal" namespace="/">

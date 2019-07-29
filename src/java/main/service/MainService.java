@@ -11,10 +11,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import main.bean.MainBean;
+import mapping.Course;
+import mapping.Lecturer;
 import mapping.PendingPayments;
+import mapping.Student;
 import mapping.StudentCourse;
+import mapping.Subject;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -139,5 +144,57 @@ public class MainService {
             }
         }
         return  iscreated;
+    }
+    public boolean getHomeDetails(MainBean bean) throws Exception {
+        boolean isAdd = false;
+        Session session = null;
+
+        try {
+            session = HibernateInit.getSessionFactory().openSession();
+            session.beginTransaction();
+         
+            Criteria c = session.createCriteria(Student.class, "sc");
+            c.setProjection(Projections.rowCount());
+            Long count = (Long)c.uniqueResult();
+            
+            bean.setStudentCount(count.toString());
+            
+            Criteria c1 = session.createCriteria(Lecturer.class, "l");
+            c1.setProjection(Projections.rowCount());
+            Long count1 = (Long)c1.uniqueResult();
+            
+            bean.setTeachersCount(count1.toString());
+            
+            Criteria c2 = session.createCriteria(Subject.class, "su");
+            c2.setProjection(Projections.rowCount());
+            Long count2 = (Long)c2.uniqueResult();
+            
+            bean.setSubjectCount(count2.toString());
+            
+            Criteria c3 = session.createCriteria(Course.class, "c");
+            c3.setProjection(Projections.rowCount());
+            Long count3 = (Long)c3.uniqueResult();
+            
+            bean.setCourseCount(count3.toString());
+            
+           
+        } catch (Exception e) {
+            
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            throw e;
+        } finally {
+           
+            if (session != null) {
+                session.getTransaction().commit();
+                session.flush();
+                session.close();
+                session = null;
+            }
+        }
+        return isAdd;
     }
 }
