@@ -53,6 +53,25 @@
                     return false;
                 }
             }
+            
+            $(document).ready(function () {
+            
+                $.ajax({
+                    url: '${pageContext.request.contextPath}/getCoreDetails',
+                    dataType: "json",
+                    type: "GET",
+                    success: function (data) {
+                        $('#stu_div').html(data.studentCount);
+                        $('#tea_div').html(data.teachersCount);
+                        $('#sub_div').html(data.subjectCount);
+                        $('#cla_div').html(data.courseCount);
+                        
+                    },
+                    error: function (data) {
+
+                    }
+                });
+            });
         </script>
 
     </head>
@@ -71,7 +90,7 @@
                             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                 <div class="simple-widget">
                                     <div class="growth">+12</div>
-                                    <h3 class="text-white">9,521</h3>
+                                    <h3 class="text-white" id="stu_div"></h3>
                                     <p class="text-white">Students</p>
                                     <div class="progress sm">
                                         <div class="progress-bar" role="progressbar" style="width: 37%;" aria-valuenow="37" aria-valuemin="0" aria-valuemax="100"></div>
@@ -81,7 +100,7 @@
                             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                 <div class="simple-widget">
                                     <div class="growth">-3</div>
-                                    <h3 class="text-white">6,417</h3>
+                                    <h3 class="text-white" id="tea_div"></h3>
                                     <p class="text-white">Teachers</p>
                                     <div class="progress sm">
                                         <div class="progress-bar" role="progressbar" style="width: 48%;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
@@ -91,7 +110,7 @@
                             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                 <div class="simple-widget">
                                     <div class="growth">+25</div>
-                                    <h3 class="text-white">9,421</h3>
+                                    <h3 class="text-white" id="sub_div"></h3>
                                     <p class="text-white">Subjects</p>
                                     <div class="progress sm">
                                         <div class="progress-bar" role="progressbar" style="width: 65%;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
@@ -101,7 +120,7 @@
                             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                 <div class="simple-widget secondary">
                                     <div class="growth">+19</div>
-                                    <h3 class="text-white">5429</h3>
+                                    <h3 class="text-white" id="cla_div"></h3>
                                     <p class="text-white">Classes</p>
                                     <div class="progress sm">
                                         <div class="progress-bar" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
