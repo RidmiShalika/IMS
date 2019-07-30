@@ -11,40 +11,7 @@
 <%@taglib prefix="s" uri="/struts-tags"%>
 <%@taglib prefix="sj" uri="/struts-jquery-tags"%>
 <%@taglib prefix="sjg" uri="/struts-jquery-grid-tags"%>
-<!--Banner-->
-<!--<div class="banner">
-     App header begin 
-    <header>
-        <a href='homeCall.action' class=""></a>
-        <div class="service-status">
-            <div id="node"></div><div id="serviceStatus" class="active"></div>
-        </div>
-        <div class="top-nav">
-            <div class="right-links">
-                <a href='logOut.action' id="logout"  class="lnk-logout" title="Log Out"></a>
-                <a href='homeCall.action' id="home" class="lnk-home" title="Home"></a>
-            </div>
-            <div class="user-info">
-                <h2></h2>
-                <h1>Welcome</h1>
-                <div>
-                    <a href="#">${SessionObject.userName}</a><br />
-                    <span>${SessionObject.userRole}</span>
-                </div>
-            </div>
-        </div>
-    </header>
-     End 
 
-</div>-->
-<!--End of Banner-->
-
-<!-- Left side navigation begin -->
-<!--<div class="row">
-    <div class="col-lg-3">
-
-    </div>
-</div>-->
 <div>
     <h1 style="color: #007dc1;text-align: center">NIKARSHA</h1>
     <div class="container-fluid" style="color: #fff;">

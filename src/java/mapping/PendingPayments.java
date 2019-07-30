@@ -6,6 +6,7 @@
 package mapping;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -27,6 +30,27 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "PendingPayments.findAll", query = "SELECT p FROM PendingPayments p")})
 public class PendingPayments implements Serializable {
+
+    @Column(name = "flag")
+    private Integer flag;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "card_type")
+    private int cardType;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "class_fee")
+    private double classFee;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "elegible_fee")
+    private double elegibleFee;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "creation_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creationDate;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -146,5 +170,45 @@ public class PendingPayments implements Serializable {
     public String toString() {
         return "mapping.PendingPayments[ id=" + id + " ]";
     }
-    
+
+    public int getCardType() {
+        return cardType;
+    }
+
+    public void setCardType(int cardType) {
+        this.cardType = cardType;
+    }
+
+    public double getClassFee() {
+        return classFee;
+    }
+
+    public void setClassFee(double classFee) {
+        this.classFee = classFee;
+    }
+
+    public double getElegibleFee() {
+        return elegibleFee;
+    }
+
+    public void setElegibleFee(double elegibleFee) {
+        this.elegibleFee = elegibleFee;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
+    }
+
 }

@@ -10,9 +10,48 @@
         <script type="text/javascript">
 
             function test() {
-                alert("");
-                var s = $('#gridtable').jqGrid('getGridParam','selarrrow');
-                alert('selected rows:'+s);
+//                var s = $('#gridtable').jqGrid('getGridParam','selarrrow');
+//                 var s= ;
+                 var courceid = $('#hcid').val();
+                 var endtime = $('#stopTime').val();
+                var s = courceid+","+endtime;
+
+                $.ajax({
+                    url: '${pageContext.request.contextPath}/stopclases',
+                    data: {selecteddata: s},
+                    dataType: "json",
+                    type: "GET",
+                    success: function (data) {
+                        
+                     jQuery("#gridtable").trigger("reloadGrid");
+                      
+                    },
+                    error: function (data) {
+                    }
+                     
+                });
+            }
+            function findc(courceid,classTypet){
+                $('#stopform').show();
+                var s = courceid+","+classTypet;
+                $('#hcid').val(courceid);
+//                $.ajax({
+//                    url: '${pageContext.request.contextPath}/findstopclases',
+//                    data: {fselecteddata: s},
+//                    dataType: "json",
+//                    type: "GET",
+//                    success: function (data) {
+//                     $('#hcid').val(data.hcid);
+//                     jQuery("#gridtable").trigger("reloadGrid");
+//                      
+//                    },
+//                    error: function (data) {
+//                    }
+//                     
+//                });
+            }
+            function stopformatter(cellvalue, options, rowObject) {
+                return "<a href='#' onClick='javascript:findc(&#34;" + cellvalue + "&#34;,&#34;" + rowObject.classTypet + "&#34;)'><i class='fa fa-share-square-o' aria-hidden='true'></i></a>";
             }
         </script>
     </head>
@@ -32,17 +71,23 @@
                     </s:div>         
                 </div>
                 
-                <form>
+                <s:form id="stopform" theme="simple" method="post"  cssStyle="display:none">
                      <table>
                         <tr>
                             <td>
-                               <%--<s:url var="stopeurl" action="stopClz" />--%>
-                                <%--<sj:submit  id="stopbtn" button="true" href="%{stopeurl}" value="STOP"   targets="divmsg" cssClass="button_aback"/>--%> 
+                                <sj:datepicker id="stopTime" name="stopTime" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                            </td> 
+                        </tr>
+                         <tr>
+                            <td>
+                                
                                 <sj:submit  id="stopbtn" button="true" onclick="test()" value="STOP"  cssClass="button_aback"/> 
                             </td>
                         </tr>
                      </table>
-                </form>
+                </s:form>
+                <s:hidden id="hcid" name="hcid" />
+                <s:hidden id="hcendtime" name="hcendtime" />
                 
                 <div class="viewuser_tbl">
                     <div id="tablediv">
@@ -63,19 +108,16 @@
                                     onCompleteTopics="completetopics"
                                     rowTotal="false"
                                     viewrecords="true"
-                                    multiselect="true"
                                     >
 
                                     <sjg:gridColumn name="id" index="id" title="id" hidden="true"/>
+                                     <sjg:gridColumn name="details" index="details" title="Stop" formatter="stopformatter" />
                                     <sjg:gridColumn name="stopcourseDescription" index="courseId.courseDescription" title="Course Description" />
-                                    <sjg:gridColumn name="monday" index="monday" title="Monday" />
-                                    <sjg:gridColumn name="tueday" index="tueday" title="Tuesday" />
-                                    <sjg:gridColumn name="wedday" index="wedday" title="Wednesday" />
-                                    <sjg:gridColumn name="thurday" index="thurday" title="Thursday" />
-                                    <sjg:gridColumn name="friday" index="friday" title="Friday" />
-                                    <sjg:gridColumn name="satday" index="satday" title="Saturday" />
-                                    <sjg:gridColumn name="sunday" index="sunday" title="Sunday" />
-                                    <sjg:gridColumn name="id" index="id" title="Select" />
+                                    <sjg:gridColumn name="startEnd" index="startEnd" title="Start/End" width="300"/>
+                                    <sjg:gridColumn name="endedTime" index="endedTime" title="Ended Time" width="300" editable="true" edittype="text"/>
+                                    <sjg:gridColumn name="classTypet" title="Class Type" width="200"/>
+                                    <%--<sjg:gridColumn name="details" index="details" title="Select" />--%>
+                                   
                                     
                                 </sjg:grid> 
                     

@@ -8,27 +8,31 @@
 <html>
     <head>
         <jsp:include page="/Styles.jsp" />
-        
+
         <script type="text/javascript">
-            
-            function ResetForm(){
-                $('#payid').val("");
+
+            function ResetForm() {
+                $('#attenid').val("");
             }
             function keyPress() {
-                
-                var keyval = $('#payid').val();
-                
-                 $.ajax({
-                    url: '${pageContext.request.contextPath}/findStp',
-                    data: {payid: keyval},
-                    dataType: "json",
-                    type: "POST",
-                    success: function (data) {
-                        window.location.href = "${pageContext.request.contextPath}/pages/payment/payment.jsp";
-                    },
-                    error: function (data) {
-                    }
-                });
+
+                var keyval = $('#attenid').val();
+                if (keyval !== "") {
+                    $.ajax({
+                        url: '${pageContext.request.contextPath}/findSt',
+                        data: {attenid: keyval},
+                        dataType: "json",
+                        type: "POST",
+                        success: function (data) {
+                            window.location.href = "${pageContext.request.contextPath}/pages/payment/payment.jsp";
+                        },
+                        error: function (data) {
+                        }
+                    });
+                }else{
+                    alert("Please Enter Student ID");
+                }
+
             }
 
         </script>
@@ -39,7 +43,7 @@
             <div class="wrapper">
                 <div class="body_content" id="includedContent" >
                     <div class="watermark"></div>
-                    <div class="heading">Payments</div>
+                    <div class="heading">Attendance</div>
                     <div class="AddUser_box ">
                         <div class="message">         
                             <s:div id="divmsg">
@@ -54,14 +58,15 @@
                                 <table class="form_table">
 
                                     <tr>
-                                        <td class="formLable">Student Id</td> <td >:</td>
-                                        <td><s:textfield id="payid" name="payid" cssClass="textField"/></td>
+                                        <td class="formLable">ID</td> <td >:</td>
+                                        <td><s:textfield id="attenid" name="attenid" cssClass="textField"/></td>
                                     </tr>
 
 
                                     <tr>
                                         <td>
-                                            <sj:submit button="true" value="Confirm"  onclick="keyPress()" cssClass="button_aback"/>
+                                            <sj:submit button="true" value="Atten"  onclick="keyPress()" cssClass="button_aback"/>
+                                            <%--<sj:submit button="true" value="Reset"  onclick="ResetForm()" cssClass="button_aback"/>--%>
                                         </td>
                                     </tr>
                                 </table>
@@ -72,24 +77,24 @@
                         </div>
                         <div class="viewuser_tbl">
                             <div id="tablediv">
-                                
+
 
                                 <sj:dialog 
-                                        id="viewdialog" 
-                                        buttons="{
-                                        'OK':function() { $( this ).dialog( 'close' );}                                    
-                                        }" 
-                                        autoOpen="false" 
-                                        modal="true"                            
-                                        width="1000"
-                                        height="500"
-                                        position="center"
-                                        title="Assign To Courses"
-                                        onOpenTopics="openview" 
-                                        loadingText="Loading .."
-                            />
-                                
-                               
+                                    id="viewdialog" 
+                                    buttons="{
+                                    'OK':function() { $( this ).dialog( 'close' );}                                    
+                                    }" 
+                                    autoOpen="false" 
+                                    modal="true"                            
+                                    width="1000"
+                                    height="500"
+                                    position="center"
+                                    title="Assign To Courses"
+                                    onOpenTopics="openview" 
+                                    loadingText="Loading .."
+                                    />
+
+
                             </div>
                         </div>
 

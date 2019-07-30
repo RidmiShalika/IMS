@@ -40,6 +40,12 @@
         <action name="main" class="main.action.MainPage" method="execute"> 
             <result name="success">/pages/login/home.jsp</result>
         </action>
+        <action name="AccCreation" class="main.action.MainPage" method="AccCreation" >
+            <result name="accCreation" type="json"></result>
+        </action>
+        <action name="getCoreDetails" class="main.action.MainPage" method="getCoreDetails" >
+            <result name="getdetails" type="json"></result>
+        </action>
     </package>
 
     <package name="Student" extends="pglobal" namespace="/">
@@ -190,6 +196,12 @@
         </action>
         <action name="Deletex" class="course.action.CourseAction" method="Deletex" > 
             <result name="deleteex" type="json"></result>
+        </action>
+        <action name="stopclases" class="course.action.CourseAction" method="stopClass" > 
+            <result name="stopClass" type="json"></result>
+        </action>
+        <action name="findstopclases" class="course.action.CourseAction" method="findstopclases" > 
+            <result name="findstopclases" type="json"></result>
         </action>
     </package>
     

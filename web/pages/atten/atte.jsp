@@ -28,6 +28,9 @@
                         $('#time').val(data.time);
                         $('#courseId').val(data.courseId);
                         $('#extra_normal').val(data.extra_normal);
+                        
+                        $('#testid').val(data.attandance_history);
+                        $('#phisid').val(data.payment_history);
                     },
                     error: function (data) {
 
@@ -40,6 +43,8 @@
             }
             function pay(keyval) {
                 //load history lists
+                 $('#testid').val("");
+                 $('#phisid').val("");
                 $.ajax({
                     url: '${pageContext.request.contextPath}/loadhistorylist',
                     data: {attenid: keyval},
@@ -57,7 +62,7 @@
             function test() {
 
                 var selected_data = $('#gridtable').jqGrid('getGridParam', 'selarrrow');
-                alert('selected rows:' + selected_data);
+//                alert('selected rows:' + selected_data);
 
                 $.ajax({
                     url: '${pageContext.request.contextPath}/paymentmark',
@@ -65,11 +70,14 @@
                     dataType: "json",
                     type: "GET",
                     success: function (data) {
-//                       $('#name').val("data.pay_status");
+                      alert("Payment Successfully Completed");
+                     jQuery("#gridtable").trigger("reloadGrid");
+                      
                     },
                     error: function (data) {
-
+                        alert("Payment Error");
                     }
+                     
                 });
             }
             $('#gridtable.id').change(function () {

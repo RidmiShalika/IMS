@@ -33,6 +33,12 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "PaymentBillDetails.findAll", query = "SELECT p FROM PaymentBillDetails p")})
 public class PaymentBillDetails implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "issued_by")
+    private String issuedBy;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -172,6 +178,14 @@ public class PaymentBillDetails implements Serializable {
     @Override
     public String toString() {
         return "mapping.PaymentBillDetails[ lineId=" + lineId + " ]";
+    }
+
+    public String getIssuedBy() {
+        return issuedBy;
+    }
+
+    public void setIssuedBy(String issuedBy) {
+        this.issuedBy = issuedBy;
     }
     
 }

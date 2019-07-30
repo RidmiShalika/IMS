@@ -372,5 +372,28 @@ public class CourseAction extends ActionSupport implements ModelDriven<CourseBea
          }
          return "deleteex";
      }
-
+     public String load(){
+         return "load";
+     }
+     
+     public String stopClass(){
+         try {
+             System.out.println("s>>>>>> "+inputbean.getSelecteddata());
+             service.stopClassess(inputbean);
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+         return "stopclases";
+     }
+     public String findstopclases(){
+         try {
+             System.out.println("s>>>>>> "+inputbean.getFselecteddata());
+             if(service.findstopClassess(inputbean)){
+                 System.out.println("success "+inputbean.getHcid()+" , "+inputbean.getHcendtime());
+             }
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+         return "findstopclases";
+     }
 }

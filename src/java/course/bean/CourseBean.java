@@ -126,6 +126,10 @@ public class CourseBean {
     private String satday;
     private String sunday;
     
+    private String startEnd;
+    private String endedTime;
+    private String classTypet;
+    
     private int course_ID;
     
     //extra class
@@ -143,7 +147,57 @@ public class CourseBean {
     
     private String message;
     private boolean success;
+    public String selecteddata;
+    public String details;
+    
+    public String hcid;
+    public String hcendtime;
+    public String fselecteddata;
 
+    public String getFselecteddata() {
+        return fselecteddata;
+    }
+
+    public void setFselecteddata(String fselecteddata) {
+        this.fselecteddata = fselecteddata;
+    }
+
+    
+    public String getHcid() {
+        return hcid;
+    }
+
+    public void setHcid(String hcid) {
+        this.hcid = hcid;
+    }
+
+    public String getHcendtime() {
+        return hcendtime;
+    }
+
+    public void setHcendtime(String hcendtime) {
+        this.hcendtime = hcendtime;
+    }
+
+    
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
+    
+    public String getSelecteddata() {
+        return selecteddata;
+    }
+
+    public void setSelecteddata(String selecteddata) {
+        this.selecteddata = selecteddata;
+    }
+
+    
     public String getMessage() {
         return message;
     }
@@ -969,5 +1023,32 @@ public class CourseBean {
     public void setSunday(String sunday) {
         this.sunday = sunday;
     }
+
+    public String getStartEnd() {
+        return startEnd;
+    }
+
+    public void setStartEnd(String startEnd) {
+        this.startEnd = startEnd;
+    }
+
+    public String getEndedTime() {
+        return endedTime;
+    }
+
+    public void setEndedTime(String endedTime) {
+        this.endedTime = endedTime;
+    }
+
+    
+    public String getClassTypet() {
+        return classTypet;
+    }
+
+    public void setClassTypet(String classTypet) {
+        this.classTypet = classTypet;
+    }
+
+   
    
 }

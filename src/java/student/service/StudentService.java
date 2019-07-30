@@ -8,7 +8,9 @@ package student.service;
 import Util.HibernateInit;
 import java.io.File;
 import java.io.FileInputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import login.bean.SessionBean;
 import mapping.Admission;
 import mapping.Course;
+import mapping.PendingPayments;
 import mapping.School;
 import mapping.Student;
 import mapping.StudentCourse;
@@ -579,7 +582,48 @@ public class StudentService {
             studentCr.setStatus("ACT");
           
             session.save(studentCr);
+            
+            Calendar cal = Calendar.getInstance();
+            String curMonth = new SimpleDateFormat("MMMM").format(cal.getTime()).toLowerCase();
+            String curYear = (new SimpleDateFormat("yyyy").format(cal.getTime())).toLowerCase();
+            
+            
+            String sqlSearch = "from Course s where s.id=:id and s.status='ACT'";
+                Query querySearch = session.createQuery(sqlSearch);
+                querySearch.setInteger("id", Integer.parseInt(bean.getAssCourse()));
+
+
+                Iterator it = querySearch.iterate();
+                double monthlyfee = 0.0;
+                while (it.hasNext()) {
+                    Course objBean = (Course) it.next();
+                    
+                    monthlyfee = objBean.getMonthlyFee();
+                }
+            
+            
+            
+            PendingPayments pp = new PendingPayments();
+            pp.setCid(Integer.parseInt(bean.getAssCourse()));
+            pp.setSid(st_id);
+            pp.setMonth(curMonth);
+            pp.setYear(curYear);
+            pp.setCardType(Integer.parseInt(bean.getAsscard_type()));
+            pp.setCreationDate(new Date());
+            pp.setClassFee(monthlyfee);
+            pp.setStatus("Pending");
+            
+            if(pp.getCardType() == 1){
+                pp.setElegibleFee(monthlyfee);
+            }else if(pp.getCardType() == 2){
+                 pp.setElegibleFee(monthlyfee/2);
+            }else{
+                pp.setElegibleFee(0.0);
+            }
+            session.save(pp);
            
+            
+             session.getTransaction().commit();
             isAddStudent = true;
         } catch (Exception e) {
             if (session != null) {
@@ -590,7 +634,7 @@ public class StudentService {
             throw e;
         } finally {
             if (session != null) {
-                 session.getTransaction().commit();
+                
                 session.flush();
                 session.close();
                 session = null;
@@ -723,6 +767,7 @@ public class StudentService {
             session.beginTransaction();
             Course course = (Course) session.createCriteria(Course.class, "course")
                     .add(Restrictions.eq("course.id", Integer.parseInt(bean.getS_c_id())))
+                    .add(Restrictions.eq("course.status", "ACT"))
                     .uniqueResult();
             if (course != null) {
                 bean.setCourse_fee(course.getMonthlyFee()+"");
@@ -757,7 +802,7 @@ public class StudentService {
             session = HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
             
-            String sql = "from StudentCourse wu where wu.id =:id";
+            String sql = "from StudentCourse wu where wu.id =:id and wu.status='ACT'";
             Query query = session.createQuery(sql);
             query.setInteger("id", Integer.parseInt(inputBean.getCard_id()));
             studentlist = query.list();
@@ -798,7 +843,7 @@ public class StudentService {
             session.beginTransaction();
             
             
-            String sql = "from StudentCourse wu where wu.id =:id";
+            String sql = "from StudentCourse wu where wu.id =:id and wu.status='ACT'";
             query = session.createQuery(sql);
             query.setInteger("id", Integer.parseInt(inputBean.getUpcardId()));
             studentCourses = query.list();
