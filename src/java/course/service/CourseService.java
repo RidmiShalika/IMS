@@ -15,11 +15,14 @@ import java.util.Iterator;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import login.bean.SessionBean;
+import mapping.Attendence;
 import mapping.ClassConductDetails;
 import mapping.Course;
 import mapping.CourseDates;
 import mapping.ExtraClasses;
 import mapping.Lecturer;
+import mapping.Student;
+import mapping.StudentCourse;
 import mapping.Subject;
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.Criteria;
@@ -628,11 +631,11 @@ public class CourseService {
         List<CourseBean> dataList = new ArrayList<CourseBean>();
         Session session = null;
 
-        boolean isConducttable = false;
-        boolean isConducttable1 = false;
+        
+        
 
         try {
-            
+
             long count = 0;
             session = (Session) HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
@@ -684,6 +687,7 @@ public class CourseService {
                 Iterator it = criteria.list()
                         .iterator();
                 while (it.hasNext()) {
+                    boolean isConducttable = false;
                     CourseBean databean = new CourseBean();
                     Object[] ob = (Object[]) it.next();
 
@@ -726,6 +730,7 @@ public class CourseService {
                 Iterator i1 = c.list()
                         .iterator();
                 while (i1.hasNext()) {
+                    boolean isConducttable1 = false;
                     ExtraClasses extraClasses = (ExtraClasses) i1.next();
                     CourseBean databean = new CourseBean();
 
@@ -971,6 +976,7 @@ public class CourseService {
 
     public boolean stopClassess(CourseBean inputbean) {
         boolean isstop = false;
+       
         Session session = HibernateInit.getSessionFactory().openSession();
 
         try {
@@ -1005,16 +1011,71 @@ public class CourseService {
                 } else {
                     id = id + 1;
                 }
-                System.out.println(">>>>>>>>> s" + id);
                 conductDetails.setId(id);
             } else {
-                System.out.println(">>>>>>>>> s");
                 conductDetails.setId(1);
             }
 
             session.save(conductDetails);
+
+            
+            
+            
+            // insert not atten student to attendace table
+            Criteria c = session.createCriteria(StudentCourse.class, "sc")
+                    .add(Restrictions.eq("sc.status", "ACT"));
+
+            Iterator it = c.list()
+                    .iterator();
+            Date da = new Date();
+            SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
+            while (it.hasNext()) {
+                 boolean isAtten = false;
+                StudentCourse studentCourse = (StudentCourse) it.next();
+
+                Criteria criteria1 = session.createCriteria(Attendence.class, "att")
+                        .createAlias("att.studentId", "st")
+                        .createAlias("att.courseId", "cr")
+                        .add(Restrictions.eq("att.completeDate", new Date()))
+                        .add(Restrictions.eq("st.sId", studentCourse.getStudentId().getSId()))
+                        .add(Restrictions.eq("cr.id", studentCourse.getCourseId().getId()));
+                Iterator it1 = criteria1.list()
+                        .iterator();
+                if (it1.hasNext()) {
+                    isAtten = true;
+                }
+
+                if (!isAtten) {
+                    DateFormat dateFormat = new SimpleDateFormat("EEEE");
+                    Date date = new Date();
+                    
+                    Date date1 = new Date();
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd|HH:mm:ss");
+                    String dd = sdf.format(date1);
+                    String datTime[] = dd.split("\\|");
+                    String dateonly[] = datTime[0].split("\\-");
+                    
+                    Attendence attendence = new Attendence();
+                    attendence.setAtten(false);
+                    attendence.setCompleteDate(new Date());
+                    Course c2 = new Course();
+                    c2.setId(studentCourse.getCourseId().getId());
+                    attendence.setCourseId(c2);
+                    Student s = new Student();
+                    s.setSId(studentCourse.getStudentId().getSId());
+                    attendence.setStudentId(s);
+                    attendence.setDate(Integer.parseInt(dateonly[2]));
+                    attendence.setDay(dateFormat.format(date).toLowerCase());
+                    attendence.setMonth(Integer.parseInt(dateonly[1]));
+                    attendence.setTime(datTime[1]);
+                    attendence.setYear(Integer.parseInt(dateonly[0]));
+                    
+                    session.save(attendence);
+                }
+
+            }
+
             session.getTransaction().commit();
-//            conductDetails.set
             isstop = true;
 
         } catch (Exception e) {
@@ -1054,17 +1115,16 @@ public class CourseService {
             Iterator it = query.iterate();
 
             while (it.hasNext()) {
-               
+
                 if (arr[1].trim().equals("Normal")) {
-                     CourseDates objBean = (CourseDates) it.next();
-                     inputbean.setHcid(objBean.getCourseId().getId().toString());
+                    CourseDates objBean = (CourseDates) it.next();
+                    inputbean.setHcid(objBean.getCourseId().getId().toString());
 //                inputbean.setHcendtime(objBean.get);
                 } else if (arr[1].trim().equals("Extra")) {
-                     ExtraClasses objBean = (ExtraClasses) it.next();
-                     inputbean.setHcid(objBean.getCourseId().getId().toString());
+                    ExtraClasses objBean = (ExtraClasses) it.next();
+                    inputbean.setHcid(objBean.getCourseId().getId().toString());
 //                    inputbean.setHcendtime(objBean.getEndDate());
                 }
-                
 
             }
 
