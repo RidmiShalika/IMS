@@ -153,7 +153,7 @@
                                             <a href="#" class="btn btn-default btn-lg"  role="button"><i class="glyphicon glyphicon-remove"></i> <br/>&nbsp&nbsp&nbspClass DACT&nbsp&nbsp&nbsp</a>
                                         </div>
                                         <div class="col-xs-2 col-md-2">
-                                            <a href="#" onclick="paymentCreate()" class="btn btn-default btn-lg"  role="button"><i class="glyphicon glyphicon-eye-open"></i> <br/>&nbspPayment Account Creation&nbsp</a>
+                                            <a href="#" onclick="paymentCreate()" class="btn btn-default btn-lg"  role="button"><i class="glyphicon glyphicon-eye-open"></i> <br/>&nbsp&nbsp&nbspMonth Begin&nbsp&nbsp&nbsp</a>
                                         </div>
                                     </div>
 
