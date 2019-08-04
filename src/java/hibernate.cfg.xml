@@ -35,6 +35,7 @@
         <mapping class="mapping.CourseDates" />
         <mapping class="mapping.ExtraClasses" />
         <mapping class="mapping.PaymentBillDetails" />
+        <mapping class="mapping.PendingPayments" />
     </session-factory>
   
 </hibernate-configuration>
