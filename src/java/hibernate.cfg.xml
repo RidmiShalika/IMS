@@ -26,7 +26,7 @@
         <mapping class="mapping.School" />
         <mapping class="mapping.Student" />
         <mapping class="mapping.StudentCourse" />
-        <!--<mapping class="mapping.StudentCoursePK" />-->
+        <mapping class="mapping.PendingPayments" />
         <mapping class="mapping.Subject" />
         <mapping class="mapping.SysUsers" />
         <mapping class="mapping.UserRole" />
