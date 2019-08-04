@@ -11,8 +11,10 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 //load student and lecture details and mark attendence
+                var paymentjsp = "0";
                 $.ajax({
                     url: '${pageContext.request.contextPath}/loadandattendence',
+                    data: {paymentjsp: paymentjsp},
                     dataType: "json",
                     type: "GET",
                     success: function (data) {
@@ -92,7 +94,7 @@
             <div class="wrapper">
                 <div class="body_content" id="includedContent" >
                     <div class="watermark"></div>
-                    <div class="heading">Attendance</div>
+                    <div class="heading">Payments</div>
                     <div class="AddUser_box ">
                         <div class="message">         
                             <s:div id="divmsg">
@@ -155,7 +157,7 @@
                                     <s:url var="listurl" action="liststatt"/>
                                     <sjg:grid
                                         id="gridtable"
-                                        caption="Student Attendance"
+                                        caption="Student Payment"
                                         cssStyle=""
                                         dataType="json"
                                         href="%{listurl}"

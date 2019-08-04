@@ -11,8 +11,10 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 //load student and lecture details and mark attendence
+                var paymentjsp = "1";
                 $.ajax({
                     url: '${pageContext.request.contextPath}/loadandattendence',
+                    data: {paymentjsp: paymentjsp},
                     dataType: "json",
                     type: "GET",
                     success: function (data) {
