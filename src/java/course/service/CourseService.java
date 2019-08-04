@@ -161,7 +161,7 @@ public class CourseService {
             Subject s = new Subject();
             s.setSubjectId(Integer.parseInt(bean.getAddsubject()));
             cor.setSubjectId(s);
-            cor.setLecHallId(Integer.parseInt(bean.getAddlectureHall()));
+//            cor.setLecHallId(Integer.parseInt(bean.getAddlectureHall()));
             cor.setLecPaymentPercentage(Double.parseDouble(bean.getAddlecturerPayment()));
 
             try {
