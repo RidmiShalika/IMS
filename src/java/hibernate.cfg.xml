@@ -36,6 +36,7 @@
         <mapping class="mapping.ExtraClasses" />
         <mapping class="mapping.PaymentBillDetails" />
         <mapping class="mapping.PendingPayments" />
+        <mapping class="mapping.SmsDetails" />
     </session-factory>
   
 </hibernate-configuration>
