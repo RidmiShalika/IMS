@@ -13,24 +13,18 @@
 <%@taglib prefix="sjg" uri="/struts-jquery-grid-tags"%>
 
 <div>
-    <h1 style="color: #007dc1;text-align: center">Nikasha Higher Education Institute</h1>
-   
+    <h1 style="color: #007dc1;text-align: center">NIKARSHA</h1>
     <div class="container-fluid" style="color: #fff;">
     <div class="row">
         <div class="col-lg-12 topborder">
-             <div class="col-lg-11">
-                <div class="username "><span id="disUser" class="caps">${SessionObject.userName}</span></div>
+            <div class="username "><span id="disUser" class="caps">${SessionObject.userName}</span></div>
+            <div class="dropdownnav">
+                <div id="myDropdown" class="dropdown-content">
                 
-             </div>
-                <div class="col-lg-1">
-                    <div class="dropdownnav">
-                    <div id="myDropdown" class="dropdown-content">
-
-                        <a  onclick="clearCookie()" href="logoutCall.action" style="color: white">Logout</a>
-                        <!--<a  onclick="clearCookie()" >Logout</a>-->
-                    </div>
-                </div> 
+                    <a  onclick="clearCookie()" href="logoutCall.action" style="color: white">Logout</a>
+                    <!--<a  onclick="clearCookie()" >Logout</a>-->
                 </div>
+            </div> 
         </div>
     </div>         
 </div>
