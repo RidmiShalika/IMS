@@ -53,10 +53,41 @@ public class AttenBean {
     private String extra_normal;
     
     private String selected_data;
+    private String student_gender;
+    private String student_name;
+    
+    //payment flag
+    private String paymentjsp;
     
     ArrayList<String> attandance_history = new ArrayList<String>();
     ArrayList<String> payment_history = new ArrayList<String>();
 
+    public String getPaymentjsp() {
+        return paymentjsp;
+    }
+
+    public void setPaymentjsp(String paymentjsp) {
+        this.paymentjsp = paymentjsp;
+    }
+
+    
+    public String getStudent_gender() {
+        return student_gender;
+    }
+
+    public void setStudent_gender(String student_gender) {
+        this.student_gender = student_gender;
+    }
+
+    public String getStudent_name() {
+        return student_name;
+    }
+
+    public void setStudent_name(String student_name) {
+        this.student_name = student_name;
+    }
+
+    
     public ArrayList<String> getPayment_history() {
         return payment_history;
     }

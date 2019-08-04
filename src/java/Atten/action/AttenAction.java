@@ -10,6 +10,8 @@ import Atten.service.AttenService;
 import Util.AccessControlService;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.apache.struts2.ServletActionContext;
@@ -19,14 +21,14 @@ import org.apache.struts2.ServletActionContext;
  * @author ridmi_g
  */
 public class AttenAction extends ActionSupport implements ModelDriven<AttenBean>, AccessControlService {
-    
+
     AttenBean inputBean = new AttenBean();
     AttenService service = new AttenService();
-    
+
     @Override
     public String execute() {
         return SUCCESS;
-        
+
     }
 
     public String findSt() {
@@ -40,12 +42,12 @@ public class AttenAction extends ActionSupport implements ModelDriven<AttenBean>
         }
         return "findSt";
     }
-    
+
     @Override
     public AttenBean getModel() {
         return inputBean;
     }
-    
+
     @Override
     public boolean checkAccess(String method, int userRole) {
         return true;
@@ -53,10 +55,34 @@ public class AttenAction extends ActionSupport implements ModelDriven<AttenBean>
 
     public String loadandattendence() {
         try {
+            System.out.println("is payment jsp : " + inputBean.getPaymentjsp());
+            if (!inputBean.getPaymentjsp().equals("0")) {
+                if (service.IS_First_Entrence()) {
+                    String mobileno = service.getmobileNo(inputBean);
+                    if (!"".equals(mobileno)) {
+                        boolean checkmobileno = validateMobileNo(mobileno.trim());
+                        if (checkmobileno) {
+                            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy HH:mm");
+                            Date date = new Date();
+                            service.insert_arrive_SMS(inputBean.getStudent_gender(), inputBean.getStudent_name(), formatter.format(date).replace(" ", "+"), mobileno);
+                        }else{
+                            System.out.println("Mobile number validation fails");
+                        }
+
+                    }else{
+                        System.out.println("No mobile number");
+                    }
+
+                }
+            }
+            
             //load data from service
             service.loadData(inputBean);
             service.historyData(inputBean, Integer.parseInt(inputBean.getCid()));
             service.getpaymenthistory(inputBean, Integer.parseInt(inputBean.getCid()));
+
+            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -70,6 +96,7 @@ public class AttenAction extends ActionSupport implements ModelDriven<AttenBean>
             int cid = service.getcorseid(inputBean);
             service.historyData(inputBean, cid);
             service.getpaymenthistory(inputBean, cid);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -86,7 +113,7 @@ public class AttenAction extends ActionSupport implements ModelDriven<AttenBean>
             int from = to - rows;
             long records;
             String orderBy = "";
-            
+
             dataList = service.loadStudent(inputBean, to, from, orderBy);
             if (!dataList.isEmpty()) {
                 records = dataList.get(0).getFullCount();
@@ -99,11 +126,11 @@ public class AttenAction extends ActionSupport implements ModelDriven<AttenBean>
                 inputBean.setRecords(0L);
                 inputBean.setTotal(0);
             }
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return "list";
     }
 
@@ -116,5 +143,27 @@ public class AttenAction extends ActionSupport implements ModelDriven<AttenBean>
         }
         return "paymentmark";
     }
-    
+
+    public boolean validateMobileNo(String parentContactNo) throws Exception {
+        boolean status = false;
+        try {
+
+            if (parentContactNo.length() == 9) {
+                parentContactNo = "0" + parentContactNo;
+            }
+            if (parentContactNo.matches("[0-9]+") && parentContactNo.length() == 10) {
+                String prefix = parentContactNo.trim().substring(0, 3);
+                if (prefix.equals("070") || prefix.equals("071") || prefix.equals("072") || prefix.equals("075") || prefix.equals("076") || prefix.equals("077") || prefix.equals("078")) {
+                    status = true;
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return status;
+    }
+
 }
