@@ -399,7 +399,7 @@ public class CourseService {
                 inputbean.setUpconductingMedium(ac.getMedium().toString());
                 inputbean.setUpcourseDescription(ac.getCourseDescription());
                 inputbean.setUpgrade(ac.getGrade().toString());
-                inputbean.setUplectureHall(ac.getLecHallId().toString());
+//                inputbean.setUplectureHall(ac.getLecHallId().toString());
                 inputbean.setUplecturer(ac.getLectureId().getId().toString());
                 inputbean.setUplecturerPayment(ac.getLecPaymentPercentage().toString());
                 inputbean.setUpmonthlyFee(ac.getMonthlyFee().toString());
@@ -534,7 +534,7 @@ public class CourseService {
                 course.setCourseDescription(inputbean.getUpcourseDescription());
 //                course.setCourseDuration(inputbean.getUpcourseDuration());
                 course.setGrade(Integer.parseInt(inputbean.getUpgrade()));
-                course.setLecHallId(Integer.parseInt(inputbean.getUplectureHall()));
+//                course.setLecHallId(Integer.parseInt(inputbean.getUplectureHall()));
                 course.setLecPaymentPercentage(Double.parseDouble(inputbean.getUplecturerPayment()));
 
                 Lecturer l = new Lecturer();
