@@ -51,7 +51,7 @@
                 $('#addcourseDuration').val("");
                 $('#addmonthlyFee').val("");
                 $('#addclassType').val("");
-                $('#addlectureHall').val("");
+//                $('#addlectureHall').val("");
                 $('#addbatchNo').val("");
                 $('#addlecturerPayment').val("");
                 $('#addclassDays').val("");
