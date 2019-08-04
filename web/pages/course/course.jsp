@@ -90,7 +90,7 @@
                     type: "POST",
                     success: function (data) {
                         $('#searchForm').hide();
-//                         $('#addForm').hide()();
+                         $('#addForm').hide();
                         $('#upcourseid').val(data.upcourseid);
                         $('#upcourseDescription').val(data.upcourseDescription);
                         $('#uplecturer').val(data.uplecturer);
