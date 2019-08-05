@@ -8,7 +8,12 @@
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/institute_management?zeroDateTimeBehavior=convertToNull</property>
         <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password">password</property>
+        <property name="hibernate.connection.password"></property>
+        
+        
+<!--       <property name="hibernate.connection.url">jdbc:mysql://institutemanagement.caime30ucsh9.us-east-2.rds.amazonaws.com:3306/institutemanagement?zeroDateTimeBehavior=convertToNull</property>
+       <property name="hibernate.connection.username">admin</property>
+       <property name="hibernate.connection.password">password</property>-->
     
     
         <!-- add classes to map from here -->
