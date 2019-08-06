@@ -421,6 +421,7 @@ public class AttenService {
 
     public void paymentdetails(AttenBean inputhbean) throws Exception {
         Session session = null;
+        String paymentSMS = "";
 
         try {
             session = HibernateInit.getSessionFactory().openSession();
@@ -428,6 +429,8 @@ public class AttenService {
 
             //generate bill ifd
             String bill_id_post = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+            
+            String Payment_SMS = " is paid for following class(es) on " + new SimpleDateFormat("YYYY-MM-dd").format(new Date()) + "-NLC-";
 
             String data[] = inputhbean.getSelected_data().split("\\,");
 
@@ -471,6 +474,7 @@ public class AttenService {
                     }
 
                     String bill_id = studentid + "_" + bill_id_post;
+                    paymentSMS = studentid + Payment_SMS;
 
                     StudentCourse scourse = (StudentCourse) session.createCriteria(StudentCourse.class, "sc")
                             .createAlias("sc.studentId", "sid")
@@ -531,9 +535,16 @@ public class AttenService {
 
                         session.update(refProfile);
                     }
+                    
+//                    String co_des = a.getCourseDesc(pbean.getCourseID());
+                    paymentSMS = paymentSMS + "Rs " + monthlyFee + " for " + courseid + " Month of " + month + "-NLC-";
+                
                 }
+                
                 session.getTransaction().commit();
             }
+            
+            // insert sms table
 
         } catch (Exception e) {
             if (session != null) {

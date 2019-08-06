@@ -114,7 +114,7 @@ public class LoginService {
 
             session = HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
-            
+
             String sql = "from Privileges as pp where pp.roleId.userRoleId =:userRoleId";
             Query query = session.createQuery(sql).setInteger("userRoleId", profileID);
             pageList = query.list();
@@ -146,7 +146,7 @@ public class LoginService {
             }
             for (int i = 0; i < tasklist.size(); i++) {
                 System.out.println("pages list " + tasklist.get(i).getTASK_NAME());
-                 System.out.println("pages url " + tasklist.get(i).getURL());
+                System.out.println("pages url " + tasklist.get(i).getURL());
             }
 
         } catch (Exception e) {
