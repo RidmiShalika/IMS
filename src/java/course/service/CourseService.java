@@ -988,11 +988,11 @@ public class CourseService {
             //get cource id . not id in cource date
             ClassConductDetails conductDetails = new ClassConductDetails();
             Course course = new Course();
-            course.setId(Integer.parseInt(arr[0]));
+            course.setId(Integer.parseInt(arr[0].trim()));
 
             conductDetails.setCourseId(course);
             conductDetails.setDate(sdf11.format(sdate1));
-            conductDetails.setEndDate(arr[1]);
+            conductDetails.setEndDate(arr[1].trim());
 
             List<ClassConductDetails> list = null;
             String sql = "from ClassConductDetails";
@@ -1064,11 +1064,11 @@ public class CourseService {
                     Student s = new Student();
                     s.setSId(studentCourse.getStudentId().getSId());
                     attendence.setStudentId(s);
-                    attendence.setDate(Integer.parseInt(dateonly[2]));
+                    attendence.setDate(Integer.parseInt(dateonly[2].trim()));
                     attendence.setDay(dateFormat.format(date).toLowerCase());
-                    attendence.setMonth(Integer.parseInt(dateonly[1]));
-                    attendence.setTime(datTime[1]);
-                    attendence.setYear(Integer.parseInt(dateonly[0]));
+                    attendence.setMonth(Integer.parseInt(dateonly[1].trim()));
+                    attendence.setTime(datTime[1].trim());
+                    attendence.setYear(Integer.parseInt(dateonly[0].trim()));
                     
                     session.save(attendence);
                 }
@@ -1111,7 +1111,7 @@ public class CourseService {
             }
 
             query = session.createQuery(sql);
-            query.setInteger("id", Integer.parseInt(arr[0]));
+            query.setInteger("id", Integer.parseInt(arr[0].trim()));
             Iterator it = query.iterate();
 
             while (it.hasNext()) {

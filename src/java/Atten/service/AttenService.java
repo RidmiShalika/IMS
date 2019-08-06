@@ -311,7 +311,7 @@ public class AttenService {
                 String datTime[] = dd.split("\\|");
                 String dateonly[] = datTime[0].split("\\-");
 
-                if (!alreadyAtte(st_id, cid, datTime[0])) {
+                if (!alreadyAtte(st_id, cid, datTime[0].trim())) {
                     Attendence attendence = new Attendence();
                     attendence.setAtten(true);
                     attendence.setCompleteDate(new Date());
@@ -321,11 +321,11 @@ public class AttenService {
                     Student s = new Student();
                     s.setSId(st_id);
                     attendence.setStudentId(s);
-                    attendence.setDate(Integer.parseInt(dateonly[2]));
+                    attendence.setDate(Integer.parseInt(dateonly[2].trim()));
                     attendence.setDay(dateFormat.format(date).toLowerCase());
-                    attendence.setMonth(Integer.parseInt(dateonly[1]));
-                    attendence.setTime(datTime[1]);
-                    attendence.setYear(Integer.parseInt(dateonly[0]));
+                    attendence.setMonth(Integer.parseInt(dateonly[1].trim()));
+                    attendence.setTime(datTime[1].trim());
+                    attendence.setYear(Integer.parseInt(dateonly[0].trim()));
                     attendence.setCompleteDate(new Date());
                     session.save(attendence);
                 }
@@ -437,7 +437,7 @@ public class AttenService {
             for (int i = 0; i < data.length; i++) {
 
                 Criteria criteria = session.createCriteria(PendingPayments.class, "pendingpayments")
-                        .add(Restrictions.eq("pendingpayments.id", Integer.parseInt(data[i])))
+                        .add(Restrictions.eq("pendingpayments.id", Integer.parseInt(data[i].trim())))
                         .setProjection(Projections.distinct(Projections.projectionList()
                                 .add(Projections.property("pendingpayments.sid"))
                                 .add(Projections.property("pendingpayments.cid"))
@@ -474,7 +474,7 @@ public class AttenService {
                     }
 
                     String bill_id = studentid + "_" + bill_id_post;
-                    paymentSMS = studentid + Payment_SMS;
+                    
 
                     StudentCourse scourse = (StudentCourse) session.createCriteria(StudentCourse.class, "sc")
                             .createAlias("sc.studentId", "sid")
@@ -484,6 +484,11 @@ public class AttenService {
                             .add(Restrictions.eq("sc.status", "ACT"))
                             .uniqueResult();
 
+                    //sms create
+                    paymentSMS = scourse.getStudentId().getSName() + Payment_SMS;
+                    
+                    
+                    
                     //insert payment table
                     Payments payments = new Payments();
 
@@ -528,7 +533,7 @@ public class AttenService {
                     PendingPayments refProfile = null;
                     String sql = "from PendingPayments wu where wu.id =:ID";
                     query = session.createQuery(sql);
-                    query.setInteger("ID", Integer.parseInt(data[i]));
+                    query.setInteger("ID", Integer.parseInt(data[i].trim()));
                     refProfile = (PendingPayments) query.uniqueResult();
                     if (refProfile != null) {
                         refProfile.setStatus("Completed");
@@ -536,23 +541,39 @@ public class AttenService {
                         session.update(refProfile);
                     }
                     
-//                    String co_des = a.getCourseDesc(pbean.getCourseID());
-                    paymentSMS = paymentSMS + "Rs " + monthlyFee + " for " + courseid + " Month of " + month + "-NLC-";
+                    paymentSMS = paymentSMS + "Rs " + monthlyFee + " for " + scourse.getCourseId().getCourseDescription() + " Month of " + month + "-NLC-";
                 
                 }
                 
-                session.getTransaction().commit();
+                
             }
             
             // insert sms table
+            String mobileno = getmobileNo(inputhbean);
+             if (!"".equals(mobileno)) {
+                        boolean checkmobileno = validateMobileNo(mobileno.trim());
+                        if (checkmobileno) {
+                            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy HH:mm");
+                            Date date = new Date();
+                            insert_payment_SMS( paymentSMS,formatter.format(date).replace(" ", "+"), mobileno);
+                        }else{
+                            System.out.println("Mobile number validation fails");
+                        }
+
+                    }else{
+                        System.out.println("No mobile number");
+                    }
+             
+             session.getTransaction().commit();
 
         } catch (Exception e) {
+            e.printStackTrace();
             if (session != null) {
                 session.getTransaction().rollback();
                 session.close();
                 session = null;
             }
-            e.printStackTrace();
+            
         } finally {
             if (session != null) {
                 session.flush();
@@ -770,6 +791,69 @@ public class AttenService {
             SmsDetails smsDetails = new SmsDetails();
             smsDetails.setSId(st_id + "");
             smsDetails.setBody(new_body);
+            smsDetails.setCreatedDate(time);
+            smsDetails.setMobile(mobile);
+            smsDetails.setRetryAttempts(0);
+            smsDetails.setStatus(0);
+
+            session.save(smsDetails);
+            session.getTransaction().commit();
+            x = 1;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            throw ex;
+        } finally {
+            if (session != null) {
+                session.flush();
+                session.clear();
+                session.close();
+                session = null;
+            }
+        }
+        return x;
+    }
+    public boolean validateMobileNo(String parentContactNo) throws Exception {
+        boolean status = false;
+        try {
+
+            if (parentContactNo.length() == 9) {
+                parentContactNo = "0" + parentContactNo;
+            }
+            if (parentContactNo.matches("[0-9]+") && parentContactNo.length() == 10) {
+                String prefix = parentContactNo.trim().substring(0, 3);
+                if (prefix.equals("070") || prefix.equals("071") || prefix.equals("072") || prefix.equals("075") || prefix.equals("076") || prefix.equals("077") || prefix.equals("078")) {
+                    status = true;
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return status;
+    }
+    public int insert_payment_SMS(String body,String time, String mobile) {
+        int x = 0;
+        Session session = null;
+        time = time.replace(":", "%3A");
+
+        try {
+            HttpSession sess = ServletActionContext.getRequest().getSession(false);
+            int st_id = (int) sess.getAttribute("stcourselist");
+
+            session = HibernateInit.getSessionFactory().openSession();
+            session.beginTransaction();
+
+            SmsDetails smsDetails = new SmsDetails();
+            smsDetails.setSId(st_id + "");
+            smsDetails.setBody(body);
             smsDetails.setCreatedDate(time);
             smsDetails.setMobile(mobile);
             smsDetails.setRetryAttempts(0);
