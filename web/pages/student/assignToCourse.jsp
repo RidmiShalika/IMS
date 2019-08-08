@@ -10,6 +10,22 @@
 <%@taglib prefix="sjg" uri="/struts-jquery-grid-tags"%> 
 <!DOCTYPE html>
 <html>
+     <style>
+            .viewuser_tbl {
+    
+                border-radius: 10px;
+                padding-left: 10px;
+                padding-right: 10px;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                margin-right: auto;
+                margin-bottom: auto;
+                margin-left: 10px;
+                width: 75%;
+   
+
+            }
+        </style>
     <head>
         <script type="text/javascript">
 //            $(document).ready(function () { 

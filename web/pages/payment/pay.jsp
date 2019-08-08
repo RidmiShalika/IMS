@@ -43,7 +43,7 @@
             <div class="wrapper">
                 <div class="body_content" id="includedContent" >
                     <div class="watermark"></div>
-                    <div class="heading">Attendance</div>
+                    <div class="heading">Payments</div>
                     <div class="AddUser_box ">
                         <div class="message">         
                             <s:div id="divmsg">
@@ -65,7 +65,7 @@
 
                                     <tr>
                                         <td>
-                                            <sj:submit button="true" value="Atten"  onclick="keyPress()" cssClass="button_aback"/>
+                                            <sj:submit button="true" value="Confirm"  onclick="keyPress()" cssClass="button_aback"/>
                                             <%--<sj:submit button="true" value="Reset"  onclick="ResetForm()" cssClass="button_aback"/>--%>
                                         </td>
                                     </tr>

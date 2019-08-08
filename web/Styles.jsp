@@ -4,7 +4,7 @@
 <%@taglib prefix="sjg" uri="/struts-jquery-grid-tags"%>
 <html>
     <head>
-        <title>Zeogyn</title>
+        <title>IMS</title>
         <!-- System theme includes begin -->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/css/bootstrap_c.css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/css/custom.css" />
@@ -19,7 +19,7 @@
         <link href="${pageContext.request.contextPath}/resources/css/fullcalendar.css" rel="stylesheet" type="text/css">
         <link href="${pageContext.request.contextPath}/resources/css/fullcalendar.print.css" media="print" rel="stylesheet" type="text/css">
         
-        <link href="${pageContext.request.contextPath}/resources/theme/darknight/css/app.css" type="text/css" rel="stylesheet" media="all" />
+        <!--<link href="${pageContext.request.contextPath}/resources/theme/darknight/css/app.css" type="text/css" rel="stylesheet" media="all" />-->
 
 
         <script src="${pageContext.request.contextPath}/resources/js/TreeMenu.js" type="text/javascript"></script>

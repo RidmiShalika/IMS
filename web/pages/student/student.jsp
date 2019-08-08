@@ -240,7 +240,7 @@
                                                     <td><s:textfield id="email" name="email" cssClass="textField" /></td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="formLable">Gender</td> <td >:</td>
+                                                    <td class="formLable">Gender<span class="mandatory">*</span></td> <td >:</td>
                                                     <!--<td><s:textfield id="gender" name="gender" cssClass="textField" /></td>-->    
                                                    <td><s:select  name="gender" id="gender" list="%{genderlList}" 
                                                      listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
@@ -306,7 +306,7 @@
                                         <td><s:textfield id="upemail" name="upemail" cssClass="textField" /></td>
                                     </tr>
                                     <tr>
-                                        <td class="formLable">Gender</td> <td >:</td>
+                                        <td class="formLable">Gender<span class="mandatory">*</span></td> <td >:</td>
                                          <td><s:select  name="upgender" id="upgender" list="%{genderlList}" 
                                                      listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
                                         <td width="25px;"></td>
