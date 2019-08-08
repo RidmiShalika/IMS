@@ -295,9 +295,9 @@ public class StudentService {
             s.setSchoolId(Integer.parseInt(bean.getSchool()));
             student.setSSchool(s);
             student.setSTelephone(bean.getTelephone());
-            File myFile = new File("D:\\cla.png"); // get file path
-            FileInputStream fis = new FileInputStream(myFile);
-            student.setSImage(IOUtils.toByteArray(fis));
+//            File myFile = new File("D:\\cla.png"); // get file path
+//            FileInputStream fis = new FileInputStream(myFile);
+//            student.setSImage(IOUtils.toByteArray(fis));
 //            System.out.println("------------------- "+bean.getImage());
             session.save(student);
            
