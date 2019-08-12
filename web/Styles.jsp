@@ -11,7 +11,7 @@
         <sj:head locale="en" jqueryui="true" jquerytheme="mytheme" customBasepath="resources/template/themes"/>
 
 
-        <link href="${pageContext.request.contextPath}/resources/images/favicon.ico" rel="shortcut icon" type="image/ico" />  
+        <!--<link href="${pageContext.request.contextPath}/resources/images/favicon.ico" rel="shortcut icon" type="image/ico" />-->  
         <link href="${pageContext.request.contextPath}/resources/css/main.css" rel="stylesheet" type="text/css">
         <link href="${pageContext.request.contextPath}/resources/css/buttons.css" rel="stylesheet" type="text/css">
         <link href="${pageContext.request.contextPath}/resources/css/familytree.css" rel="stylesheet" type="text/css">

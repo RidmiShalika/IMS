@@ -20,7 +20,7 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/style.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/font-awesome/css/font-awesome.min.css">
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/js/bootstrap.min.js"></script>
-        <link href="${pageContext.request.contextPath}/resources/images/favicon.ico" rel="shortcut icon" type="image/ico" />
+        <!--<link href="${pageContext.request.contextPath}/resources/images/favicon.ico" rel="shortcut icon" type="image/ico" />-->
         <script src="${pageContext.request.contextPath}/resources/assets/js/script.js"></script>
         <script type="text/javascript">
             function noBack() {
