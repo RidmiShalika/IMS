@@ -234,7 +234,7 @@ public class CourseAction extends ActionSupport implements ModelDriven<CourseBea
          if(inputbean.getUpcourseDescription() == null || inputbean.getUpcourseDescription().isEmpty()){
              addActionError("Description can not be empty");
              ok = false;
-         }else if(service.checkdublicateDes(inputbean)){
+         }else if(service.upcheckdublicateDes(inputbean)){
              addActionError("Course description already defined");
              ok = false;
         }else if(inputbean.getUplecturer().equals("-1")){
