@@ -380,6 +380,7 @@ public class CourseAction extends ActionSupport implements ModelDriven<CourseBea
          try {
              System.out.println("s>>>>>> "+inputbean.getSelecteddata());
              service.stopClassess(inputbean);
+             service.insertsms(inputbean);
          } catch (Exception e) {
              e.printStackTrace();
          }
@@ -387,7 +388,7 @@ public class CourseAction extends ActionSupport implements ModelDriven<CourseBea
      }
      public String findstopclases(){
          try {
-             System.out.println("s>>>>>> "+inputbean.getFselecteddata());
+            
              if(service.findstopClassess(inputbean)){
                  System.out.println("success "+inputbean.getHcid()+" , "+inputbean.getHcendtime());
              }

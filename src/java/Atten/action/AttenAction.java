@@ -37,8 +37,12 @@ public class AttenAction extends ActionSupport implements ModelDriven<AttenBean>
             int stuid = 0;
             if (inputBean.getAttenid().length() == Config.cardnoLength) {
                 stuid = service.getSIDusibgCardNo(inputBean.getAttenid());
+                inputBean.setIsmismatch(true);
             } else if (inputBean.getAttenid().length() == Config.studentIdLength) {
                 stuid = Integer.parseInt(inputBean.getAttenid());
+                inputBean.setIsmismatch(true);
+            }else{
+                inputBean.setIsmismatch(false);
             }
 
             System.out.println("Stuid " + stuid);
