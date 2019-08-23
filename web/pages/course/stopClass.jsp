@@ -7,11 +7,18 @@
 <html>
     <head>
         <jsp:include page="/Styles.jsp" />
+       
+        <style>
+            .ui-datepicker {
+                /*background: transparent;*/
+                background: white;
+            }
+
+        </style>
         <script type="text/javascript">
 
             function test() {
-//                var s = $('#gridtable').jqGrid('getGridParam','selarrrow');
-//                 var s= ;
+
                  var courceid = $('#hcid').val();
                  var endtime = $('#stopTime').val();
                 var s = courceid+","+endtime;
@@ -35,20 +42,6 @@
                 $('#stopform').show();
                 var s = courceid+","+classTypet;
                 $('#hcid').val(courceid);
-//                $.ajax({
-//                    url: '${pageContext.request.contextPath}/findstopclases',
-//                    data: {fselecteddata: s},
-//                    dataType: "json",
-//                    type: "GET",
-//                    success: function (data) {
-//                     $('#hcid').val(data.hcid);
-//                     jQuery("#gridtable").trigger("reloadGrid");
-//                      
-//                    },
-//                    error: function (data) {
-//                    }
-//                     
-//                });
             }
             function stopformatter(cellvalue, options, rowObject) {
                 return "<a href='#' onClick='javascript:findc(&#34;" + cellvalue + "&#34;,&#34;" + rowObject.classTypet + "&#34;)'><i class='fa fa-share-square-o' aria-hidden='true'></i></a>";
@@ -75,7 +68,7 @@
                      <table>
                         <tr>
                             <td>
-                                <sj:datepicker id="stopTime" name="stopTime" timepicker="true" timepickerOnly="true" cssStyle="width : 50px"/>
+                                <sj:datepicker id="stopTime" name="stopTime" timepicker="true" timepickerOnly="true" cssStyle="width : 100px"/>
                             </td> 
                         </tr>
                          <tr>
@@ -84,6 +77,7 @@
                                 <sj:submit  id="stopbtn" button="true" onclick="test()" value="STOP"  cssClass="button_aback"/> 
                             </td>
                         </tr>
+                        
                      </table>
                 </s:form>
                 <s:hidden id="hcid" name="hcid" />
