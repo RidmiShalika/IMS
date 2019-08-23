@@ -58,10 +58,20 @@ public class AttenBean {
     
     //payment flag
     private String paymentjsp;
+    private boolean ismismatch;
     
     ArrayList<String> attandance_history = new ArrayList<String>();
     ArrayList<String> payment_history = new ArrayList<String>();
 
+    public boolean isIsmismatch() {
+        return ismismatch;
+    }
+
+    public void setIsmismatch(boolean ismismatch) {
+        this.ismismatch = ismismatch;
+    }
+
+    
     public String getPaymentjsp() {
         return paymentjsp;
     }

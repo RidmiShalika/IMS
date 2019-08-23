@@ -881,5 +881,42 @@ public class AttenService {
         }
         return x;
     }
+    public int getSIDusibgCardNo(String cardno) throws Exception {
+        Session session = null;
+        int sid=0;
+
+        try {
+            session = HibernateInit.getSessionFactory().openSession();
+            session.beginTransaction();
+
+            Criteria criteria = session.createCriteria(Student.class, "st")
+                    .add(Restrictions.eq("st.cardNumber", cardno.trim()));
+
+            Iterator iterator = criteria.list()
+                    .iterator();
+
+            while (iterator.hasNext()) {
+                Student student = (Student) iterator.next();
+                sid = student.getSId();
+            }
+
+        } catch (Exception e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.flush();
+                session.clear();
+                session.getTransaction().commit();
+                session.close();
+                session = null;
+            }
+        }
+        return sid;
+    }
 
 }

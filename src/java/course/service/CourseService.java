@@ -948,7 +948,7 @@ public class CourseService {
 
             session.beginTransaction();
             Course at = (Course) session.createCriteria(Course.class)
-                    .add(Restrictions.eq("courseDescription", inputbean.getAddcourseDescription()))
+                    .add(Restrictions.eq("courseDescription", inputbean.getAddcourseDescription().trim()))
                     .uniqueResult();
 
             if (at != null) {
@@ -1145,5 +1145,39 @@ public class CourseService {
             }
         }
         return isstop;
+    }
+    public boolean upcheckdublicateDes(CourseBean inputbean) {
+        boolean ok = false;
+
+        Session session = HibernateInit.getSessionFactory().openSession();
+        try {
+
+            session.beginTransaction();
+            Course at = (Course) session.createCriteria(Course.class)
+                    .add(Restrictions.eq("courseDescription", inputbean.getUpcourseDescription().trim()))
+                    .add(Restrictions.not(Restrictions.eq("id", Integer.parseInt(inputbean.getUpcourseid()))))
+                    .uniqueResult();
+
+            if (at != null) {
+                ok = true;
+            }
+
+        } catch (Exception ex) {
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            throw ex;
+        } finally {
+            if (session != null) {
+                session.getTransaction().commit();
+                session.flush();
+                session.close();
+                session = null;
+            }
+        }
+
+        return ok;
     }
 }

@@ -8,6 +8,7 @@ package Atten.action;
 import Atten.bean.AttenBean;
 import Atten.service.AttenService;
 import Util.AccessControlService;
+import Util.Config;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import java.text.SimpleDateFormat;
@@ -33,8 +34,14 @@ public class AttenAction extends ActionSupport implements ModelDriven<AttenBean>
 
     public String findSt() {
         try {
-            int stuid = Integer.parseInt(inputBean.getAttenid());
-            System.out.println("-- " + stuid);
+            int stuid = 0;
+            if (inputBean.getAttenid().length() == Config.cardnoLength) {
+                stuid = service.getSIDusibgCardNo(inputBean.getAttenid());
+            } else if (inputBean.getAttenid().length() == Config.studentIdLength) {
+                stuid = Integer.parseInt(inputBean.getAttenid());
+            }
+
+            System.out.println("Stuid " + stuid);
             HttpSession session = ServletActionContext.getRequest().getSession(false);
             session.setAttribute("stcourselist", stuid);
         } catch (Exception e) {
@@ -56,32 +63,43 @@ public class AttenAction extends ActionSupport implements ModelDriven<AttenBean>
     public String loadandattendence() {
         try {
             System.out.println("is payment jsp : " + inputBean.getPaymentjsp());
-            if (!inputBean.getPaymentjsp().equals("0")) {
-                if (service.IS_First_Entrence()) {
-                    String mobileno = service.getmobileNo(inputBean);
-                    if (!"".equals(mobileno)) {
-                        boolean checkmobileno = validateMobileNo(mobileno.trim());
-                        if (checkmobileno) {
-                            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy HH:mm");
-                            Date date = new Date();
-                            service.insert_arrive_SMS(inputBean.getStudent_gender(), inputBean.getStudent_name(), formatter.format(date).replace(" ", "+"), mobileno);
-                        }else{
-                            System.out.println("Mobile number validation fails");
+            boolean istrue = false;
+
+            if (inputBean.getAttenid().length() == Config.cardnoLength) {
+                istrue = true;
+            } else if (inputBean.getAttenid().length() == Config.studentIdLength) {
+                istrue = true;
+            }
+
+            if (istrue) {
+                inputBean.setIsmismatch(istrue);
+                if (!inputBean.getPaymentjsp().equals("0")) {
+                    if (service.IS_First_Entrence()) {
+                        String mobileno = service.getmobileNo(inputBean);
+                        if (!"".equals(mobileno)) {
+                            boolean checkmobileno = validateMobileNo(mobileno.trim());
+                            if (checkmobileno) {
+                                SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy HH:mm");
+                                Date date = new Date();
+                                service.insert_arrive_SMS(inputBean.getStudent_gender(), inputBean.getStudent_name(), formatter.format(date).replace(" ", "+"), mobileno);
+                            } else {
+                                System.out.println("Mobile number validation fails");
+                            }
+
+                        } else {
+                            System.out.println("No mobile number");
                         }
 
-                    }else{
-                        System.out.println("No mobile number");
                     }
-
                 }
-            }
-            
-            //load data from service
-            service.loadData(inputBean);
-            service.historyData(inputBean, Integer.parseInt(inputBean.getCid()));
-            service.getpaymenthistory(inputBean, Integer.parseInt(inputBean.getCid()));
 
-            
+                //load data from service
+                service.loadData(inputBean);
+                service.historyData(inputBean, Integer.parseInt(inputBean.getCid()));
+                service.getpaymenthistory(inputBean, Integer.parseInt(inputBean.getCid()));
+            }else{
+                inputBean.setIsmismatch(istrue);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
