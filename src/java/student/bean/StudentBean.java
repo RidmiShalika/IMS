@@ -17,6 +17,18 @@ import java.util.Map;
  */
 public class StudentBean {
 
+    /**
+     * @return the viewImage
+     */
+   
+    /**
+     * @return the upimageContentType
+     */
+    
+    
+
+    
+
     private String sName;
     private String sDob;
     private String sAddress;
@@ -30,6 +42,9 @@ public class StudentBean {
     private String sParentEmail;
     private String sParentName;
     private byte[] sImage;
+    private String viewImage;
+    private String sImageContentType;
+    private String sImageFileName;
     private String sNic;
     private String sFirstname;
     private String cardNumber;
@@ -60,6 +75,9 @@ public class StudentBean {
     private String parentContactNo;
     private String cardno;
     private File addimage;
+   
+	private String addimageContentType;
+	private String addimageFileName;
     private String tt;
     
 
@@ -75,7 +93,9 @@ public class StudentBean {
     private String upbirthday;
     private String upparentContactNo;
     private String upcardno;
-    private byte[] upimage;
+    private File upimage;
+    private String upimageContentType;
+	private String upimageFileName;
 
     private String id;
     private String upId;
@@ -118,13 +138,37 @@ public class StudentBean {
     //search data
     private String searchname;
 
-    public byte[] getUpimage() {
+    public File getUpimage() {
         return upimage;
     }
 
-    public void setUpimage(byte[] upimage) {
+    public void setUpimage(File upimage) {
         this.upimage = upimage;
     }
+    
+    public String getUpimageContentType() {
+        return upimageContentType;
+    }
+
+    public void setUpimageContentType(String upimageContentType) {
+        this.upimageContentType = upimageContentType;
+    }
+
+    public String getUpimageFileName() {
+        return upimageFileName;
+    }
+
+    public void setUpimageFileName(String upimageFileName) {
+        this.upimageFileName = upimageFileName;
+    }
+     public String getViewImage() {
+        return viewImage;
+    }
+
+    public void setViewImage(String viewImage) {
+        this.viewImage = viewImage;
+    }
+
 
     
     public String getCard_id() {
@@ -175,6 +219,22 @@ public class StudentBean {
 
     public void setAddimage(File addimage) {
         this.addimage = addimage;
+    }
+
+    public String getAddimageContentType() {
+        return addimageContentType;
+    }
+
+    public void setAddimageContentType(String addimageContentType) {
+        this.addimageContentType = addimageContentType;
+    }
+
+    public String getAddimageFileName() {
+        return addimageFileName;
+    }
+
+    public void setAddimageFileName(String addimageFileName) {
+        this.addimageFileName = addimageFileName;
     }
     
     
@@ -539,6 +599,10 @@ public class StudentBean {
     public void setsImage(byte[] sImage) {
         this.sImage = sImage;
     }
+    
+    
+    
+    
 
     public String getsNic() {
         return sNic;

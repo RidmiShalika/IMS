@@ -32,6 +32,7 @@ import org.hibernate.criterion.Restrictions;
 import org.jfree.chart.axis.SubCategoryAxis;
 import student.bean.CoData;
 import student.bean.StudentBean;
+import org.apache.commons.codec.binary.Base64;
 
 
 /**
@@ -295,10 +296,11 @@ public class StudentService {
             s.setSchoolId(Integer.parseInt(bean.getSchool()));
             student.setSSchool(s);
             student.setSTelephone(bean.getTelephone());
-//            File myFile = new File("D:\\cla.png"); // get file path
-//            FileInputStream fis = new FileInputStream(myFile);
-//            student.setSImage(IOUtils.toByteArray(fis));
-//            System.out.println("------------------- "+bean.getImage());
+            File myFile = bean.getAddimage(); // get file path
+            FileInputStream fis = new FileInputStream(myFile);
+            student.setSImage(IOUtils.toByteArray(fis));
+           
+              
             session.save(student);
            
             isAddStudent = true;
@@ -351,10 +353,17 @@ public class StudentService {
                 inputBean.setUpyearOfRegistration(studentlist.get(0).getSYor());
                 inputBean.setUpId(studentlist.get(0).getSId().toString());
                 
-                byte[] im = studentlist.get(0).getSImage();
-//                Bitmap bitmap = BitmapFactory.decodeByteArray(im, 0, im.length);
-                
-
+//                byte[] im = studentlist.get(0).getSImage();
+//                im = Base64.encodeBase64(im);
+                //Bitmap bitmap = BitmapFactory.decodeByteArray(im, 0, im.length);
+              File myFile = new File("C:\\Users\\malindad\\Downloads\\download.jpg"); // get file path
+              FileInputStream fis = new FileInputStream(myFile);   
+              byte[] blobAsBytes = IOUtils.toByteArray(fis);
+              
+              blobAsBytes = Base64.encodeBase64(blobAsBytes);
+              System.out.println(blobAsBytes);
+              inputBean.setViewImage(new String(blobAsBytes));
+              System.out.println("hello");
             }
           
 
