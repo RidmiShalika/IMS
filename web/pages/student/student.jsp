@@ -334,7 +334,7 @@
                                         <td><s:textfield id="upcardno" name="upcardno" cssClass="textField" /></td>                                    
                                         <td width="25px;"></td>
                                     </tr>
-
+                                    
                                 </table>
                                 <table>
                                     <tr>
