@@ -13,7 +13,7 @@
     <head>
         <%--<sj:head jqueryui="true" jquerytheme="redmond" />--%>
         <jsp:include page="/Styles.jsp" />
-
+        
         <style>
             .buttonS {
                 color: white;
@@ -96,6 +96,7 @@
             }
             function editNow(keyval) {
                 $('#updateForm').show();
+                
                 var text = ' Edit User';
 
                 $.ajax({
@@ -104,7 +105,7 @@
                     dataType: "json",
                     type: "POST",
                     success: function (data) {
-                        
+
 
                         $('#searchForm').hide();
                         $('#addForm').hide();
@@ -120,7 +121,7 @@
                         $('#upparentContactNo').val(data.upparentContactNo);
                         $('#upcardno').val(data.upcardno);
                         $('#upId').val(data.upId);
-//                        alert($('#upId').val());
+                         document.getElementById("viewImage").src = "" + data.viewImage;
 
                     },
                     error: function (data) {
@@ -338,7 +339,7 @@
                                                     
                                     </tr>
                                     <tr>
-                                        <td><img width="100" height="100" src="<s:property value="viewImage"/>" id="viewImage" name="viewImage">
+                                        <td><img width="100" height="100" src="" id="viewImage" name="viewImage">
                             </td>                                    
                             <td width="25px;"></td>
                                     </tr>
