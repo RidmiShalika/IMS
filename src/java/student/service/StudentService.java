@@ -350,22 +350,17 @@ public class StudentService {
                 inputBean.setUpyearOfRegistration(studentlist.get(0).getSYor());
                 inputBean.setUpId(studentlist.get(0).getSId().toString());
 
-//                byte[] im = studentlist.get(0).getSImage();
-//                im = Base64.encodeBase64(im);
-                //Bitmap bitmap = BitmapFactory.decodeByteArray(im, 0, im.length);
-//              File myFile = new File("C:\\Users\\malindad\\Downloads\\download.jpg"); // get file path
-//              FileInputStream fis = new FileInputStream(myFile);   
-//              byte[] blobAsBytes = IOUtils.toByteArray(fis);
+                byte[] im = studentlist.get(0).getSImage();
+
                 try {
-                    File myFile = new File("C:\\Users\\malindad\\Downloads\\download.jpg");
-                    FileInputStream fileInputStreamReader = new FileInputStream(myFile);
-                    byte[] bytes = new byte[(int)myFile.length()];
-                    fileInputStreamReader.read(bytes);
+//                    File myFile = new File("C:\\Users\\malindad\\Downloads\\download.jpg");
+//                    FileInputStream fileInputStreamReader = new FileInputStream(myFile);
+//                    byte[] bytes = new byte[(int)myFile.length()];
+                     byte[] bytes = im;
+//                    fileInputStreamReader.read(bytes);
                     String encodedfile = "data:image/jpeg;base64,"+new String(Base64.encodeBase64(bytes), "UTF-8");
                    
                     inputBean.setViewImage(encodedfile);
-                    System.out.println("hello");
-                    System.out.println(encodedfile);
                 } catch (Exception ex) {
                     System.out.println(ex);
                 }
@@ -426,6 +421,12 @@ public class StudentService {
                 student.get(0).setSSchool(s);
                 student.get(0).setSTelephone(inputBean.getUptelephone());
                 student.get(0).setSYor(inputBean.getUpyearOfRegistration());
+                
+                if(inputBean.getUpimage() != null){
+                    File myFile = inputBean.getUpimage(); // get file path
+                    FileInputStream fis = new FileInputStream(myFile);
+                    student.get(0).setSImage(IOUtils.toByteArray(fis));
+                }
 
                 session.save(student.get(0));
                 session.getTransaction().commit();
