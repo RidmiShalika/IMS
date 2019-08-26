@@ -29,11 +29,10 @@ import org.apache.struts2.ServletActionContext;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-import org.jfree.chart.axis.SubCategoryAxis;
 import student.bean.CoData;
 import student.bean.StudentBean;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.codec.binary.Base64;
-
 
 /**
  *
@@ -51,25 +50,25 @@ public class StudentService {
             long count = 0;
             session = (Session) HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
-            
-            System.out.println("search name "+inputBean.getSearchname());
-            if(inputBean.getSearchname() == null){
+
+            System.out.println("search name " + inputBean.getSearchname());
+            if (inputBean.getSearchname() == null) {
                 System.out.println("---------");
                 inputBean.setSearchname("");
             }
 
             String sqlCount = "select count(s.sName) from Student s where s.sName LIKE :sName";
             Query queryCount = session.createQuery(sqlCount);
-            queryCount.setString("sName", "%"+inputBean.getSearchname()+"%");
+            queryCount.setString("sName", "%" + inputBean.getSearchname() + "%");
             Iterator itCount = queryCount.iterate();
             count = (Long) itCount.next();
-            
-            System.out.println("count "+count);
-            
+
+            System.out.println("count " + count);
+
             if (count > 0) {
                 String sqlSearch = "from Student s where s.sName LIKE :sName";
                 Query querySearch = session.createQuery(sqlSearch);
-                querySearch.setString("sName", "%"+inputBean.getSearchname()+"%");
+                querySearch.setString("sName", "%" + inputBean.getSearchname() + "%");
 
                 querySearch.setMaxResults(max);
                 querySearch.setFirstResult(first);
@@ -135,12 +134,12 @@ public class StudentService {
 //                      databean.setsName("--");
                     }
                     try {
-                        if(objBean.getSGender().equals("1")){
+                        if (objBean.getSGender().equals("1")) {
                             databean.setsGender("Male");
-                        }else if(objBean.getSGender().equals("2")){
+                        } else if (objBean.getSGender().equals("2")) {
                             databean.setsGender("Female");
                         }
-                        
+
                     } catch (NullPointerException e) {
                         databean.setsGender("--");
                     }
@@ -186,6 +185,7 @@ public class StudentService {
         }
         return dataList;
     }
+
     public List<StudentBean> loadStudentcr(StudentBean inputBean, int max, int first, String orderBy) throws Exception {
         List<StudentBean> dataList = new ArrayList<StudentBean>();
         Session session = null;
@@ -194,10 +194,10 @@ public class StudentService {
             long count = 0;
             session = (Session) HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
-            
+
             HttpSession sess = ServletActionContext.getRequest().getSession(false);
-            int st_id= (int) sess.getAttribute("assToCourse");
-            System.out.println("st_id== "+st_id);
+            int st_id = (int) sess.getAttribute("assToCourse");
+            System.out.println("st_id== " + st_id);
 
             String sqlCount = "select count(id) from StudentCourse s where s.studentId.sId=:sId and s.status='ACT'";
             Query queryCount = session.createQuery(sqlCount);
@@ -228,11 +228,11 @@ public class StudentService {
                         databean.setS_c_courseId("--");
                     }
                     try {
-                         if(objBean.getCardType() == 1){
+                        if (objBean.getCardType() == 1) {
                             databean.setS_c_cardType("Normal");
-                        }else if(objBean.getCardType() == 2){
+                        } else if (objBean.getCardType() == 2) {
                             databean.setS_c_cardType("Half");
-                        }else if(objBean.getCardType() == 3){
+                        } else if (objBean.getCardType() == 3) {
                             databean.setS_c_cardType("Free");
                         }
                     } catch (NullPointerException e) {
@@ -243,7 +243,7 @@ public class StudentService {
                     } catch (NullPointerException e) {
                         databean.setS_c_status("--");
                     }
-                   
+
                     databean.setFullCount(count);
                     dataList.add(databean);
 
@@ -278,8 +278,7 @@ public class StudentService {
 //            System.out.println("------------------- "+bean.getImage().);
             session = HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
-            
-            
+
             student = new Student();
 
             student.setCardNumber(bean.getCardno());
@@ -291,7 +290,7 @@ public class StudentService {
             student.setSYor(bean.getYearOfRegistration());
             student.setSName(bean.getName());
             student.setSParentContactNo(bean.getParentContactNo());
-            
+
             School s = new School();
             s.setSchoolId(Integer.parseInt(bean.getSchool()));
             student.setSSchool(s);
@@ -299,10 +298,9 @@ public class StudentService {
             File myFile = bean.getAddimage(); // get file path
             FileInputStream fis = new FileInputStream(myFile);
             student.setSImage(IOUtils.toByteArray(fis));
-           
-              
+
             session.save(student);
-           
+
             isAddStudent = true;
         } catch (Exception e) {
             if (session != null) {
@@ -313,7 +311,7 @@ public class StudentService {
             throw e;
         } finally {
             if (session != null) {
-                 session.getTransaction().commit();
+                session.getTransaction().commit();
                 session.flush();
                 session.close();
                 session = null;
@@ -328,18 +326,17 @@ public class StudentService {
         Session session = null;
 
         try {
-            
+
             session = HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
-            
+
             String sql = "from Student wu where wu.sId =:sId";
             Query query = session.createQuery(sql);
             query.setInteger("sId", Integer.parseInt(inputBean.getId()));
             studentlist = query.list();
 
             if (0 < studentlist.size()) {
-                
-               
+
                 inputBean.setUpname(studentlist.get(0).getSName());
                 inputBean.setUpaddress(studentlist.get(0).getSAddress());
                 inputBean.setUpbirthday(studentlist.get(0).getSDob());
@@ -352,20 +349,27 @@ public class StudentService {
                 inputBean.setUptelephone(studentlist.get(0).getSTelephone());
                 inputBean.setUpyearOfRegistration(studentlist.get(0).getSYor());
                 inputBean.setUpId(studentlist.get(0).getSId().toString());
-                
+
 //                byte[] im = studentlist.get(0).getSImage();
 //                im = Base64.encodeBase64(im);
                 //Bitmap bitmap = BitmapFactory.decodeByteArray(im, 0, im.length);
-              File myFile = new File("C:\\Users\\malindad\\Downloads\\download.jpg"); // get file path
-              FileInputStream fis = new FileInputStream(myFile);   
-              byte[] blobAsBytes = IOUtils.toByteArray(fis);
-              
-              blobAsBytes = Base64.encodeBase64(blobAsBytes);
-              System.out.println(blobAsBytes);
-              inputBean.setViewImage(new String(blobAsBytes));
-              System.out.println("hello");
+//              File myFile = new File("C:\\Users\\malindad\\Downloads\\download.jpg"); // get file path
+//              FileInputStream fis = new FileInputStream(myFile);   
+//              byte[] blobAsBytes = IOUtils.toByteArray(fis);
+                try {
+                    File myFile = new File("C:\\Users\\malindad\\Downloads\\download.jpg");
+                    FileInputStream fileInputStreamReader = new FileInputStream(myFile);
+                    byte[] bytes = new byte[(int)myFile.length()];
+                    fileInputStreamReader.read(bytes);
+                    String encodedfile = "data:image/jpeg;base64,"+new String(Base64.encodeBase64(bytes), "UTF-8");
+                   
+                    inputBean.setViewImage(encodedfile);
+                    System.out.println("hello");
+                    System.out.println(encodedfile);
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                }
             }
-          
 
         } catch (Exception e) {
             if (session != null) {
@@ -394,7 +398,7 @@ public class StudentService {
         try {
             session = HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
-            
+
 //             String sql1 ="from School sc where sc.schoolId =:schoolId";
 //            Query query1 = session.createQuery(sql1);
 //            query1.setString("schoolId", inputBean.getUpschool());
@@ -403,7 +407,6 @@ public class StudentService {
 //                  schoolName = school.get(0).getSchool();
 //                }
 //            
-            
             String sql = "from Student wu where wu.sId =:sId";
             query = session.createQuery(sql);
             query.setInteger("sId", Integer.parseInt(inputBean.getUpId()));
@@ -417,7 +420,7 @@ public class StudentService {
                 student.get(0).setSGender(inputBean.getUpgender());
                 student.get(0).setSName(inputBean.getUpname());
                 student.get(0).setSParentContactNo(inputBean.getUpparentContactNo());
-                
+
                 School s = new School();
                 s.setSchoolId(Integer.parseInt(inputBean.getUpschool()));
                 student.get(0).setSSchool(s);
@@ -444,88 +447,86 @@ public class StudentService {
         }
         return isUpdated;
     }
-    
-     public void getSchoolList(StudentBean inputbean) throws Exception{
-         List<School> school = null;
-         Session session = null;
-         
-         try {
+
+    public void getSchoolList(StudentBean inputbean) throws Exception {
+        List<School> school = null;
+        Session session = null;
+
+        try {
             session = HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
 
             String sql = "from School";
             Query query = session.createQuery(sql);
             school = query.list();
-            
+
             for (int i = 0; i < school.size(); i++) {
 //                System.out.println(school.get(0));
                 inputbean.getSchoolList().put(school.get(i).getSchoolId(), school.get(i).getSchool());
             }
-            
 
-            
         } catch (Exception e) {
-             if (session != null) {
-                 session.getTransaction().rollback();
+            if (session != null) {
+                session.getTransaction().rollback();
                 session.close();
                 session = null;
             }
             throw e;
-        }finally {
+        } finally {
             if (session != null) {
                 session.getTransaction().commit();
                 session.close();
                 session = null;
             }
         }
-         
+
     }
-     public void getsubList(StudentBean inputbean) throws Exception{
-         List<Subject> sub = null;
-         Session session = null;
-         
-         try {
+
+    public void getsubList(StudentBean inputbean) throws Exception {
+        List<Subject> sub = null;
+        Session session = null;
+
+        try {
             session = HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
 
             String sql = "from Subject";
             Query query = session.createQuery(sql);
             sub = query.list();
-            
+
             for (int i = 0; i < sub.size(); i++) {
 //                System.out.println(school.get(0));
                 inputbean.getSubList().put(sub.get(i).getSubjectId(), sub.get(i).getSubjectName());
             }
-            
 
-            
         } catch (Exception e) {
-             if (session != null) {
-                 session.getTransaction().rollback();
+            if (session != null) {
+                session.getTransaction().rollback();
                 session.close();
                 session = null;
             }
             throw e;
-        }finally {
+        } finally {
             if (session != null) {
                 session.getTransaction().commit();
                 session.close();
                 session = null;
             }
         }
-         
+
     }
-     public ArrayList<CoData> getCorList(StudentBean inputbean) throws Exception{
-         List<Course> cr = null;
-         Session session = null;
-         ArrayList<CoData> arrayList = new ArrayList<CoData>();
-         
-         try {
+
+    public ArrayList<CoData> getCorList(StudentBean inputbean) throws Exception {
+        List<Course> cr = null;
+        Session session = null;
+        ArrayList<CoData> arrayList = new ArrayList<CoData>();
+
+        try {
             session = HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
-            
-             System.out.println("inputbean.getGrade_id() "+inputbean.getGrade_id());
-             System.out.println("inputbean.getSub_id() "+inputbean.getSub_id());
+
+            System.out.println("inputbean.getGrade_id() " + inputbean.getGrade_id());
+            System.out.println("inputbean.getSub_id() " + inputbean.getSub_id());
 
             String sql = "from Course c where c.grade=:grade and c.subjectId.subjectId=:subjectId";
             Query query = session.createQuery(sql);
@@ -533,7 +534,7 @@ public class StudentService {
             query.setInteger("subjectId", Integer.parseInt(inputbean.getSub_id()));
             cr = query.list();
             CoData coData = null;
-            
+
             for (int i = 0; i < cr.size(); i++) {
                 coData = new CoData();
                 coData.setId(cr.get(i).getId().toString());
@@ -541,26 +542,25 @@ public class StudentService {
                 arrayList.add(coData);
 //                inputbean.getCorList().put(cr.get(i).getId(), cr.get(i).getCourseDescription());
             }
-            
 
-            
         } catch (Exception e) {
-             if (session != null) {
-                 session.getTransaction().rollback();
+            if (session != null) {
+                session.getTransaction().rollback();
                 session.close();
                 session = null;
             }
             throw e;
-        }finally {
+        } finally {
             if (session != null) {
                 session.getTransaction().commit();
                 session.close();
                 session = null;
             }
         }
-         return  arrayList;
+        return arrayList;
     }
-     public boolean addStudentForCourse(StudentBean bean) throws Exception {
+
+    public boolean addStudentForCourse(StudentBean bean) throws Exception {
         boolean isAddStudent = false;
         StudentCourse studentCr = null;
         Session session = null;
@@ -570,48 +570,43 @@ public class StudentService {
         try {
             session = HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
-            
-            
+
             studentCr = new StudentCourse();
 
             HttpSession sess = ServletActionContext.getRequest().getSession(false);
-            int st_id= (int) sess.getAttribute("assToCourse");
-            
-            System.out.println("st "+st_id);
-            
-            Student s1=new Student();
+            int st_id = (int) sess.getAttribute("assToCourse");
+
+            System.out.println("st " + st_id);
+
+            Student s1 = new Student();
             s1.setSId(st_id);
             studentCr.setStudentId(s1);
-            
+
             Course c = new Course();
             c.setId(Integer.parseInt(bean.getAssCourse()));
             studentCr.setCourseId(c);
             studentCr.setRegistrationDate(new Date());
             studentCr.setCardType(Integer.parseInt(bean.getAsscard_type()));
             studentCr.setStatus("ACT");
-          
+
             session.save(studentCr);
-            
+
             Calendar cal = Calendar.getInstance();
             String curMonth = new SimpleDateFormat("MMMM").format(cal.getTime()).toLowerCase();
             String curYear = (new SimpleDateFormat("yyyy").format(cal.getTime())).toLowerCase();
-            
-            
+
             String sqlSearch = "from Course s where s.id=:id and s.status='ACT'";
-                Query querySearch = session.createQuery(sqlSearch);
-                querySearch.setInteger("id", Integer.parseInt(bean.getAssCourse()));
+            Query querySearch = session.createQuery(sqlSearch);
+            querySearch.setInteger("id", Integer.parseInt(bean.getAssCourse()));
 
+            Iterator it = querySearch.iterate();
+            double monthlyfee = 0.0;
+            while (it.hasNext()) {
+                Course objBean = (Course) it.next();
 
-                Iterator it = querySearch.iterate();
-                double monthlyfee = 0.0;
-                while (it.hasNext()) {
-                    Course objBean = (Course) it.next();
-                    
-                    monthlyfee = objBean.getMonthlyFee();
-                }
-            
-            
-            
+                monthlyfee = objBean.getMonthlyFee();
+            }
+
             PendingPayments pp = new PendingPayments();
             pp.setCid(Integer.parseInt(bean.getAssCourse()));
             pp.setSid(st_id);
@@ -621,18 +616,17 @@ public class StudentService {
             pp.setCreationDate(new Date());
             pp.setClassFee(monthlyfee);
             pp.setStatus("Pending");
-            
-            if(pp.getCardType() == 1){
+
+            if (pp.getCardType() == 1) {
                 pp.setElegibleFee(monthlyfee);
-            }else if(pp.getCardType() == 2){
-                 pp.setElegibleFee(monthlyfee/2);
-            }else{
+            } else if (pp.getCardType() == 2) {
+                pp.setElegibleFee(monthlyfee / 2);
+            } else {
                 pp.setElegibleFee(0.0);
             }
             session.save(pp);
-           
-            
-             session.getTransaction().commit();
+
+            session.getTransaction().commit();
             isAddStudent = true;
         } catch (Exception e) {
             if (session != null) {
@@ -643,7 +637,7 @@ public class StudentService {
             throw e;
         } finally {
             if (session != null) {
-                
+
                 session.flush();
                 session.close();
                 session = null;
@@ -651,7 +645,8 @@ public class StudentService {
         }
         return isAddStudent;
     }
-     public boolean DeleteC(StudentBean bean) throws Exception {
+
+    public boolean DeleteC(StudentBean bean) throws Exception {
         boolean ok = false;
 
         Session session = HibernateInit.getSessionFactory().openSession();
@@ -689,15 +684,16 @@ public class StudentService {
         return ok;
 
     }
-     public boolean checkAddmission(StudentBean bean){
-         boolean ok = false;
-         Session session = HibernateInit.getSessionFactory().openSession();
-         try {
+
+    public boolean checkAddmission(StudentBean bean) {
+        boolean ok = false;
+        Session session = HibernateInit.getSessionFactory().openSession();
+        try {
             session.beginTransaction();
-            
+
             HttpSession session1 = ServletActionContext.getRequest().getSession(false);
-            int s_id =(int) session1.getAttribute("stuid");
-        
+            int s_id = (int) session1.getAttribute("stuid");
+
             Admission admission = (Admission) session.createCriteria(Admission.class, "addmis")
                     .createAlias("addmis.sId", "student")
                     .add(Restrictions.eq("student.sId", s_id))
@@ -706,8 +702,8 @@ public class StudentService {
                 bean.setPayment_date(admission.getPaymentDate());
                 ok = true;
             }
-             
-         } catch (Exception ex) {
+
+        } catch (Exception ex) {
             if (session != null) {
                 session.getTransaction().rollback();
                 session.close();
@@ -722,9 +718,10 @@ public class StudentService {
                 session = null;
             }
         }
-         return ok;
-     }
-     public boolean addAddmission(StudentBean bean) throws Exception {
+        return ok;
+    }
+
+    public boolean addAddmission(StudentBean bean) throws Exception {
         boolean isAddStudent = false;
         Admission add = null;
         Session session = null;
@@ -734,24 +731,22 @@ public class StudentService {
         try {
             session = HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
-            
-            
+
             add = new Admission();
 
             HttpSession sess = ServletActionContext.getRequest().getSession(false);
-            int st_id= (int) sess.getAttribute("stuid");
-            
-            System.out.println("st "+st_id);
-            
-            Student s1=new Student();
+            int st_id = (int) sess.getAttribute("stuid");
+
+            System.out.println("st " + st_id);
+
+            Student s1 = new Student();
             s1.setSId(st_id);
             add.setSId(s1);
             add.setPaymentDate(new Date().toString());
             add.setAmount(Double.parseDouble(bean.getPayment_amount()));
-            
-          
+
             session.save(add);
-           
+
             isAddStudent = true;
         } catch (Exception e) {
             if (session != null) {
@@ -762,7 +757,7 @@ public class StudentService {
             throw e;
         } finally {
             if (session != null) {
-                 session.getTransaction().commit();
+                session.getTransaction().commit();
                 session.flush();
                 session.close();
                 session = null;
@@ -770,22 +765,21 @@ public class StudentService {
         }
         return isAddStudent;
     }
-     public void checkcourse(StudentBean bean){
-         Session session = HibernateInit.getSessionFactory().openSession();
-         try {
+
+    public void checkcourse(StudentBean bean) {
+        Session session = HibernateInit.getSessionFactory().openSession();
+        try {
             session.beginTransaction();
             Course course = (Course) session.createCriteria(Course.class, "course")
                     .add(Restrictions.eq("course.id", Integer.parseInt(bean.getS_c_id())))
                     .add(Restrictions.eq("course.status", "ACT"))
                     .uniqueResult();
             if (course != null) {
-                bean.setCourse_fee(course.getMonthlyFee()+"");
+                bean.setCourse_fee(course.getMonthlyFee() + "");
                 bean.setCourse_duration(course.getCourseDuration());
             }
-       
-            
-             
-         } catch (Exception ex) {
+
+        } catch (Exception ex) {
             if (session != null) {
                 session.getTransaction().rollback();
                 session.close();
@@ -800,30 +794,29 @@ public class StudentService {
                 session = null;
             }
         }
-     }
-     public void findcards(StudentBean inputBean) throws Exception {
+    }
+
+    public void findcards(StudentBean inputBean) throws Exception {
 
         List<StudentCourse> studentlist = null;
         Session session = null;
 
         try {
-            
+
             session = HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
-            
+
             String sql = "from StudentCourse wu where wu.id =:id and wu.status='ACT'";
             Query query = session.createQuery(sql);
             query.setInteger("id", Integer.parseInt(inputBean.getCard_id()));
             studentlist = query.list();
 
             if (0 < studentlist.size()) {
-                
-               
+
                 inputBean.setUpasscard_type(studentlist.get(0).getCardType().toString());
                 inputBean.setUpcardId(studentlist.get(0).getId().toString());
 
             }
-          
 
         } catch (Exception e) {
             if (session != null) {
@@ -841,24 +834,24 @@ public class StudentService {
             }
         }
     }
-      public boolean updatecards(StudentBean inputBean) throws Exception {
+
+    public boolean updatecards(StudentBean inputBean) throws Exception {
         boolean isUpdated = false;
         Session session = null;
         Query query = null;
         List<StudentCourse> studentCourses = null;
-       
+
         try {
             session = HibernateInit.getSessionFactory().openSession();
             session.beginTransaction();
-            
-            
+
             String sql = "from StudentCourse wu where wu.id =:id and wu.status='ACT'";
             query = session.createQuery(sql);
             query.setInteger("id", Integer.parseInt(inputBean.getUpcardId()));
             studentCourses = query.list();
             if (studentCourses.size() > 0) {
                 studentCourses.get(0).setCardType(Integer.parseInt(inputBean.getUpasscard_type()));
-          
+
                 session.update(studentCourses.get(0));
                 session.getTransaction().commit();
                 isUpdated = true;

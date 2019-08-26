@@ -338,7 +338,7 @@
                                                     
                                     </tr>
                                     <tr>
-                                        <td><img width="100" height="100" src="data:image/jpeg;base64,<s:property value="viewImage"/>" id="viewImage" name="viewImage">
+                                        <td><img width="100" height="100" src="<s:property value="viewImage"/>" id="viewImage" name="viewImage">
                             </td>                                    
                             <td width="25px;"></td>
                                     </tr>
