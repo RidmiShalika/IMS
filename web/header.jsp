@@ -13,7 +13,7 @@
 <%@taglib prefix="sjg" uri="/struts-jquery-grid-tags"%>
 
 <div>
-    <h1 style="color: #007dc1;text-align: center">NIKARSHA</h1>
+    <h1 style="color: #007dc1;text-align: center">NIKASHA   </h1>
     <div class="container-fluid" style="color: #fff;">
     <div class="row">
         <div class="col-lg-12 topborder">

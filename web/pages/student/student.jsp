@@ -273,7 +273,7 @@
                                                     <td><s:textfield id="cardno" name="cardno" cssClass="textField" /></td>                                    
                                                     <td width="25px;"></td>
                                                     <td>
-                                                        <%-- <s:file  id = "addimage" name="addimage" label="File" cssClass="fileField" cssStyle="font-size : 14px"/> --%>
+                                                        <s:file  id = "addimage" name="addimage" label="File" cssClass="fileField" cssStyle="font-size : 14px"/> 
                                                 </tr>
                 
                                             </table>
@@ -289,6 +289,7 @@
                                     </tr>
                                 </table>
                             </s:form>
+                            
                             <s:form  id="updateForm"  theme="simple" method="post"  cssStyle="display:none">
                                 <table >
                                     <tr>
@@ -333,9 +334,18 @@
                                         <td class="formLable">Card No</td> <td >:</td>
                                         <td><s:textfield id="upcardno" name="upcardno" cssClass="textField" /></td>                                    
                                         <td width="25px;"></td>
+                                       
+                                                    
                                     </tr>
+                                    <tr>
+                                        <td><img width="100" height="100" src="data:image/jpeg;base64,<s:property value="viewImage"/>" id="viewImage" name="viewImage">
+                            </td>                                    
+                            <td width="25px;"></td>
+                                    </tr>
+                                    
 
                                 </table>
+                                        
                                 <table>
                                     <tr>
                                         <td>
