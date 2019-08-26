@@ -291,7 +291,7 @@
                                 </table>
                             </s:form>
                             
-                            <s:form  id="updateForm"  theme="simple" method="post"  cssStyle="display:none">
+                            <s:form  id="updateForm"  theme="simple" method="post" enctype="multipart/form-data" cssStyle="display:none">
                                 <table >
                                     <tr>
                                         <s:hidden id="upId" name="upId"/>
@@ -339,9 +339,10 @@
                                                     
                                     </tr>
                                     <tr>
-                                        <td><img width="100" height="100" src="" id="viewImage" name="viewImage">
-                            </td>                                    
-                            <td width="25px;"></td>
+                                        <td class="formLable">Image</td> <td >:</td>
+                                        <td><img width="150" height="100" src="" id="viewImage" name="viewImage"></td>   
+                                        <td><s:file  id = "upimage" name="upimage" label="File" cssClass="fileField" cssStyle="font-size : 14px"/>
+                                        <td width="25px;"></td>
                                     </tr>
                                     
 
