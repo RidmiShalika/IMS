@@ -95,6 +95,7 @@
                 return "<a href='#' onClick='javascript:editNow(&#34;" + cellvalue + "&#34;)'><img src ='${pageContext.request.contextPath}/resources/images/iconEdit.png' /></a>";
             }
             function editNow(keyval) {
+                $('#divmsg').empty()
                 $('#updateForm').show();
                 
                 var text = ' Edit User';
