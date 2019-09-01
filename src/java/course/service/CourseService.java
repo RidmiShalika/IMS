@@ -5,6 +5,7 @@
  */
 package course.service;
 
+import Util.Config;
 import Util.HibernateInit;
 import course.bean.CourseBean;
 import java.text.DateFormat;
@@ -21,6 +22,7 @@ import mapping.Course;
 import mapping.CourseDates;
 import mapping.ExtraClasses;
 import mapping.Lecturer;
+import mapping.SmsDetails;
 import mapping.Student;
 import mapping.StudentCourse;
 import mapping.Subject;
@@ -631,9 +633,6 @@ public class CourseService {
         List<CourseBean> dataList = new ArrayList<CourseBean>();
         Session session = null;
 
-        
-        
-
         try {
 
             long count = 0;
@@ -948,7 +947,7 @@ public class CourseService {
 
             session.beginTransaction();
             Course at = (Course) session.createCriteria(Course.class)
-                    .add(Restrictions.eq("courseDescription", inputbean.getAddcourseDescription()))
+                    .add(Restrictions.eq("courseDescription", inputbean.getAddcourseDescription().trim()))
                     .uniqueResult();
 
             if (at != null) {
@@ -976,7 +975,7 @@ public class CourseService {
 
     public boolean stopClassess(CourseBean inputbean) {
         boolean isstop = false;
-       
+
         Session session = HibernateInit.getSessionFactory().openSession();
 
         try {
@@ -1018,9 +1017,6 @@ public class CourseService {
 
             session.save(conductDetails);
 
-            
-            
-            
             // insert not atten student to attendace table
             Criteria c = session.createCriteria(StudentCourse.class, "sc")
                     .add(Restrictions.eq("sc.status", "ACT"));
@@ -1030,7 +1026,7 @@ public class CourseService {
             Date da = new Date();
             SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
             while (it.hasNext()) {
-                 boolean isAtten = false;
+                boolean isAtten = false;
                 StudentCourse studentCourse = (StudentCourse) it.next();
 
                 Criteria criteria1 = session.createCriteria(Attendence.class, "att")
@@ -1048,13 +1044,13 @@ public class CourseService {
                 if (!isAtten) {
                     DateFormat dateFormat = new SimpleDateFormat("EEEE");
                     Date date = new Date();
-                    
+
                     Date date1 = new Date();
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd|HH:mm:ss");
                     String dd = sdf.format(date1);
                     String datTime[] = dd.split("\\|");
                     String dateonly[] = datTime[0].split("\\-");
-                    
+
                     Attendence attendence = new Attendence();
                     attendence.setAtten(false);
                     attendence.setCompleteDate(new Date());
@@ -1069,7 +1065,7 @@ public class CourseService {
                     attendence.setMonth(Integer.parseInt(dateonly[1].trim()));
                     attendence.setTime(datTime[1].trim());
                     attendence.setYear(Integer.parseInt(dateonly[0].trim()));
-                    
+
                     session.save(attendence);
                 }
 
@@ -1146,4 +1142,173 @@ public class CourseService {
         }
         return isstop;
     }
+
+    public boolean upcheckdublicateDes(CourseBean inputbean) {
+        boolean ok = false;
+
+        Session session = HibernateInit.getSessionFactory().openSession();
+        try {
+
+            session.beginTransaction();
+            Course at = (Course) session.createCriteria(Course.class)
+                    .add(Restrictions.eq("courseDescription", inputbean.getUpcourseDescription().trim()))
+                    .add(Restrictions.not(Restrictions.eq("id", Integer.parseInt(inputbean.getUpcourseid()))))
+                    .uniqueResult();
+
+            if (at != null) {
+                ok = true;
+            }
+
+        } catch (Exception ex) {
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            throw ex;
+        } finally {
+            if (session != null) {
+                session.getTransaction().commit();
+                session.flush();
+                session.close();
+                session = null;
+            }
+        }
+
+        return ok;
+    }
+
+    public boolean insertsms(CourseBean inputbean) {
+        boolean issend = false;
+        Session session = HibernateInit.getSessionFactory().openSession();
+
+        try {
+            String arr[] = inputbean.getSelecteddata().split("\\,");
+
+            Criteria c = session.createCriteria(Attendence.class, "att")
+                    .createAlias("att.courseId", "course")
+                    .createAlias("att.studentId", "student")
+                    .add(Restrictions.eq("course.id", Integer.parseInt(arr[0].trim())))
+                    .add(Restrictions.eq("att.completeDate", new Date()));
+
+            Iterator it = c.list()
+                    .iterator();
+            while (it.hasNext()) {
+                Attendence attendence = (Attendence) it.next();
+
+                String sms_tem = "";
+                String mobileno = "";
+                String isatt = "";
+                mobileno = attendence.getStudentId().getSParentContactNo();
+                String in_time_array[] = attendence.getTime().split(":");
+                String in_Time = in_time_array[0] + ":" + in_time_array[1];
+
+                if (!"".equals(mobileno)) {
+                    boolean checkmobileno = validateMobileNo(mobileno.trim());
+                    if (checkmobileno) {
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy HH:mm");
+                        Date date = new Date();
+
+                        if (attendence.getAtten() == true) {
+                            sms_tem = Config.SMS_course_attendance;
+                            isatt = "1";
+                        } else {
+                            sms_tem = Config.SMS_Genaral_not_attendance;
+                            isatt = "0";
+                        }
+                        insert_end_SMS(attendence.getStudentId().getSName(), attendence.getCourseId().getCourseDescription(), in_Time, arr[1].trim(), mobileno, attendence.getStudentId().getSId().toString(), sms_tem, isatt);
+                    } else {
+                        System.out.println("Mobile number validation fails");
+                    }
+
+                } else {
+                    System.out.println("No mobile number");
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return issend;
+    }
+
+    public boolean validateMobileNo(String parentContactNo) throws Exception {
+        boolean status = false;
+        try {
+
+            if (parentContactNo.length() == 9) {
+                parentContactNo = "0" + parentContactNo;
+            }
+            if (parentContactNo.matches("[0-9]+") && parentContactNo.length() == 10) {
+                String prefix = parentContactNo.trim().substring(0, 3);
+                if (prefix.equals("070") || prefix.equals("071") || prefix.equals("072") || prefix.equals("075") || prefix.equals("076") || prefix.equals("077") || prefix.equals("078")) {
+                    status = true;
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return status;
+    }
+
+    public int insert_end_SMS(String Name, String course, String in_time, String out_time, String mobile, String s_id, String sms_tem, String isatt) {
+        String new_body = sms_tem;
+        int x = 0;
+
+        if (isatt.equals("1")) {
+            in_time = in_time.replace(":", "%3A");
+            out_time = out_time.replace(":", "%3A");
+            new_body = new_body.replace("<NAME>", Name);
+            new_body = new_body.replace("<COURSE>", course);
+            new_body = new_body.replace("<IN_TIME>", in_time);
+            new_body = new_body.replace("<OUT_TIME>", out_time);
+
+        } else if (isatt.equals("0")) {
+            new_body = new_body.replace("<NAME>", Name);
+            new_body = new_body.replace("<COURSE>", course);
+        }
+
+        Session session = null;
+
+        try {
+            
+
+            session = HibernateInit.getSessionFactory().openSession();
+            session.beginTransaction();
+
+            SmsDetails smsDetails = new SmsDetails();
+            smsDetails.setSId(s_id);
+            smsDetails.setBody(new_body);
+            smsDetails.setCreatedDate(new Date().toString());
+            smsDetails.setMobile(mobile);
+            smsDetails.setRetryAttempts(0);
+            smsDetails.setStatus(0);
+
+            session.save(smsDetails);
+            session.getTransaction().commit();
+            x = 1;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            throw ex;
+        } finally {
+            if (session != null) {
+                session.flush();
+                session.clear();
+                session.close();
+                session = null;
+            }
+        }
+        return x;
+    }
+
 }

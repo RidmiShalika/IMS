@@ -592,14 +592,16 @@
                                 rowTotal="false"
                                 viewrecords="true"
                                 >
-                                <sjg:gridColumn name="courseID" index="courseID" title="Course ID" />
+                                
+                                <sjg:gridColumn name="courseID" index="courseID" title="Course ID" width="80"/>
+                                <sjg:gridColumn name="courseID" index="courseID" title="Edit" formatter="editformatter" align="center" width="100"/>
+                                <sjg:gridColumn name="courseID" index="courseID" title="Extra Class" formatter="extraclzformatter" align="center" width="100"/>
                                 <sjg:gridColumn name="courseDescription" index="courseDescription" title="Course Description" />
                                 <sjg:gridColumn name="subject" index="subject" title="Subject" />
                                 <sjg:gridColumn name="lecturer" index="lecturer" title="Lecturer" />
                                 <sjg:gridColumn name="classType" index="classType" title="Class Type" />
                                 <sjg:gridColumn name="medium" index="medium" title="Medium" />
-                                <sjg:gridColumn name="courseID" index="courseID" title="Edit" formatter="editformatter" align="center"/>
-                                <sjg:gridColumn name="courseID" index="courseID" title="Extra Class" formatter="extraclzformatter" align="center"/>
+                                
 
                             </sjg:grid> 
                         </div>

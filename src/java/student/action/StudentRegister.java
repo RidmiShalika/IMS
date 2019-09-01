@@ -16,6 +16,9 @@ import mapping.Student;
 import org.apache.struts2.ServletActionContext;
 import student.bean.StudentBean;
 import student.service.StudentService;
+import java.io.File;
+import java.io.OutputStream;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -75,6 +78,7 @@ public class StudentRegister extends ActionSupport implements ModelDriven<Studen
 
         return "list";
     }
+
     public String listcr() {
         System.out.println("list method cr++++++++++++++++++++++");
         List<StudentBean> dataList;
@@ -121,7 +125,8 @@ public class StudentRegister extends ActionSupport implements ModelDriven<Studen
         }
         return inputBean;
     }
-    public String getCList(){
+
+    public String getCList() {
         try {
             inputBean.setCorList(service.getCorList(inputBean));
         } catch (Exception e) {
@@ -140,10 +145,12 @@ public class StudentRegister extends ActionSupport implements ModelDriven<Studen
 
     public String Add() {
         System.out.println("add method in sudent");
-         
+
         try {
-//              String filePath = ServletActionContext.getServletContext().getRealPath("/").concat("userimages");
-//            System.out.println("Image Location:" + filePath);
+            String filePath = ServletActionContext.getServletContext().getRealPath("/").concat("userimages");
+            System.out.println("Image type" + inputBean.getAddimageContentType());
+            System.out.println("Image Location:" + inputBean.getAddimageFileName());
+            System.out.println("Image name:" + inputBean.getAddimage());
 
 //            System.out.println("8888 t "+inputBean.getAddimage().getAbsolutePath());
             if (doValidation(inputBean)) {
@@ -174,7 +181,7 @@ public class StudentRegister extends ActionSupport implements ModelDriven<Studen
             } else if (bean.getSchool().equals("-1")) {
                 addActionError("Please select school");
                 return ok;
-            }  else if (bean.getGender().equals("-1")) {
+            } else if (bean.getGender().equals("-1")) {
                 addActionError("Please select gender");
                 return ok;
             } else {
@@ -190,6 +197,8 @@ public class StudentRegister extends ActionSupport implements ModelDriven<Studen
     public String find() {
         try {
             service.findstudent(inputBean);
+            
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -225,7 +234,7 @@ public class StudentRegister extends ActionSupport implements ModelDriven<Studen
             } else if (bean.getUpschool().equals("-1")) {
                 addActionError("Please select school");
                 return ok;
-            }  else if (bean.getUpgender().equals("-1")) {
+            } else if (bean.getUpgender().equals("-1")) {
                 addActionError("Please select gender");
                 return ok;
             } else {
@@ -237,8 +246,8 @@ public class StudentRegister extends ActionSupport implements ModelDriven<Studen
         }
         return ok;
     }
-    
-     public String assign() {
+
+    public String assign() {
 
         int stuid = inputBean.getStudentId();
         HttpSession session = ServletActionContext.getRequest().getSession(false);
@@ -246,7 +255,8 @@ public class StudentRegister extends ActionSupport implements ModelDriven<Studen
         return "Assign";
 
     }
-     public void getGrade(StudentBean inputbean){
+
+    public void getGrade(StudentBean inputbean) {
         inputbean.getGradeList().put(1, "Grade 1");
         inputbean.getGradeList().put(2, "Grade 2");
         inputbean.getGradeList().put(3, "Grade 3");
@@ -267,42 +277,45 @@ public class StudentRegister extends ActionSupport implements ModelDriven<Studen
         inputbean.getGradeList().put(18, "A/L 2025");
         inputbean.getGradeList().put(19, "A/L 2026");
         inputbean.getGradeList().put(20, "A/L 2027");
-        
+
     }
-     public void cardTypeList(StudentBean inputbean) {
+
+    public void cardTypeList(StudentBean inputbean) {
         try {
             inputbean.getCardTypeList().put(1, "Normal Card");
-             inputbean.getCardTypeList().put(2, "Half Card");
-              inputbean.getCardTypeList().put(3, "Free Card");
+            inputbean.getCardTypeList().put(2, "Half Card");
+            inputbean.getCardTypeList().put(3, "Free Card");
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-     public String studentRegistrationForCourse(){
-         try {
-             if(doVali(inputBean)){
-                 service.addStudentForCourse(inputBean);
+
+    public String studentRegistrationForCourse() {
+        try {
+            if (doVali(inputBean)) {
+                service.addStudentForCourse(inputBean);
                 addActionMessage("Student successfuly added to course");
-             }
-             
-         } catch (Exception e) {
-             e.printStackTrace();
-             addActionError("Student added to course fail");
-         }
-         return "assForCourse";
-     }
-     public boolean doVali(StudentBean bean) throws Exception {
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            addActionError("Student added to course fail");
+        }
+        return "assForCourse";
+    }
+
+    public boolean doVali(StudentBean bean) throws Exception {
         boolean ok = false;
 
         try {
-            if(bean.getAssSubject().equals("-1")){
+            if (bean.getAssSubject().equals("-1")) {
                 addActionError("Please select subject");
                 return ok;
-            }else if(bean.getAssgrade().equals("-1")){
+            } else if (bean.getAssgrade().equals("-1")) {
                 addActionError("Please select grade");
                 return ok;
-            }else if(bean.getAssCourse().equals("-1")){
+            } else if (bean.getAssCourse().equals("-1")) {
                 addActionError("Please select course");
                 return ok;
             } else if (bean.getAsscard_type().equals("-1")) {
@@ -317,19 +330,21 @@ public class StudentRegister extends ActionSupport implements ModelDriven<Studen
         }
         return ok;
     }
-     public String delete(){
-         try {
-             service.DeleteC(inputBean);
-             inputBean.setMessage("Delete successfull");
-             inputBean.setSuccess(true);
-         } catch (Exception e) {
-             e.printStackTrace();
-             inputBean.setMessage("Delete fail");
-             inputBean.setSuccess(false);
-         }
-         return "delete";
-     }
-      public String pay() {
+
+    public String delete() {
+        try {
+            service.DeleteC(inputBean);
+            inputBean.setMessage("Delete successfull");
+            inputBean.setSuccess(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            inputBean.setMessage("Delete fail");
+            inputBean.setSuccess(false);
+        }
+        return "delete";
+    }
+
+    public String pay() {
 
         int stuid = inputBean.getStuId();
         HttpSession session = ServletActionContext.getRequest().getSession(false);
@@ -337,62 +352,66 @@ public class StudentRegister extends ActionSupport implements ModelDriven<Studen
         return "pay";
 
     }
-      public String paymentAdd(){
-          try {
-              if(service.checkAddmission(inputBean)){
-                  addActionMessage("Student already paid admission");
-              }else{
-                  service.addAddmission(inputBean);
-                  addActionMessage("Student paid admission successfuly");
-              }
-          } catch (Exception e) {
-              e.printStackTrace();
-              addActionError("Payment add faill");
-          }
-          return "payment";
-      }
-      public String getInfo(){
-          try {
-              if(service.checkAddmission(inputBean)){
-                  inputBean.setPay_status("Paid");
-              }else{
-                  inputBean.setPay_status("Not Paid");
-              }
-              
-          } catch (Exception e) {
-              e.printStackTrace();
-          }
-          return "getInfo";
-      }
-      public String getclassInfo(){
-          try {
-              service.checkcourse(inputBean);
-          } catch (Exception e) {
-              e.printStackTrace();
-          }
-          return "getclassInfo";
-      }
-       public String findCard(){
-          try {
-              service.findcards(inputBean);
-          } catch (Exception e) {
-              e.printStackTrace();
-          }
-          return "findCard";
-      }
-        public String updateCard(){
-          try {
-              if(!inputBean.getUpasscard_type().equals("-1")){
-                  service.updatecards(inputBean);
-                  addActionMessage("Student card type updated successfully");
-              }else{
-                  addActionError("Please select card type");
-              }
-              
-          } catch (Exception e) {
-              e.printStackTrace();
-          }
-          return "updateCard";
-      }
-}
 
+    public String paymentAdd() {
+        try {
+            if (service.checkAddmission(inputBean)) {
+                addActionMessage("Student already paid admission");
+            } else {
+                service.addAddmission(inputBean);
+                addActionMessage("Student paid admission successfuly");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            addActionError("Payment add faill");
+        }
+        return "payment";
+    }
+
+    public String getInfo() {
+        try {
+            if (service.checkAddmission(inputBean)) {
+                inputBean.setPay_status("Paid");
+            } else {
+                inputBean.setPay_status("Not Paid");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "getInfo";
+    }
+
+    public String getclassInfo() {
+        try {
+            service.checkcourse(inputBean);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "getclassInfo";
+    }
+
+    public String findCard() {
+        try {
+            service.findcards(inputBean);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "findCard";
+    }
+
+    public String updateCard() {
+        try {
+            if (!inputBean.getUpasscard_type().equals("-1")) {
+                service.updatecards(inputBean);
+                addActionMessage("Student card type updated successfully");
+            } else {
+                addActionError("Please select card type");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "updateCard";
+    }
+}
