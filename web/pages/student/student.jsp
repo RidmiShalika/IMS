@@ -416,7 +416,8 @@
                                     viewrecords="true"
                                     >
 
-                                    <sjg:gridColumn name="sId" index="sId" title="StudentId" hidden="true"/>
+                                     <sjg:gridColumn name="sId" index="sId" title="Assign Course" formatter="assignformatter" align="center"/>
+                                    <sjg:gridColumn name="sId" index="sId" title="StudentId" hidden="show"/>
                                     <sjg:gridColumn name="sName" index="sName" title="Name" />
                                     <sjg:gridColumn name="sDob" index="sDob" title="Birthday" />
                                     <sjg:gridColumn name="sAddress" index="sAddress" title="Address" />
@@ -431,7 +432,6 @@
                                     <sjg:gridColumn name="sNic" index="sNic" title="NIC" />
                                     <sjg:gridColumn name="cardNumber" index="cardNumber" title="Card No" />
                                     <sjg:gridColumn name="sId" index="sId" title="Edit" formatter="editformatter" align="center"/>
-                                    <sjg:gridColumn name="sId" index="sId" title="Assign Course" formatter="assignformatter" align="center"/>
                                     <sjg:gridColumn name="sId" index="sId" title="Pay Admission" formatter="admissionformatter" align="center"/>
 
                                 </sjg:grid> 
