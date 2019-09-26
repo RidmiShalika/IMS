@@ -51,7 +51,7 @@
                 $('#addcourseDuration').val("");
                 $('#addmonthlyFee').val("");
                 $('#addclassType').val("");
-                $('#addlectureHall').val("");
+//                $('#addlectureHall').val("");
                 $('#addbatchNo').val("");
                 $('#addlecturerPayment').val("");
                 $('#addclassDays').val("");
@@ -465,9 +465,9 @@
                                     <td><s:select  name="upclassType" id="upclassType" list="%{clzList}" 
                                                listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td>
                                     <td width="25px;"></td>
-                                    <td class="formLable">Lecture Hall</td> <td>:</td>
+<!--                                    <td class="formLable">Lecture Hall</td> <td>:</td>
                                     <td><s:select  name="uplectureHall" id="uplectureHall" list="%{hallList}" 
-                                               listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td>
+                                               listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td>-->
                                 </tr>
                                 <tr>
                                     <td class="formLable">Batch No<span class="mandatory">*</span></td> <td >:</td>

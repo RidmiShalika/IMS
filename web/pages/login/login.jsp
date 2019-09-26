@@ -13,7 +13,7 @@
      <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Zeogyn</title>
+        <title>IMS</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/bootstrap/css/bootstrap.css">
         <script src="${pageContext.request.contextPath}/resources/js/js/jquery.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/assets/js/jquery.backstretch.min.js"></script>        

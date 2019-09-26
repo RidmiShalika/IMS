@@ -78,7 +78,7 @@
 
                                     <tr>
                                         <td>
-                                            <sj:submit button="true" value="Atten"  onclick="keyPress()" cssClass="button_aback"/>
+                                            <sj:submit button="true" value="Confirm"  onclick="keyPress()" cssClass="button_aback"/>
                                             <%--<sj:submit button="true" value="Reset"  onclick="ResetForm()" cssClass="button_aback"/>--%>
                                         </td>
                                     </tr>

@@ -145,14 +145,14 @@ public class StudentRegister extends ActionSupport implements ModelDriven<Studen
 //              String filePath = ServletActionContext.getServletContext().getRealPath("/").concat("userimages");
 //            System.out.println("Image Location:" + filePath);
 
-            System.out.println("8888 t "+inputBean.getAddimage().getAbsolutePath());
-//            if (doValidation(inputBean)) {
-//                if (service.addStudent(inputBean)) {
-//                    addActionMessage("Student registration successfull");
-//                } else {
-//                    addActionError("Student registration fail");
-//                }
-//            }
+//            System.out.println("8888 t "+inputBean.getAddimage().getAbsolutePath());
+            if (doValidation(inputBean)) {
+                if (service.addStudent(inputBean)) {
+                    addActionMessage("Student registration successfull");
+                } else {
+                    addActionError("Student registration fail");
+                }
+            }
 
         } catch (Exception e) {
             addActionError("Student registration fail");
@@ -173,6 +173,9 @@ public class StudentRegister extends ActionSupport implements ModelDriven<Studen
                 return ok;
             } else if (bean.getSchool().equals("-1")) {
                 addActionError("Please select school");
+                return ok;
+            }  else if (bean.getGender().equals("-1")) {
+                addActionError("Please select gender");
                 return ok;
             } else {
                 ok = true;
@@ -221,6 +224,9 @@ public class StudentRegister extends ActionSupport implements ModelDriven<Studen
                 return ok;
             } else if (bean.getUpschool().equals("-1")) {
                 addActionError("Please select school");
+                return ok;
+            }  else if (bean.getUpgender().equals("-1")) {
+                addActionError("Please select gender");
                 return ok;
             } else {
                 ok = true;

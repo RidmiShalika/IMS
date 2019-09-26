@@ -7,6 +7,22 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <style>
+            .viewuser_tbl {
+    
+                border-radius: 10px;
+                padding-left: 10px;
+                padding-right: 10px;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                margin-right: auto;
+                margin-bottom: auto;
+                margin-left: 10px;
+                width: 75%;
+   
+
+}
+        </style>
         <script type="text/javascript">
             function resetData() {
                 jQuery("#exgridtable").trigger("reloadGrid");
@@ -44,7 +60,8 @@
             
         </script>
     </head>
-    <body style="overflow:hidden" onload="load()">
+    <!--<body style="overflow:hidden" onload="load()">-->
+    <body>
         <section class="app-content">
             <div class="wrapper">
                 <div class="body_content" id="includedContent" >
@@ -136,12 +153,12 @@
                                 viewrecords="true"
                                 >
                                 <sjg:gridColumn name="exid" index="id" title="Course ID" hidden="true"/>
-                                <sjg:gridColumn name="courseId" index="courseId" title="Course Id" />
+                                <sjg:gridColumn name="courseId" index="courseId" title="Course description" />
                                 <sjg:gridColumn name="date" index="date" title="Date" />
                                 <sjg:gridColumn name="startTime" index="startTime" title="Start Time" />
                                 <sjg:gridColumn name="endTime" index="endTime" title="End Time" />
                                 <sjg:gridColumn name="status" index="status" title="Status" />
-                                <sjg:gridColumn name="exid" index="id" title="Delete"  align="center" width="52" formatter="deleteformatter" sortable="false"/>
+                                <sjg:gridColumn name="exid" index="id" title="Delete"  align="center" width="100" formatter="deleteformatter" sortable="false"/>
                                 
 
                             </sjg:grid> 

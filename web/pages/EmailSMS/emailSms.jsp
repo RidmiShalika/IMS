@@ -52,6 +52,9 @@
                 $('#msgSample1').val("");
                 $('#msg1').val("");
             }
+            function test(){
+                alert("Temporary Disabled");
+            }
         </script>
     </head>
     <body style="overflow:hidden" onload="load()">
@@ -103,8 +106,8 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <s:url var="crsurl" action="SendCrs" />
-                                            <sj:submit  id="sendbtn" button="true" href="%{crsurl}" value="Send"   targets="divmsg" cssClass="button_aback"/> 
+                                            <%--<s:url var="crsurl" action="SendCrs" />--%>
+                                            <sj:submit  id="sendbtn" button="true" onclick="test()" value="Send"    cssClass="button_aback"/> 
                                             <sj:submit button="true" value="Reset"  onclick="ResetForm()" cssClass="button_aback"/>
                                         </td>
                                     </tr>
@@ -137,8 +140,8 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <s:url var="stdurl" action="SendStd" />
-                                            <sj:submit  id="sendbtn1" button="true" href="%{stdurl}" value="Send"   targets="divmsg" cssClass="button_aback"/> 
+                                            <%--<s:url var="stdurl" action="SendStd" /> comment for demo --%>
+                                            <sj:submit  id="sendbtn1" button="true" onclick="test()" value="Send" cssClass="button_aback"/> 
                                             <sj:submit button="true" value="Reset"  onclick="ResetForm1()" cssClass="button_aback"/>
                                         </td>
                                     </tr>

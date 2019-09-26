@@ -9,6 +9,7 @@
         <property name="hibernate.connection.url">jdbc:mysql://institutemanagement.caime30ucsh9.us-east-2.rds.amazonaws.com:3306/institutemanagement?zeroDateTimeBehavior=convertToNull</property>
         <property name="hibernate.connection.username">admin</property>
         <property name="hibernate.connection.password">password</property>
+
     
     
         <!-- add classes to map from here -->
@@ -35,7 +36,8 @@
         <mapping class="mapping.CourseDates" />
         <mapping class="mapping.ExtraClasses" />
         <mapping class="mapping.PaymentBillDetails" />
-        <mapping class="mapping.PendingPayments" />
+        <!--<mapping class="mapping.PendingPayments" />-->
+        <mapping class="mapping.SmsDetails" />
     </session-factory>
   
 </hibernate-configuration>

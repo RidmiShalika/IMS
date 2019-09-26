@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
  * @author Ridmi Shalika
  *///tetst modification
 @Entity
-@Table(name = "extra_classes", catalog = "institute_management", schema = "")
+@Table(name = "extra_classes", schema = "")
 @NamedQueries({
     @NamedQuery(name = "ExtraClasses.findAll", query = "SELECT e FROM ExtraClasses e")})
 public class ExtraClasses implements Serializable {

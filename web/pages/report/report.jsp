@@ -15,7 +15,8 @@
 
         <script type="text/javascript">
             function viewDailog1(){
-                $("#dailog1").dialog('open');
+                alert("Temporary Disabled");
+//                $("#dailog1").dialog('open');
                 return false;
             }
              $.subscribe('openview1', function (event, data) {
@@ -24,7 +25,8 @@
             });
             
             function viewDailog2(){
-                $("#dailog2").dialog('open');
+                alert("Temporary Disabled");
+//                $("#dailog2").dialog('open');
                 return false;
             }
              $.subscribe('openview2', function (event, data) {
@@ -33,7 +35,8 @@
             });
             
             function viewDailog3(){
-                $("#dailog3").dialog('open');
+                alert("Temporary Disabled");
+//                $("#dailog3").dialog('open');
                 return false;
             }
              $.subscribe('openview3', function (event, data) {
@@ -42,7 +45,8 @@
             });
             
             function viewDailog4(){
-                $("#dailog4").dialog('open');
+                alert("Temporary Disabled");
+//                $("#dailog4").dialog('open');
                 return false;
             }
              $.subscribe('openview4', function (event, data) {
@@ -51,7 +55,8 @@
             });
             
             function viewDailog5(){
-                $("#dailog5").dialog('open');
+                alert("Temporary Disabled");
+//                $("#dailog5").dialog('open');
                 return false;
             }
              $.subscribe('openview5', function (event, data) {
@@ -60,7 +65,8 @@
             });
             
             function viewDailog6(){
-                $("#dailog6").dialog('open');
+                alert("Temporary Disabled");
+//                $("#dailog6").dialog('open');
                 return false;
             }
              $.subscribe('openview6', function (event, data) {
@@ -69,7 +75,8 @@
             });
             
             function viewDailog7(){
-                $("#dailog7").dialog('open');
+                alert("Temporary Disabled");
+//                $("#dailog7").dialog('open');
                 return false;
             }
              $.subscribe('openview7', function (event, data) {
@@ -78,7 +85,8 @@
             });
             
             function viewDailog8(){
-                $("#dailog8").dialog('open');
+                alert("Temporary Disabled");
+//                $("#dailog8").dialog('open');
                 return false;
             }
              $.subscribe('openview8', function (event, data) {
@@ -87,7 +95,8 @@
             });
             
             function viewDailog9(){
-                $("#dailog9").dialog('open');
+                alert("Temporary Disabled");
+//                $("#dailog9").dialog('open');
                 return false;
             }
              $.subscribe('openview9', function (event, data) {
@@ -96,7 +105,8 @@
             });
             
             function viewDailog10(){
-                $("#dailog10").dialog('open');
+                alert("Temporary Disabled");
+//                $("#dailog10").dialog('open');
                 return false;
             }
              $.subscribe('openview10', function (event, data) {
@@ -105,7 +115,8 @@
             });
             
             function viewDailog11(){
-                $("#dailog11").dialog('open');
+                alert("Temporary Disabled");
+//                $("#dailog11").dialog('open');
                 return false;
             }
              $.subscribe('openview11', function (event, data) {

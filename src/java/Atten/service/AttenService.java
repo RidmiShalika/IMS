@@ -6,6 +6,7 @@
 package Atten.service;
 
 import Atten.bean.AttenBean;
+import Util.Config;
 import Util.HibernateInit;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -25,6 +26,7 @@ import mapping.ExtraClasses;
 import mapping.PaymentBillDetails;
 import mapping.Payments;
 import mapping.PendingPayments;
+import mapping.SmsDetails;
 import mapping.Student;
 import mapping.StudentCourse;
 import org.apache.struts2.ServletActionContext;
@@ -217,27 +219,6 @@ public class AttenService {
 
                 list.add(classaArray);
 
-//                StudentCourse studentCourse = (StudentCourse) i.next();
-//                Set<CourseDates> studentCoursesSet = studentCourse.getCourseId().getCourseDatesSet();
-//                List<CourseDates> siteIdList = new ArrayList<>(studentCoursesSet);
-//                
-//                if (day.equals("monday")) {
-//                    list.add(siteIdList.get(0).getMonday());
-////                    classArray[0] = studentCourse.getCourseId().getId().toString();
-////                    classArray[1] = studentCourse.getCourseId().getId().toString();
-//                } else if (day.equals("tueday")) {
-//                    list.add(siteIdList.get(0).getTueday());
-//                } else if (day.equals("wedday")) {
-//                    list.add(siteIdList.get(0).getWedday());
-//                } else if (day.equals("thurday")) {
-//                    list.add(siteIdList.get(0).getThurday());
-//                } else if (day.equals("friday")) {
-//                    list.add(siteIdList.get(0).getFriday());
-//                } else if (day.equals("satday")) {
-//                    list.add(siteIdList.get(0).getSatday());
-//                } else if (day.equals("sunday")) {
-//                    list.add(siteIdList.get(0).getSunday());
-//                }
             }
 
             //from extra class table
@@ -323,29 +304,31 @@ public class AttenService {
             }
 
             //attendance table ekta insert ekak wadina one ada apu class ekata adalawa
-            Date date1 = new Date();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd|HH:mm:ss");
-            String dd = sdf.format(date1);
-            String datTime[] = dd.split("\\|");
-            String dateonly[] = datTime[0].split("\\-");
+            if (!attenBean.getPaymentjsp().equals("0")) {
+                Date date1 = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd|HH:mm:ss");
+                String dd = sdf.format(date1);
+                String datTime[] = dd.split("\\|");
+                String dateonly[] = datTime[0].split("\\-");
 
-            if (!alreadyAtte(st_id, cid, datTime[0])) {
-                Attendence attendence = new Attendence();
-                attendence.setAtten(true);
-                attendence.setCompleteDate(new Date());
-                Course c2 = new Course();
-                c2.setId(cid);
-                attendence.setCourseId(c2);
-                Student s = new Student();
-                s.setSId(st_id);
-                attendence.setStudentId(s);
-                attendence.setDate(Integer.parseInt(dateonly[2]));
-                attendence.setDay(dateFormat.format(date).toLowerCase());
-                attendence.setMonth(Integer.parseInt(dateonly[1]));
-                attendence.setTime(datTime[1]);
-                attendence.setYear(Integer.parseInt(dateonly[0]));
-                attendence.setCompleteDate(new Date());
-                session.save(attendence);
+                if (!alreadyAtte(st_id, cid, datTime[0].trim())) {
+                    Attendence attendence = new Attendence();
+                    attendence.setAtten(true);
+                    attendence.setCompleteDate(new Date());
+                    Course c2 = new Course();
+                    c2.setId(cid);
+                    attendence.setCourseId(c2);
+                    Student s = new Student();
+                    s.setSId(st_id);
+                    attendence.setStudentId(s);
+                    attendence.setDate(Integer.parseInt(dateonly[2].trim()));
+                    attendence.setDay(dateFormat.format(date).toLowerCase());
+                    attendence.setMonth(Integer.parseInt(dateonly[1].trim()));
+                    attendence.setTime(datTime[1].trim());
+                    attendence.setYear(Integer.parseInt(dateonly[0].trim()));
+                    attendence.setCompleteDate(new Date());
+                    session.save(attendence);
+                }
             }
 
             //ada dawasata adala class eke lectuterge details load
@@ -438,6 +421,7 @@ public class AttenService {
 
     public void paymentdetails(AttenBean inputhbean) throws Exception {
         Session session = null;
+        String paymentSMS = "";
 
         try {
             session = HibernateInit.getSessionFactory().openSession();
@@ -445,13 +429,15 @@ public class AttenService {
 
             //generate bill ifd
             String bill_id_post = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+            
+            String Payment_SMS = " is paid for following class(es) on " + new SimpleDateFormat("YYYY-MM-dd").format(new Date()) + "-NLC-";
 
             String data[] = inputhbean.getSelected_data().split("\\,");
 
             for (int i = 0; i < data.length; i++) {
 
                 Criteria criteria = session.createCriteria(PendingPayments.class, "pendingpayments")
-                        .add(Restrictions.eq("pendingpayments.id", Integer.parseInt(data[i])))
+                        .add(Restrictions.eq("pendingpayments.id", Integer.parseInt(data[i].trim())))
                         .setProjection(Projections.distinct(Projections.projectionList()
                                 .add(Projections.property("pendingpayments.sid"))
                                 .add(Projections.property("pendingpayments.cid"))
@@ -488,6 +474,7 @@ public class AttenService {
                     }
 
                     String bill_id = studentid + "_" + bill_id_post;
+                    
 
                     StudentCourse scourse = (StudentCourse) session.createCriteria(StudentCourse.class, "sc")
                             .createAlias("sc.studentId", "sid")
@@ -497,6 +484,11 @@ public class AttenService {
                             .add(Restrictions.eq("sc.status", "ACT"))
                             .uniqueResult();
 
+                    //sms create
+                    paymentSMS = scourse.getStudentId().getSName() + Payment_SMS;
+                    
+                    
+                    
                     //insert payment table
                     Payments payments = new Payments();
 
@@ -541,24 +533,47 @@ public class AttenService {
                     PendingPayments refProfile = null;
                     String sql = "from PendingPayments wu where wu.id =:ID";
                     query = session.createQuery(sql);
-                    query.setInteger("ID", Integer.parseInt(data[i]));
+                    query.setInteger("ID", Integer.parseInt(data[i].trim()));
                     refProfile = (PendingPayments) query.uniqueResult();
                     if (refProfile != null) {
                         refProfile.setStatus("Completed");
 
                         session.update(refProfile);
                     }
+                    
+                    paymentSMS = paymentSMS + "Rs " + monthlyFee + " for " + scourse.getCourseId().getCourseDescription() + " Month of " + month + "-NLC-";
+                
                 }
-                session.getTransaction().commit();
+                
+                
             }
+            
+            // insert sms table
+            String mobileno = getmobileNo(inputhbean);
+             if (!"".equals(mobileno)) {
+                        boolean checkmobileno = validateMobileNo(mobileno.trim());
+                        if (checkmobileno) {
+                            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy HH:mm");
+                            Date date = new Date();
+                            insert_payment_SMS( paymentSMS,formatter.format(date).replace(" ", "+"), mobileno);
+                        }else{
+                            System.out.println("Mobile number validation fails");
+                        }
+
+                    }else{
+                        System.out.println("No mobile number");
+                    }
+             
+             session.getTransaction().commit();
 
         } catch (Exception e) {
+            e.printStackTrace();
             if (session != null) {
                 session.getTransaction().rollback();
                 session.close();
                 session = null;
             }
-            e.printStackTrace();
+            
         } finally {
             if (session != null) {
                 session.flush();
@@ -692,6 +707,179 @@ public class AttenService {
             }
         }
         return courseid;
+    }
+
+    public boolean IS_First_Entrence() throws Exception {
+        boolean count = true;
+        Session session = null;
+        try {
+            DateFormat dateFormat2 = new SimpleDateFormat("YYYY-MM-dd");
+            String dateattendence2 = dateFormat2.format(new Date());
+
+            session = HibernateInit.getSessionFactory().openSession();
+            session.beginTransaction();
+
+            HttpSession sess = ServletActionContext.getRequest().getSession(false);
+            int st_id = (int) sess.getAttribute("stcourselist");
+
+            Criteria criteria = session.createCriteria(Attendence.class, "at")
+                    .createAlias("at.studentId", "st")
+                    .add(Restrictions.eq("at.atten", true))
+                    .add(Restrictions.eq("at.completeDate", new Date()))
+                    .add(Restrictions.eq("st.sId", st_id));
+
+            Iterator iterator = criteria.list()
+                    .iterator();
+            if (iterator.hasNext()) {
+                count = false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public String getmobileNo(AttenBean inputbean) throws Exception {
+        String mobileno = "";
+        Session session = null;
+        try {
+
+            session = HibernateInit.getSessionFactory().openSession();
+            session.beginTransaction();
+
+            HttpSession sess = ServletActionContext.getRequest().getSession(false);
+            int st_id = (int) sess.getAttribute("stcourselist");
+
+            Criteria criteria = session.createCriteria(Student.class, "st")
+                    .add(Restrictions.eq("st.sId", st_id));
+
+            Iterator iterator = criteria.list()
+                    .iterator();
+            while (iterator.hasNext()) {
+                Student s = (Student) iterator.next();
+                mobileno = s.getSParentContactNo();
+                if (s.getSGender().equals("1")) {
+                    inputbean.setStudent_gender("son");
+                } else if (s.getSGender().equals("2")) {
+                    inputbean.setStudent_gender("daughter");
+                }
+                inputbean.setStudent_name(s.getSName());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return mobileno;
+    }
+
+    public int insert_arrive_SMS(String title, String Name, String time, String mobile) {
+        String new_body = Config.SMS_Genaral_attendance;
+        int x = 0;
+        time = time.replace(":", "%3A");
+        new_body = new_body.replace("<TITLE>", title);
+        new_body = new_body.replace("<NAME>", Name);
+        new_body = new_body.replace("<TIME>", time);
+
+        Session session = null;
+
+        try {
+            HttpSession sess = ServletActionContext.getRequest().getSession(false);
+            int st_id = (int) sess.getAttribute("stcourselist");
+
+            session = HibernateInit.getSessionFactory().openSession();
+            session.beginTransaction();
+
+            SmsDetails smsDetails = new SmsDetails();
+            smsDetails.setSId(st_id + "");
+            smsDetails.setBody(new_body);
+            smsDetails.setCreatedDate(time);
+            smsDetails.setMobile(mobile);
+            smsDetails.setRetryAttempts(0);
+            smsDetails.setStatus(0);
+
+            session.save(smsDetails);
+            session.getTransaction().commit();
+            x = 1;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            throw ex;
+        } finally {
+            if (session != null) {
+                session.flush();
+                session.clear();
+                session.close();
+                session = null;
+            }
+        }
+        return x;
+    }
+    public boolean validateMobileNo(String parentContactNo) throws Exception {
+        boolean status = false;
+        try {
+
+            if (parentContactNo.length() == 9) {
+                parentContactNo = "0" + parentContactNo;
+            }
+            if (parentContactNo.matches("[0-9]+") && parentContactNo.length() == 10) {
+                String prefix = parentContactNo.trim().substring(0, 3);
+                if (prefix.equals("070") || prefix.equals("071") || prefix.equals("072") || prefix.equals("075") || prefix.equals("076") || prefix.equals("077") || prefix.equals("078")) {
+                    status = true;
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return status;
+    }
+    public int insert_payment_SMS(String body,String time, String mobile) {
+        int x = 0;
+        Session session = null;
+        time = time.replace(":", "%3A");
+
+        try {
+            HttpSession sess = ServletActionContext.getRequest().getSession(false);
+            int st_id = (int) sess.getAttribute("stcourselist");
+
+            session = HibernateInit.getSessionFactory().openSession();
+            session.beginTransaction();
+
+            SmsDetails smsDetails = new SmsDetails();
+            smsDetails.setSId(st_id + "");
+            smsDetails.setBody(body);
+            smsDetails.setCreatedDate(time);
+            smsDetails.setMobile(mobile);
+            smsDetails.setRetryAttempts(0);
+            smsDetails.setStatus(0);
+
+            session.save(smsDetails);
+            session.getTransaction().commit();
+            x = 1;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            throw ex;
+        } finally {
+            if (session != null) {
+                session.flush();
+                session.clear();
+                session.close();
+                session = null;
+            }
+        }
+        return x;
     }
 
 }

@@ -26,7 +26,7 @@ import javax.validation.constraints.Size;
  * @author Ridmi Shalika
  */
 @Entity
-@Table(name = "pending_payments", catalog = "institute_management", schema = "")
+@Table(name = "pending_payments", schema = "")
 @NamedQueries({
     @NamedQuery(name = "PendingPayments.findAll", query = "SELECT p FROM PendingPayments p")})
 public class PendingPayments implements Serializable {
