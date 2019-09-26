@@ -24,7 +24,12 @@
                         dataType: "json",
                         type: "POST",
                         success: function (data) {
-                            window.location.href = "${pageContext.request.contextPath}/pages/payment/payment.jsp";
+                           
+                            if(data.ismismatch === true){
+                                 window.location.href = "${pageContext.request.contextPath}/pages/payment/payment.jsp";
+                            }else{
+                                alert("Student id or card number mismatch");
+                            }
                         },
                         error: function (data) {
                         }

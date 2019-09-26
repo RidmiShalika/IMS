@@ -13,7 +13,7 @@
     <head>
         <%--<sj:head jqueryui="true" jquerytheme="redmond" />--%>
         <jsp:include page="/Styles.jsp" />
-
+        
         <style>
             .buttonS {
                 color: white;
@@ -95,7 +95,9 @@
                 return "<a href='#' onClick='javascript:editNow(&#34;" + cellvalue + "&#34;)'><img src ='${pageContext.request.contextPath}/resources/images/iconEdit.png' /></a>";
             }
             function editNow(keyval) {
+                $('#divmsg').empty()
                 $('#updateForm').show();
+                
                 var text = ' Edit User';
 
                 $.ajax({
@@ -104,7 +106,7 @@
                     dataType: "json",
                     type: "POST",
                     success: function (data) {
-                        
+
 
                         $('#searchForm').hide();
                         $('#addForm').hide();
@@ -120,7 +122,7 @@
                         $('#upparentContactNo').val(data.upparentContactNo);
                         $('#upcardno').val(data.upcardno);
                         $('#upId').val(data.upId);
-//                        alert($('#upId').val());
+                         document.getElementById("viewImage").src = "" + data.viewImage;
 
                     },
                     error: function (data) {
@@ -273,7 +275,7 @@
                                                     <td><s:textfield id="cardno" name="cardno" cssClass="textField" /></td>                                    
                                                     <td width="25px;"></td>
                                                     <td>
-                                                        <%-- <s:file  id = "addimage" name="addimage" label="File" cssClass="fileField" cssStyle="font-size : 14px"/> --%>
+                                                        <s:file  id = "addimage" name="addimage" label="File" cssClass="fileField" cssStyle="font-size : 14px"/> 
                                                 </tr>
                 
                                             </table>
@@ -289,7 +291,8 @@
                                     </tr>
                                 </table>
                             </s:form>
-                            <s:form  id="updateForm"  theme="simple" method="post"  cssStyle="display:none">
+                            
+                            <s:form  id="updateForm"  theme="simple" method="post" enctype="multipart/form-data" cssStyle="display:none">
                                 <table >
                                     <tr>
                                         <s:hidden id="upId" name="upId"/>
@@ -333,9 +336,19 @@
                                         <td class="formLable">Card No</td> <td >:</td>
                                         <td><s:textfield id="upcardno" name="upcardno" cssClass="textField" /></td>                                    
                                         <td width="25px;"></td>
+                                       
+                                                    
                                     </tr>
+                                    <tr>
+                                        <td class="formLable">Image</td> <td >:</td>
+                                        <td><img width="150" height="100" src="" id="viewImage" name="viewImage"></td>   
+                                        <td><s:file  id = "upimage" name="upimage" label="File" cssClass="fileField" cssStyle="font-size : 14px"/>
+                                        <td width="25px;"></td>
+                                    </tr>
+                                    
 
                                 </table>
+                                        
                                 <table>
                                     <tr>
                                         <td>
@@ -403,7 +416,8 @@
                                     viewrecords="true"
                                     >
 
-                                    <sjg:gridColumn name="sId" index="sId" title="StudentId" hidden="true"/>
+                                     <sjg:gridColumn name="sId" index="sId" title="Assign Course" formatter="assignformatter" align="center"/>
+                                    <sjg:gridColumn name="sId" index="sId" title="StudentId" hidden="show"/>
                                     <sjg:gridColumn name="sName" index="sName" title="Name" />
                                     <sjg:gridColumn name="sDob" index="sDob" title="Birthday" />
                                     <sjg:gridColumn name="sAddress" index="sAddress" title="Address" />
@@ -418,7 +432,6 @@
                                     <sjg:gridColumn name="sNic" index="sNic" title="NIC" />
                                     <sjg:gridColumn name="cardNumber" index="cardNumber" title="Card No" />
                                     <sjg:gridColumn name="sId" index="sId" title="Edit" formatter="editformatter" align="center"/>
-                                    <sjg:gridColumn name="sId" index="sId" title="Assign Course" formatter="assignformatter" align="center"/>
                                     <sjg:gridColumn name="sId" index="sId" title="Pay Admission" formatter="admissionformatter" align="center"/>
 
                                 </sjg:grid> 

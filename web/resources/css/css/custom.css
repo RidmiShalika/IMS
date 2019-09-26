@@ -49,26 +49,26 @@ code {
     font-size: 80%;
 }
 .topborder{
-    /*background-image: url(../../newimages/bannerbar1.png);*/
+    background-image: url(../../newimages/bannerbar1.png);
     height: 19px;
     background-size: 100%;
 }
 
 .logo-custom {
-    /*background-image: url(../../newimages/logo.png);*/
+    background-image: url(../../newimages/logo.png);
     background-repeat: no-repeat;
     height:68px;
     margin-top: 11px;
 }
 .logo-left {
-    /*background-image: url(../../newimages/aub.png);*/
+    background-image: url(../../newimages/aub.png);
     background-repeat: no-repeat;
     height:73px;
     margin-top: 7px;
 }
 .main-left {
     background-size: 100%;
-    /*background-image: url(../../newimages/bank.jpg);*/
+    background-image: url(../../newimages/bank.jpg);
     background-repeat: no-repeat;    
     padding-top: 10%;
     height:414px;

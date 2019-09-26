@@ -15,4 +15,7 @@ public class Config {
     public static String SMS_course_attendance =  "Nikasha+SMS+Alert-NLC-Name+:+<NAME>-NLC-Course+:+<COURSE>-NLC-Status+:+Attend-NLC-In+Time+:+<IN_TIME>-NLC-Out+Time+:+<OUT_TIME>.";
     public static String SMS_Genaral_not_attendance = "Nikasha+SMS+Alert-NLC-Name+:+<NAME>-NLC-Course+:+<COURSE>-NLC-Status+:+NOT+Attend."; 
     
+    
+    public static final int cardnoLength = 10;
+    public static final int studentIdLength = 5;
 }

@@ -233,13 +233,25 @@ public class AttenService {
             while (i1.hasNext()) {
                 ExtraClasses extraClasses = (ExtraClasses) i1.next();
 
-                String[] exclassaArray = new String[3];
+                Criteria cc = session.createCriteria(StudentCourse.class, "stc")
+                        .createAlias("stc.studentId", "st")
+                        .createAlias("stc.courseId", "c")
+                        .add(Restrictions.eq("st.sId", st_id))
+                        .add(Restrictions.eq("c.id", extraClasses.getCourseId().getId()))
+                        .add(Restrictions.eq("stc.status", "ACT"));
+                Iterator i11 = cc.list()
+                        .iterator();
+                if (i11.hasNext()) {
+                   
+                    String[] exclassaArray = new String[3];
 
-                exclassaArray[0] = extraClasses.getCourseId().getId().toString();
-                exclassaArray[1] = extraClasses.getStartTime() + "-" + extraClasses.getEndTime();
-                exclassaArray[2] = "Extra";
+                    exclassaArray[0] = extraClasses.getCourseId().getId().toString();
+                    exclassaArray[1] = extraClasses.getStartTime() + "-" + extraClasses.getEndTime();
+                    exclassaArray[2] = "Extra";
 
-                list.add(exclassaArray);
+                    list.add(exclassaArray);
+                }
+
             }
 
 //            Set<String> set = new HashSet<>(list);
@@ -429,7 +441,7 @@ public class AttenService {
 
             //generate bill ifd
             String bill_id_post = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-            
+
             String Payment_SMS = " is paid for following class(es) on " + new SimpleDateFormat("YYYY-MM-dd").format(new Date()) + "-NLC-";
 
             String data[] = inputhbean.getSelected_data().split("\\,");
@@ -474,7 +486,6 @@ public class AttenService {
                     }
 
                     String bill_id = studentid + "_" + bill_id_post;
-                    
 
                     StudentCourse scourse = (StudentCourse) session.createCriteria(StudentCourse.class, "sc")
                             .createAlias("sc.studentId", "sid")
@@ -486,9 +497,7 @@ public class AttenService {
 
                     //sms create
                     paymentSMS = scourse.getStudentId().getSName() + Payment_SMS;
-                    
-                    
-                    
+
                     //insert payment table
                     Payments payments = new Payments();
 
@@ -540,31 +549,30 @@ public class AttenService {
 
                         session.update(refProfile);
                     }
-                    
+
                     paymentSMS = paymentSMS + "Rs " + monthlyFee + " for " + scourse.getCourseId().getCourseDescription() + " Month of " + month + "-NLC-";
-                
+
                 }
-                
-                
+
             }
-            
+
             // insert sms table
             String mobileno = getmobileNo(inputhbean);
-             if (!"".equals(mobileno)) {
-                        boolean checkmobileno = validateMobileNo(mobileno.trim());
-                        if (checkmobileno) {
-                            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy HH:mm");
-                            Date date = new Date();
-                            insert_payment_SMS( paymentSMS,formatter.format(date).replace(" ", "+"), mobileno);
-                        }else{
-                            System.out.println("Mobile number validation fails");
-                        }
+            if (!"".equals(mobileno)) {
+                boolean checkmobileno = validateMobileNo(mobileno.trim());
+                if (checkmobileno) {
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy HH:mm");
+                    Date date = new Date();
+                    insert_payment_SMS(paymentSMS, formatter.format(date).replace(" ", "+"), mobileno);
+                } else {
+                    System.out.println("Mobile number validation fails");
+                }
 
-                    }else{
-                        System.out.println("No mobile number");
-                    }
-             
-             session.getTransaction().commit();
+            } else {
+                System.out.println("No mobile number");
+            }
+
+            session.getTransaction().commit();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -573,7 +581,7 @@ public class AttenService {
                 session.close();
                 session = null;
             }
-            
+
         } finally {
             if (session != null) {
                 session.flush();
@@ -818,6 +826,7 @@ public class AttenService {
         }
         return x;
     }
+
     public boolean validateMobileNo(String parentContactNo) throws Exception {
         boolean status = false;
         try {
@@ -839,7 +848,8 @@ public class AttenService {
         }
         return status;
     }
-    public int insert_payment_SMS(String body,String time, String mobile) {
+
+    public int insert_payment_SMS(String body, String time, String mobile) {
         int x = 0;
         Session session = null;
         time = time.replace(":", "%3A");
@@ -880,6 +890,44 @@ public class AttenService {
             }
         }
         return x;
+    }
+
+    public int getSIDusibgCardNo(String cardno) throws Exception {
+        Session session = null;
+        int sid = 0;
+
+        try {
+            session = HibernateInit.getSessionFactory().openSession();
+            session.beginTransaction();
+
+            Criteria criteria = session.createCriteria(Student.class, "st")
+                    .add(Restrictions.eq("st.cardNumber", cardno.trim()));
+
+            Iterator iterator = criteria.list()
+                    .iterator();
+
+            while (iterator.hasNext()) {
+                Student student = (Student) iterator.next();
+                sid = student.getSId();
+            }
+
+        } catch (Exception e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.flush();
+                session.clear();
+                session.getTransaction().commit();
+                session.close();
+                session = null;
+            }
+        }
+        return sid;
     }
 
 }

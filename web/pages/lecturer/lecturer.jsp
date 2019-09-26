@@ -69,6 +69,7 @@
 
                 $('#updateForm').show();
                 $('#searchForm').hide();
+                $('#divmsg').empty();
 
                 var text = ' Edit User';
 

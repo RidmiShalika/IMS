@@ -28,7 +28,12 @@
                         dataType: "json",
                         type: "POST",
                         success: function (data) {
-                            window.location.href = "${pageContext.request.contextPath}/pages/atten/atte.jsp";
+                            if(data.ismismatch === true){
+                                window.location.href = "${pageContext.request.contextPath}/pages/atten/atte.jsp";
+                            }else{
+                                alert("Student id or card number mismatch");
+                            }
+                            
                         },
                         error: function (data) {
                         }

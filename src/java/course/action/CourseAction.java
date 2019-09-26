@@ -234,7 +234,7 @@ public class CourseAction extends ActionSupport implements ModelDriven<CourseBea
          if(inputbean.getUpcourseDescription() == null || inputbean.getUpcourseDescription().isEmpty()){
              addActionError("Description can not be empty");
              ok = false;
-         }else if(service.checkdublicateDes(inputbean)){
+         }else if(service.upcheckdublicateDes(inputbean)){
              addActionError("Course description already defined");
              ok = false;
         }else if(inputbean.getUplecturer().equals("-1")){
@@ -380,6 +380,7 @@ public class CourseAction extends ActionSupport implements ModelDriven<CourseBea
          try {
              System.out.println("s>>>>>> "+inputbean.getSelecteddata());
              service.stopClassess(inputbean);
+             service.insertsms(inputbean);
          } catch (Exception e) {
              e.printStackTrace();
          }
@@ -387,7 +388,7 @@ public class CourseAction extends ActionSupport implements ModelDriven<CourseBea
      }
      public String findstopclases(){
          try {
-             System.out.println("s>>>>>> "+inputbean.getFselecteddata());
+            
              if(service.findstopClassess(inputbean)){
                  System.out.println("success "+inputbean.getHcid()+" , "+inputbean.getHcendtime());
              }
