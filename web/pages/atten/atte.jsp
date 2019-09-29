@@ -18,21 +18,23 @@
                     dataType: "json",
                     type: "GET",
                     success: function (data) {
-                        $('#name').val(data.name);
-                        $('#regID').val(data.regID);
-                        $('#school').val(data.school);
-                        $('#regDate').val(data.regDate);
-                        $('#addcardType').val(data.addcardType);
-                        $('#addpayments').val(data.addpayments);
-
-                        $('#lname').val(data.lname);
-                        $('#crdType').val(data.crdType);
-                        $('#time').val(data.time);
-                        $('#courseId').val(data.courseId);
-                        $('#extra_normal').val(data.extra_normal);
-                        
-                        $('#testid').val(data.attandance_history);
-                        $('#phisid').val(data.payment_history);
+                        if(data.error=='NO'){
+                            $('#name').val(data.name);
+                            $('#regID').val(data.regID);
+                            $('#school').val(data.school);
+                            $('#regDate').val(data.regDate);
+                            $('#addcardType').val(data.addcardType);
+                            $('#addpayments').val(data.addpayments);
+                            $('#lname').val(data.lname);
+                            $('#crdType').val(data.crdType);
+                            $('#time').val(data.time);
+                            $('#courseId').val(data.courseId);
+                            $('#extra_normal').val(data.extra_normal);
+                            $('#testid').val(data.attandance_history);
+                            $('#phisid').val(data.payment_history);
+                    }else{
+                        alert("NO Match Found")
+                    }
                     },
                     error: function (data) {
 
