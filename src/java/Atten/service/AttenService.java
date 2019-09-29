@@ -499,8 +499,9 @@ public class AttenService {
                             .uniqueResult();
 
                     //sms create
+                    if(i==0){
                     paymentSMS = scourse.getStudentId().getSName() + Payment_SMS;
-
+                    }
                     //insert payment table
                     Payments payments = new Payments();
 

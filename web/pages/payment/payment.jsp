@@ -74,10 +74,10 @@
                     success: function (data) {
                         alert("Payment Successfully Completed");
                         jQuery("#gridtable").trigger("reloadGrid");
-                        alert("data.hiddBillid "+data.hiddBillid);
+//                        alert("data.hiddBillid "+data.hiddBillid);
                         
-                        $('#hiddBillid').val(data.hiddBillid);
-                        $('#downloadbut').click();
+//                        $('#hiddBillid').val(data.hiddBillid);
+//                        $('#downloadbut').click();
                         
 
                     },
