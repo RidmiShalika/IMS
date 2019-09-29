@@ -145,7 +145,7 @@ public class AttenService {
 
             HttpSession sess = ServletActionContext.getRequest().getSession(false);
             int st_id = (int) sess.getAttribute("stcourselist");
-
+            attenBean.setError("NO");
             //load student details
             Iterator it = session.createCriteria(StudentCourse.class, "studentcourse")
                     .createAlias("studentcourse.studentId", "st")
@@ -242,7 +242,7 @@ public class AttenService {
                 Iterator i11 = cc.list()
                         .iterator();
                 if (i11.hasNext()) {
-                   
+
                     String[] exclassaArray = new String[3];
 
                     exclassaArray[0] = extraClasses.getCourseId().getId().toString();
@@ -258,7 +258,9 @@ public class AttenService {
 //            list.clear();
 //            list.addAll(set);
             int selected_index = -1;
-            if (list.size() == 1) {
+            if (list.size() == 0 && attenBean.getPaymentjsp().equals("1")) {
+                attenBean.setError("YES");
+            } else if (list.size() == 1) {
 //                return list.get(0);
                 selected_index = 0;
             } else {
@@ -295,84 +297,84 @@ public class AttenService {
             String[] outList = new String[3];
             if (selected_index > -1) {
                 outList = list.get(selected_index);
-            }
 
 //            int cid = 8;
-            int cid = Integer.parseInt(outList[0]);
-            attenBean.setCid(cid + "");
-            //class ekata related payment status eka gannwa me current mmonth ekata payment table eken
-            Criteria c1 = session.createCriteria(Payments.class, "payment")
-                    .createAlias("payment.studentId", "sid")
-                    .createAlias("payment.courseId", "cid")
-                    .add(Restrictions.eq("sid.sId", st_id))
-                    .add(Restrictions.eq("cid.id", cid));
-            Iterator i2 = c1.list().iterator();
+                int cid = Integer.parseInt(outList[0]);
+                attenBean.setCid(cid + "");
+                //class ekata related payment status eka gannwa me current mmonth ekata payment table eken
+                Criteria c1 = session.createCriteria(Payments.class, "payment")
+                        .createAlias("payment.studentId", "sid")
+                        .createAlias("payment.courseId", "cid")
+                        .add(Restrictions.eq("sid.sId", st_id))
+                        .add(Restrictions.eq("cid.id", cid));
+                Iterator i2 = c1.list().iterator();
 
-            attenBean.setAddpayments("NO");
-            while (i2.hasNext()) {
-                Payments p = (Payments) i2.next();
+                attenBean.setAddpayments("NO");
+                while (i2.hasNext()) {
+                    Payments p = (Payments) i2.next();
 
-                attenBean.setAddpayments("YES");
-            }
-
-            //attendance table ekta insert ekak wadina one ada apu class ekata adalawa
-            if (!attenBean.getPaymentjsp().equals("0")) {
-                Date date1 = new Date();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd|HH:mm:ss");
-                String dd = sdf.format(date1);
-                String datTime[] = dd.split("\\|");
-                String dateonly[] = datTime[0].split("\\-");
-
-                if (!alreadyAtte(st_id, cid, datTime[0].trim())) {
-                    Attendence attendence = new Attendence();
-                    attendence.setAtten(true);
-                    attendence.setCompleteDate(new Date());
-                    Course c2 = new Course();
-                    c2.setId(cid);
-                    attendence.setCourseId(c2);
-                    Student s = new Student();
-                    s.setSId(st_id);
-                    attendence.setStudentId(s);
-                    attendence.setDate(Integer.parseInt(dateonly[2].trim()));
-                    attendence.setDay(dateFormat.format(date).toLowerCase());
-                    attendence.setMonth(Integer.parseInt(dateonly[1].trim()));
-                    attendence.setTime(datTime[1].trim());
-                    attendence.setYear(Integer.parseInt(dateonly[0].trim()));
-                    attendence.setCompleteDate(new Date());
-                    session.save(attendence);
+                    attenBean.setAddpayments("YES");
                 }
-            }
 
-            //ada dawasata adala class eke lectuterge details load
-            Criteria c3 = session.createCriteria(StudentCourse.class, "stcr")
-                    .createAlias("stcr.studentId", "stu")
-                    .createAlias("stcr.courseId", "crs")
-                    .add(Restrictions.eq("stu.sId", st_id))
-                    .add(Restrictions.eq("crs.id", cid))
-                    .add(Restrictions.eq("stcr.status", "ACT"));
+                //attendance table ekta insert ekak wadina one ada apu class ekata adalawa
+                if (!attenBean.getPaymentjsp().equals("0")) {
+                    Date date1 = new Date();
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd|HH:mm:ss");
+                    String dd = sdf.format(date1);
+                    String datTime[] = dd.split("\\|");
+                    String dateonly[] = datTime[0].split("\\-");
 
-            Iterator i3 = c3.list().iterator();
-            while (i3.hasNext()) {
-                StudentCourse studentCourse = (StudentCourse) i3.next();
-
-                attenBean.setLname(studentCourse.getCourseId().getLectureId().getName());
-                if (studentCourse.getCourseId().getClassType() == 1) {
-                    attenBean.setExtra_normal("Theory Class");
-                } else if (studentCourse.getCourseId().getClassType() == 2) {
-                    attenBean.setExtra_normal("Revision Class");
-                } else if (studentCourse.getCourseId().getClassType() == 3) {
-                    attenBean.setExtra_normal("Paper Class");
+                    if (!alreadyAtte(st_id, cid, datTime[0].trim())) {
+                        Attendence attendence = new Attendence();
+                        attendence.setAtten(true);
+                        attendence.setCompleteDate(new Date());
+                        Course c2 = new Course();
+                        c2.setId(cid);
+                        attendence.setCourseId(c2);
+                        Student s = new Student();
+                        s.setSId(st_id);
+                        attendence.setStudentId(s);
+                        attendence.setDate(Integer.parseInt(dateonly[2].trim()));
+                        attendence.setDay(dateFormat.format(date).toLowerCase());
+                        attendence.setMonth(Integer.parseInt(dateonly[1].trim()));
+                        attendence.setTime(datTime[1].trim());
+                        attendence.setYear(Integer.parseInt(dateonly[0].trim()));
+                        attendence.setCompleteDate(new Date());
+                        session.save(attendence);
+                    }
                 }
-                attenBean.setCourseId(studentCourse.getCourseId().getCourseDescription());
-                if (studentCourse.getCardType() == 1) {
-                    attenBean.setCrdType("Normal Card");
-                } else if (studentCourse.getCardType() == 2) {
-                    attenBean.setCrdType("Half Card");
-                } else if (studentCourse.getCardType() == 3) {
-                    attenBean.setCrdType("Free Card");
-                }
-                attenBean.setCrdType(day);
 
+                //ada dawasata adala class eke lectuterge details load
+                Criteria c3 = session.createCriteria(StudentCourse.class, "stcr")
+                        .createAlias("stcr.studentId", "stu")
+                        .createAlias("stcr.courseId", "crs")
+                        .add(Restrictions.eq("stu.sId", st_id))
+                        .add(Restrictions.eq("crs.id", cid))
+                        .add(Restrictions.eq("stcr.status", "ACT"));
+
+                Iterator i3 = c3.list().iterator();
+                while (i3.hasNext()) {
+                    StudentCourse studentCourse = (StudentCourse) i3.next();
+
+                    attenBean.setLname(studentCourse.getCourseId().getLectureId().getName());
+                    if (studentCourse.getCourseId().getClassType() == 1) {
+                        attenBean.setExtra_normal("Theory Class");
+                    } else if (studentCourse.getCourseId().getClassType() == 2) {
+                        attenBean.setExtra_normal("Revision Class");
+                    } else if (studentCourse.getCourseId().getClassType() == 3) {
+                        attenBean.setExtra_normal("Paper Class");
+                    }
+                    attenBean.setCourseId(studentCourse.getCourseId().getCourseDescription());
+                    if (studentCourse.getCardType() == 1) {
+                        attenBean.setCrdType("Normal Card");
+                    } else if (studentCourse.getCardType() == 2) {
+                        attenBean.setCrdType("Half Card");
+                    } else if (studentCourse.getCardType() == 3) {
+                        attenBean.setCrdType("Free Card");
+                    }
+                    attenBean.setCrdType(day);
+
+                }
             }
 
         } catch (Exception e) {
@@ -441,8 +443,7 @@ public class AttenService {
 
             //generate bill ifd
             String bill_id_post = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-            
-            
+
             inputhbean.setHiddBillid("testbillid");
 
             String Payment_SMS = " is paid for following class(es) on " + new SimpleDateFormat("YYYY-MM-dd").format(new Date()) + "-NLC-";
@@ -488,7 +489,7 @@ public class AttenService {
 
                     }
 
-                        String bill_id = studentid + "_" + bill_id_post;
+                    String bill_id = studentid + "_" + bill_id_post;
 
                     StudentCourse scourse = (StudentCourse) session.createCriteria(StudentCourse.class, "sc")
                             .createAlias("sc.studentId", "sid")
@@ -499,8 +500,8 @@ public class AttenService {
                             .uniqueResult();
 
                     //sms create
-                    if(i==0){
-                    paymentSMS = scourse.getStudentId().getSName() + Payment_SMS;
+                    if (i == 0) {
+                        paymentSMS = scourse.getStudentId().getSName() + Payment_SMS;
                     }
                     //insert payment table
                     Payments payments = new Payments();
@@ -575,8 +576,6 @@ public class AttenService {
             } else {
                 System.out.println("No mobile number");
             }
-            
-            
 
             session.getTransaction().commit();
 
