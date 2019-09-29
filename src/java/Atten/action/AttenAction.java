@@ -96,11 +96,11 @@ public class AttenAction extends ActionSupport implements ModelDriven<AttenBean>
             System.out.println("is payment jsp : " + inputBean.getPaymentjsp());
             boolean istrue = false;
 
-            if (inputBean.getAttenid().length() == Config.cardnoLength) {
+//            if (inputBean.getAttenid().length() == Config.cardnoLength) {
+//                istrue = true;
+//            } else if (inputBean.getAttenid().length() == Config.studentIdLength) {
                 istrue = true;
-            } else if (inputBean.getAttenid().length() == Config.studentIdLength) {
-                istrue = true;
-            }
+//            }
 
             if (istrue) {
                 inputBean.setIsmismatch(istrue);
