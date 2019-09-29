@@ -103,7 +103,8 @@ public class AttenService {
                             databean.setCid(c.getCourseDescription());
                         }
                         
-                    } catch (NullPointerException e) {
+                    } catch (Exception e) {
+                        e.printStackTrace();
                         databean.setCid("--");
                     }
                     try {
