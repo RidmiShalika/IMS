@@ -92,7 +92,17 @@ public class AttenService {
                         databean.setSid("--");
                     }
                     try {
-                        databean.setCid(objBean.getCid() + "");
+                        String sqlSearch1 = "from Course p where p.id =:id";
+                        Query querySearch1 = session.createQuery(sqlSearch1);
+                        querySearch1.setInteger("id", objBean.getCid());
+
+                        Iterator it1 = querySearch1.iterate();
+                        while (it1.hasNext()) {
+                            Course c = (Course) it1.next();
+                            
+                            databean.setCid(c.getCourseDescription());
+                        }
+                        
                     } catch (NullPointerException e) {
                         databean.setCid("--");
                     }
