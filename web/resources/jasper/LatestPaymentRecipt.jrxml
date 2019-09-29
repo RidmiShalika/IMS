@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LatestPaymentRecipt" language="groovy" pageWidth="229" pageHeight="2834" columnWidth="213" leftMargin="8" rightMargin="8" topMargin="2" bottomMargin="2" uuid="e529bb86-40ca-411a-acfe-dbaf9419729b">
+	<property name="ireport.zoom" value="1.464100000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="bill_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select pbd.*,(select s_name from student where s_id = pbd.s_id )s_name,(select course_description from course where course_id = pbd.course_id)course_dis from payment_bill_details pbd where pbd.bill_id=$P{bill_id}]]>
+	</queryString>
+	<field name="line_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bill_id" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="course_id" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bill_amount" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="payment_month" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="comments" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="s_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="card_type" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="created_time" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="issued_by" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="s_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="course_dis" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="113">
+			<rectangle>
+				<reportElement x="3" y="67" width="190" height="42" uuid="85dc5caa-d1e4-4351-a457-6bfcf800a723"/>
+				<graphicElement>
+					<pen lineWidth="0.75" lineStyle="Dashed"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="3" y="71" width="46" height="11" uuid="84c231fd-78e8-483e-84fe-9cd0064c2add"/>
+				<textElement>
+					<font fontName="Cambria" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reg ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="82" width="46" height="11" uuid="a4195a4a-b5a2-4811-9beb-a723d6e36802"/>
+				<textElement>
+					<font fontName="Cambria" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="93" width="46" height="11" uuid="c85e1ac4-8bb7-43ac-83e7-7e94f2def449"/>
+				<textElement>
+					<font fontName="Cambria" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bill Date]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="56" y="93" width="100" height="11" uuid="8348c44e-ca2f-4c3d-903e-584a00994795"/>
+				<textElement>
+					<font fontName="Cambria" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{created_time}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="56" y="71" width="100" height="11" uuid="3442043b-534e-42af-a7dd-5e05f343097d"/>
+				<textElement>
+					<font fontName="Cambria" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{s_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="56" y="82" width="129" height="11" uuid="d9b818f8-4855-4af4-8d5e-ce4298d6d326"/>
+				<textElement>
+					<font fontName="Cambria" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{s_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="49" y="71" width="8" height="11" uuid="a86155dc-f57a-45eb-a445-8ec50f1a2032"/>
+				<textElement textAlignment="Left">
+					<font fontName="Cambria" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="82" width="8" height="11" uuid="0d2cf93f-d2fb-4adf-b196-d3c9644b8948"/>
+				<textElement textAlignment="Left">
+					<font fontName="Cambria" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="93" width="8" height="11" uuid="91b90628-1bc1-4209-95d9-c3456a2506b4"/>
+				<textElement textAlignment="Left">
+					<font fontName="Cambria" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="29" width="189" height="15" forecolor="#000000" uuid="95e4a869-4597-4337-b9af-041ca7a00537"/>
+				<textElement textAlignment="Center">
+					<font fontName="Cambria" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Higher Educational Institute]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="45" width="189" height="19" forecolor="#000000" uuid="d04c8748-4860-40ff-8c53-75f53e85642e"/>
+				<textElement textAlignment="Center">
+					<font fontName="Cambria" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Payment Receipt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="0" width="189" height="37" forecolor="#000000" uuid="1136888f-6ae8-489d-b847-29eb60378ef6"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Cambria" size="30" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nikasha]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="46" splitType="Stretch">
+			<textField>
+				<reportElement x="53" y="16" width="78" height="11" uuid="bcf723c4-cfe8-4123-8565-f2cb4ae93e08"/>
+				<textElement>
+					<font fontName="Cambria" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{payment_month}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="53" y="29" width="75" height="11" uuid="dabace10-f05d-4e62-af37-9fe105c382c9"/>
+				<textElement>
+					<font fontName="Cambria" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bill_amount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="14" y="4" width="33" height="11" uuid="6c4bc8c9-1072-441e-a9f2-b1bd128e8aae"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Cambria" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Course]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="16" width="33" height="11" uuid="a9f8c14d-83c8-462a-86d8-2bb7a9fe365d"/>
+				<textElement textAlignment="Right">
+					<font fontName="Cambria" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Month]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="29" width="33" height="11" uuid="871445dc-e361-4c19-a6db-1f1791700b12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Cambria" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="53" y="4" width="153" height="11" uuid="2e0e1e59-e99e-4c1e-91f9-b0ddd51bd930"/>
+				<textElement>
+					<font fontName="Cambria" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{course_dis}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="40">
+			<staticText>
+				<reportElement x="3" y="13" width="189" height="11" uuid="e153f47d-e955-4598-9397-f98bb304cac0"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Cambria" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Please Settle the Class fee within first two weeks]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="25" width="189" height="11" uuid="5fb8f3c8-efcf-4a76-8927-72d9d5925f7c"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Cambria" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[~Thank You~]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="2" width="44" height="11" uuid="21a5d08d-f5bd-416e-8412-5d508117fc37"/>
+				<textElement textAlignment="Left">
+					<font fontName="Cambria" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Issued By]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="53" y="2" width="78" height="11" uuid="97a8208d-ba44-4b45-920f-5f451d2bf421"/>
+				<textElement textAlignment="Left">
+					<font fontName="Cambria" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{issued_by}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

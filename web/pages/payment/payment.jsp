@@ -30,7 +30,7 @@
                         $('#time').val(data.time);
                         $('#courseId').val(data.courseId);
                         $('#extra_normal').val(data.extra_normal);
-                        
+
                         $('#testid').val(data.attandance_history);
                         $('#phisid').val(data.payment_history);
                     },
@@ -45,8 +45,8 @@
             }
             function pay(keyval) {
                 //load history lists
-                 $('#testid').val("");
-                 $('#phisid').val("");
+                $('#testid').val("");
+                $('#phisid').val("");
                 $.ajax({
                     url: '${pageContext.request.contextPath}/loadhistorylist',
                     data: {attenid: keyval},
@@ -57,7 +57,7 @@
                         $('#phisid').val(data.payment_history);
                     },
                     error: function (data) {
-                         alert("error");
+                        alert("error");
                     }
                 });
             }
@@ -72,14 +72,19 @@
                     dataType: "json",
                     type: "GET",
                     success: function (data) {
-                      alert("Payment Successfully Completed");
-                     jQuery("#gridtable").trigger("reloadGrid");
-                      
+                        alert("Payment Successfully Completed");
+                        jQuery("#gridtable").trigger("reloadGrid");
+                        alert("data.hiddBillid "+data.hiddBillid);
+                        
+                        $('#hiddBillid').val(data.hiddBillid);
+                        $('#downloadbut').click();
+                        
+
                     },
                     error: function (data) {
                         alert("Payment Error");
                     }
-                     
+
                 });
             }
             $('#gridtable.id').change(function () {
@@ -141,8 +146,8 @@
 
                             </s:form>
                         </div>
-                        
-                          
+
+
                         <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
                         <div style="width: 50%; float:left">  
                             <table>
@@ -191,14 +196,14 @@
 
                         <div style="width: 40%; float:right">
                             <s:form id="payList"  theme="simple" >
-<!--                                <table>
-                                    <tr>
-                                        <td class="formLable">Payment List</td> 
-                                    </tr>
-                                    <tr>
-                                        <sj:submit button="true" value="PAYMENT"  onclick="" cssClass="button_aback"/>
-                                    </tr>
-                                </table>-->
+                                <!--                                <table>
+                                                                    <tr>
+                                                                        <td class="formLable">Payment List</td> 
+                                                                    </tr>
+                                                                    <tr>
+                                <sj:submit button="true" value="PAYMENT"  onclick="" cssClass="button_aback"/>
+                            </tr>
+                        </table>-->
 
                             </s:form>
                         </div>            
@@ -224,6 +229,19 @@
                             </s:form>
                         </div>
                     </div>
+
+                    <s:form action="downloadBillpdf" theme="simple" method="post">
+                        <s:hidden id="hiddBillid" name ="hiddBillid"/>
+                        <s:hidden id="bankaname" name="bankaname"/>
+                        <s:hidden id="terminalid" name="terminalid" />
+                        <s:hidden id="merchantname" name="merchantname"/>
+                        <s:hidden id="mek" name="mek" />
+                        <s:hidden id="issuedDate" name="issuedDate" />
+                        <s:hidden id="keyid" name="keyid" />
+                        <s:hidden id="tmk" name="tmk" />
+                        <%--<s:submit button="true"  id="downloadbut" cssStyle="display: none; visibility: hidden;"  />--%>
+                         <s:submit button="true"  id="downloadbut"  />
+                    </s:form>
                     </section>
 
 
