@@ -11,12 +11,31 @@ import Util.AccessControlService;
 import Util.Config;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
+import net.sf.jasperreports.engine.JRException;
+
 import org.apache.struts2.ServletActionContext;
 
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JRViewer;
 /**
  *
  * @author ridmi_g
@@ -25,6 +44,14 @@ public class AttenAction extends ActionSupport implements ModelDriven<AttenBean>
 
     AttenBean inputBean = new AttenBean();
     AttenService service = new AttenService();
+    
+    public String submit = null;
+    public InputStream fileInputStream;
+    public String jasperPath = "";
+    public String pdfName = "";
+    public String rpt = "";
+    
+    
 
     @Override
     public String execute() {
@@ -186,6 +213,59 @@ public class AttenAction extends ActionSupport implements ModelDriven<AttenBean>
             throw e;
         }
         return status;
+    }
+    public String printBill(){
+         InputStream inputStream;
+        try {
+            System.out.println("printBill>>>>>>>>>>.."+inputBean.getHiddBillid());
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/institute_management", "root", "");
+//            String str;
+//            str = ServletActionContext.getServletContext().getRealPath("/resources/jasper/LatestPaymentRecipt.jrxml");
+//            JasperDesign jd=JRXmlLoader.load(str);
+//            Map parameters = new HashMap();
+//            parameters.put("userid", 1);
+//            net.sf.jasperreports.engine.JasperReport jr = JasperCompileManager.compileReport(jd);
+//            JasperPrint jp=JasperFillManager.fillReport(jr, parameters,cn);
+//            JRExporter exporter = new net.sf.jasperreports.engine.export.JRPdfExporter();
+//            exporter.setParameter(JRExporterParameter.JASPER_PRINT, jp);
+//            exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, ServletActionContext.getServletContext().getRealPath("/resources/jasper/LatestPaymentRecipt.pdf"));
+//            exporter.exportReport();
+//            File file = new File(ServletActionContext.getServletContext().getRealPath("/resources/jasper/LatestPaymentRecipt.pdf"));  
+//            inputStream = new DataInputStream( new FileInputStream(file));
+
+                jasperPath = ServletActionContext.getServletContext().getRealPath("/resources/jasper");
+		jasperPath = jasperPath+"\\"+"LatestPaymentRecipt.jasper";//jasper eka daanna one ummiyoo		
+                 File reportFile = new File(jasperPath);
+                 JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(reportFile.getPath());
+        
+                        //JRResultSetDataSource resultSetDataSource = new JRResultSetDataSource(rs);
+				HashMap<String, Object> pm = new HashMap<String, Object>();
+				String bill_id = "10001";
+				pm.put("bill_id", bill_id);
+				//JasperReport jr = JasperCompileManager.compileReport(jasperPath);
+				JasperPrint jp = JasperFillManager.fillReport(jasperReport, pm,cn);
+                                
+                                //me thiyenne mage eke thiye widiya
+                                boolean autoprint = true;
+                                  JRViewer viewer = new JRViewer(jp);
+                                if(autoprint){
+                                    JasperPrintManager.printReport(jp,false);
+                                }
+            
+           
+              // If compiled file is not found, then compile XML template
+   
+  
+//            ///end
+//				JasperExportManager.exportReportToPdfFile(jp, jasperPath + pdfName + ".pdf");
+//				fileInputStream = new FileInputStream(new File(jasperPath + pdfName + ".pdf"));
+
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "PdfDownload";
     }
 
 }

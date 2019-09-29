@@ -303,6 +303,17 @@
         <action name="paymentmark" class="Atten.action.AttenAction" method="paymentmark"> 
              <result name="paymentmark" type="json"></result>
         </action>
+        <action name="downloadBillpdf" class="Atten.action.AttenAction" method="printBill"> 
+             <result name="PdfDownload" type="jasper">            
+                <param name="location">/resources/jasper/LatestPaymentRecipt.jasper</param>
+                <param name="dataSource">reportdatalist</param>
+                <param name="format">PDF</param>
+                <param name="reportParameters">parameterMap</param>
+                <param name="contentDisposition">attachment;filename=${filename}</param>
+            </result> 
+            <!--<result name="PdfDownload">/pages/atten/attendence.jsp</result>--> 
+        </action>
+         
     </package>
     <package name="Payment" extends="pglobal" namespace="/">
         <action name="payment" class="payment.action.PaymentAction" method="execute"> 

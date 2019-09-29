@@ -17,5 +17,5 @@ public class Config {
     
     
     public static final int cardnoLength = 10;
-    public static final int studentIdLength = 5;
+    public static final int studentIdLength = 1;
 }
