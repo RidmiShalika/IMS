@@ -62,7 +62,18 @@ public class AttenBean {
     
     ArrayList<String> attandance_history = new ArrayList<String>();
     ArrayList<String> payment_history = new ArrayList<String>();
+    
+    private String hiddBillid;
 
+    public String getHiddBillid() {
+        return hiddBillid;
+    }
+
+    public void setHiddBillid(String hiddBillid) {
+        this.hiddBillid = hiddBillid;
+    }
+
+    
     public boolean isIsmismatch() {
         return ismismatch;
     }

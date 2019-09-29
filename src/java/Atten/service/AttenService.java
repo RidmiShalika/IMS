@@ -441,6 +441,9 @@ public class AttenService {
 
             //generate bill ifd
             String bill_id_post = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+            
+            
+            inputhbean.setHiddBillid("testbillid");
 
             String Payment_SMS = " is paid for following class(es) on " + new SimpleDateFormat("YYYY-MM-dd").format(new Date()) + "-NLC-";
 
@@ -485,7 +488,7 @@ public class AttenService {
 
                     }
 
-                    String bill_id = studentid + "_" + bill_id_post;
+                        String bill_id = studentid + "_" + bill_id_post;
 
                     StudentCourse scourse = (StudentCourse) session.createCriteria(StudentCourse.class, "sc")
                             .createAlias("sc.studentId", "sid")
@@ -571,6 +574,8 @@ public class AttenService {
             } else {
                 System.out.println("No mobile number");
             }
+            
+            
 
             session.getTransaction().commit();
 
