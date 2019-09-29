@@ -37,6 +37,15 @@ public class AttenBean {
     private String year;
     private String month;
     private String status;
+    private String error;
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
     
     
     private String name;
