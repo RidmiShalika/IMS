@@ -126,6 +126,7 @@ public class AttenAction extends ActionSupport implements ModelDriven<AttenBean>
 
                 //load data from service
                 service.loadData(inputBean);
+                
                 service.historyData(inputBean, Integer.parseInt(inputBean.getCid()));
                 service.getpaymenthistory(inputBean, Integer.parseInt(inputBean.getCid()));
             }else{
