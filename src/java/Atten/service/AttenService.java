@@ -311,6 +311,7 @@ public class AttenService {
 
 //            int cid = 8;
                 int cid = Integer.parseInt(outList[0]);
+                
                 attenBean.setCid(cid + "");
                 //class ekata related payment status eka gannwa me current mmonth ekata payment table eken
                 Criteria c1 = session.createCriteria(Payments.class, "payment")
@@ -368,13 +369,8 @@ public class AttenService {
                     StudentCourse studentCourse = (StudentCourse) i3.next();
 
                     attenBean.setLname(studentCourse.getCourseId().getLectureId().getName());
-                    if (studentCourse.getCourseId().getClassType() == 1) {
-                        attenBean.setExtra_normal("Theory Class");
-                    } else if (studentCourse.getCourseId().getClassType() == 2) {
-                        attenBean.setExtra_normal("Revision Class");
-                    } else if (studentCourse.getCourseId().getClassType() == 3) {
-                        attenBean.setExtra_normal("Paper Class");
-                    }
+                    
+                    attenBean.setExtra_normal(outList[2]+" class");
                     attenBean.setCourseId(studentCourse.getCourseId().getCourseDescription());
                     if (studentCourse.getCardType() == 1) {
                         attenBean.setCrdType("Normal Card");
@@ -383,7 +379,7 @@ public class AttenService {
                     } else if (studentCourse.getCardType() == 3) {
                         attenBean.setCrdType("Free Card");
                     }
-                    attenBean.setCrdType(day);
+//                    attenBean.setCrdType(day);
 
                 }
             }
