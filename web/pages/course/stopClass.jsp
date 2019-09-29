@@ -108,7 +108,7 @@
                                      <sjg:gridColumn name="details" index="details" title="Stop" formatter="stopformatter" />
                                     <sjg:gridColumn name="stopcourseDescription" index="courseId.courseDescription" title="Course Description" />
                                     <sjg:gridColumn name="startEnd" index="startEnd" title="Start/End" width="300"/>
-                                    <sjg:gridColumn name="endedTime" index="endedTime" title="Ended Time" width="300" editable="true" edittype="text"/>
+                                    <sjg:gridColumn name="endedTime" index="endedTime" title="Ended Time" width="300" editable="true" edittype="text" hidden="true"/>
                                     <sjg:gridColumn name="classTypet" title="Class Type" width="200"/>
                                     <%--<sjg:gridColumn name="details" index="details" title="Select" />--%>
                                    
