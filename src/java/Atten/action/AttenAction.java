@@ -216,11 +216,11 @@ public class AttenAction extends ActionSupport implements ModelDriven<AttenBean>
         return status;
     }
     public String printBill(){
-         InputStream inputStream;
+//         InputStream inputStream;
         try {
             System.out.println("printBill>>>>>>>>>>.."+inputBean.getHiddBillid());
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/institute_management", "root", "");
+//            Class.forName("com.mysql.jdbc.Driver");
+//            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/institute_management", "root", "");
 //            String str;
 //            str = ServletActionContext.getServletContext().getRealPath("/resources/jasper/LatestPaymentRecipt.jrxml");
 //            JasperDesign jd=JRXmlLoader.load(str);
@@ -235,24 +235,24 @@ public class AttenAction extends ActionSupport implements ModelDriven<AttenBean>
 //            File file = new File(ServletActionContext.getServletContext().getRealPath("/resources/jasper/LatestPaymentRecipt.pdf"));  
 //            inputStream = new DataInputStream( new FileInputStream(file));
 
-                jasperPath = ServletActionContext.getServletContext().getRealPath("/resources/jasper");
-		jasperPath = jasperPath+"\\"+"LatestPaymentRecipt.jasper";//jasper eka daanna one ummiyoo		
-                 File reportFile = new File(jasperPath);
-                 JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(reportFile.getPath());
-        
-                        //JRResultSetDataSource resultSetDataSource = new JRResultSetDataSource(rs);
-				HashMap<String, Object> pm = new HashMap<String, Object>();
-				String bill_id = "10001";
-				pm.put("bill_id", bill_id);
-				//JasperReport jr = JasperCompileManager.compileReport(jasperPath);
-				JasperPrint jp = JasperFillManager.fillReport(jasperReport, pm,cn);
-                                
-                                //me thiyenne mage eke thiye widiya
-                                boolean autoprint = true;
-                                  JRViewer viewer = new JRViewer(jp);
-                                if(autoprint){
-                                    JasperPrintManager.printReport(jp,false);
-                                }
+//                jasperPath = ServletActionContext.getServletContext().getRealPath("/resources/jasper");
+//		jasperPath = jasperPath+"\\"+"LatestPaymentRecipt.jasper";//jasper eka daanna one ummiyoo		
+//                 File reportFile = new File(jasperPath);
+//                 JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(reportFile.getPath());
+//        
+//                        //JRResultSetDataSource resultSetDataSource = new JRResultSetDataSource(rs);
+//				HashMap<String, Object> pm = new HashMap<String, Object>();
+//				String bill_id = "10001";
+//				pm.put("bill_id", bill_id);
+//				//JasperReport jr = JasperCompileManager.compileReport(jasperPath);
+//				JasperPrint jp = JasperFillManager.fillReport(jasperReport, pm,cn);
+//                                
+//                                //me thiyenne mage eke thiye widiya
+//                                boolean autoprint = true;
+//                                  JRViewer viewer = new JRViewer(jp);
+//                                if(autoprint){
+//                                    JasperPrintManager.printReport(jp,false);
+//                                }
             
            
               // If compiled file is not found, then compile XML template

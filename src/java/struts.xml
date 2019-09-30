@@ -305,7 +305,7 @@
         </action>
         <action name="downloadBillpdf" class="Atten.action.AttenAction" method="printBill"> 
              <result name="PdfDownload" type="jasper">            
-                <param name="location">/resources/jasper/LatestPaymentRecipt.jasper</param>
+                <param name="location">/resources/jasper/batchTable.jasper</param>
                 <param name="dataSource">reportdatalist</param>
                 <param name="format">PDF</param>
                 <param name="reportParameters">parameterMap</param>
