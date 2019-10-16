@@ -13,15 +13,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import javax.servlet.http.HttpSession;
 import login.bean.SessionBean;
 import mapping.Attendence;
 import mapping.Course;
-import mapping.CourseDates;
 import mapping.ExtraClasses;
 import mapping.PaymentBillDetails;
 import mapping.Payments;
@@ -36,6 +34,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import payment.bean.paymentBillBean;
 
 /**
  *
@@ -128,6 +127,75 @@ public class AttenService {
 
                 }
             }
+        } catch (Exception e) {
+
+            if (session != null) {
+                session.getTransaction().rollback();
+                session.close();
+                session = null;
+            }
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.flush();
+                session.clear();
+                session.getTransaction().commit();
+                session.close();
+                session = null;
+            }
+        }
+        return dataList;
+    }
+    
+    
+    public List<paymentBillBean> getBillData(String bill_id) throws Exception {
+        List<paymentBillBean> dataList = new ArrayList<paymentBillBean>();
+        Session session = null;
+
+        try {
+            
+            session = (Session) HibernateInit.getSessionFactory().openSession();
+            session.beginTransaction();
+//            HttpSession sess = ServletActionContext.getRequest().getSession(false);
+            
+//            String sqlCount = "select s.s_name,p.student_id,p.created_date,p.issued_by,"
+//                    + "c.course_description,p.payment_month,p.bill_amount "
+//                    + "from payment_bill_details p, student s, course c "
+//                    + "where bill_id = :bill and c.id = p.course_id and s.s_id = p.student_id";
+//            Query queryCount = session.createQuery(sqlCount);
+//            queryCount.setString("bill", bill_id);
+//            
+//            Iterator itCount = queryCount.iterate();
+            
+            Iterator itCount = session.createCriteria(PaymentBillDetails.class, "paymentBillDe")
+                    .createAlias("paymentBillDe.studentId", "st")
+                    .createAlias("paymentBillDe.courseId", "cs")
+                    .add(Restrictions.eq("paymentBillDe.billId", bill_id))
+                    .setProjection(Projections.distinct(Projections.projectionList()
+                            .add(Projections.property("st.sName"))
+                            .add(Projections.property("st.sId"))
+                            .add(Projections.property("paymentBillDe.createdDate"))
+                            .add(Projections.property("paymentBillDe.issuedBy"))
+                            .add(Projections.property("cs.courseDescription"))
+                            .add(Projections.property("paymentBillDe.paymentMonth"))
+                            .add(Projections.property("paymentBillDe.billAmount"))))
+                    .list().iterator();
+             while (itCount.hasNext()) {
+                 Object[] ob = (Object[]) itCount.next();
+                 paymentBillBean bean = new paymentBillBean();
+                 bean.setS_name(ob[0]+"");
+                 bean.setS_id(Integer.parseInt(ob[1].toString()));
+                 bean.setCreated_time(ob[2]+"");
+                 bean.setIssued_by(ob[3]+"");
+                 bean.setCourse_dis(ob[4]+"");
+                 bean.setPayment_month(ob[5]+"");
+                 bean.setBill_amount(Double.parseDouble(ob[6].toString()));
+                 dataList.add(bean);
+             }
+
+            
+
+           
         } catch (Exception e) {
 
             if (session != null) {
@@ -456,6 +524,10 @@ public class AttenService {
             String Payment_SMS = " is paid for following class(es) on " + new SimpleDateFormat("YYYY-MM-dd").format(new Date()) + "-NLC-";
 
             String data[] = inputhbean.getSelected_data().split("\\,");
+            HashMap parameters = new HashMap();
+            List<paymentBillBean> collection = new ArrayList<paymentBillBean>();
+            
+
 
             for (int i = 0; i < data.length; i++) {
 
@@ -497,7 +569,9 @@ public class AttenService {
                     }
 
                     String bill_id = studentid + "_" + bill_id_post;
-
+                    inputhbean.setHiddBillid(bill_id);
+//                    parameters.put("bill_id", bill_id);//malinda
+                    
                     StudentCourse scourse = (StudentCourse) session.createCriteria(StudentCourse.class, "sc")
                             .createAlias("sc.studentId", "sid")
                             .createAlias("sc.courseId", "cid")
@@ -512,6 +586,7 @@ public class AttenService {
                     }
                     //insert payment table
                     Payments payments = new Payments();
+                   
 
                     Student s = new Student();
                     s.setSId(studentid);
@@ -549,6 +624,18 @@ public class AttenService {
                     billDetails.setCreatedDate(new Date());
 
                     session.save(billDetails);
+                    //set bill print details
+//                    billBean.setBill_amount(monthlyFee);
+//                    billBean.setBill_id(bill_id);
+//                    billBean.setCard_type(scourse.getCardType()+"");
+//                    billBean.setCourse_id(c.getCourseDescription());
+//                    billBean.setCreated_time(new Date().toString());
+//                    billBean.setIssued_by(sub.getUserName());
+//                    billBean.setLine_id(1);
+//                    billBean.setPayment_month(month + "-" + year);
+//                    billBean.setS_id(s.getSId());
+//                    collection.add(billBean);
+//                    inputhbean.setReportdatalist(collection);
 
                     Query query = null;
                     PendingPayments refProfile = null;
@@ -567,6 +654,17 @@ public class AttenService {
                 }
 
             }
+//            inputhbean.setBillList(collection);
+//            inputhbean.setParameters(parameters);
+            //print bill malinda
+//            JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(collection);
+//            String jasperPath = ServletActionContext.getServletContext().getRealPath("/resources/jasper/LatestPaymentRecipt _bean.jasper");
+//            
+////            Map parameters = new HashMap();
+////            parameters.put("userid", 1);
+////            net.sf.jasperreports.engine.JasperReport jr = JasperCompileManager.compileReport(jd);
+//            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperPath, parameters, beanCollectionDataSource);
+
 
             // insert sms table
             String mobileno = getmobileNo(inputhbean);

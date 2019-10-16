@@ -17,25 +17,22 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
-import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
 
 import org.apache.struts2.ServletActionContext;
 
-import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperPrintManager;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JRViewer;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import payment.bean.paymentBillBean;
 /**
  *
  * @author ridmi_g
@@ -48,7 +45,7 @@ public class AttenAction extends ActionSupport implements ModelDriven<AttenBean>
     public String submit = null;
     public InputStream fileInputStream;
     public String jasperPath = "";
-    public String pdfName = "";
+    public String pdfName = "test";
     public String rpt = "";
     
     
@@ -219,9 +216,30 @@ public class AttenAction extends ActionSupport implements ModelDriven<AttenBean>
 //         InputStream inputStream;
         try {
             System.out.println("printBill>>>>>>>>>>.."+inputBean.getHiddBillid());
+            List<paymentBillBean> billList = new ArrayList<paymentBillBean>();
+            HashMap parameters = new HashMap();
+            billList =  service.getBillData(inputBean.getHiddBillid());
 //            Class.forName("com.mysql.jdbc.Driver");
-//            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/institute_management", "root", "");
-//            String str;
+//            Connection cn = DriverManager.getConnection("jdbc:mysql://aai7qptcub3je4.caime30ucsh9.us-east-2.rds.amazonaws.com:3306/ebdb?useSSL=false", "admin", "password");
+//            PreparedStatement stmt = null;
+//            ResultSet result = null;
+//            String str = "select c.course_description,s.s_name,p.* from payment_bill_details p, student s, course c where bill_id = ? and c.id = p.course_id and s.s_id = p.student_id";
+//            stmt = cn.prepareStatement(str);
+//            stmt.setString(1,inputBean.getHiddBillid());
+//            result = stmt.executeQuery();
+//            List<paymentBillBean> billList = new ArrayList<paymentBillBean>();
+//            HashMap parameters = new HashMap();
+//            while (result.next()) {
+//                 paymentBillBean bean = new paymentBillBean();
+//                 bean.setS_name(result.getString("s_name"));
+//                 bean.setS_id(result.getInt("student_id"));
+//                 bean.setCreated_time(result.getString("created_date"));
+//                 bean.setIssued_by(result.getString("issued_by"));
+//                 bean.setCourse_dis(result.getString("course_description"));
+//                 bean.setPayment_month(result.getString("payment_month"));
+//                 bean.setBill_amount(result.getDouble("bill_amount"));
+//                 billList.add(bean);
+//            }
 //            str = ServletActionContext.getServletContext().getRealPath("/resources/jasper/LatestPaymentRecipt.jrxml");
 //            JasperDesign jd=JRXmlLoader.load(str);
 //            Map parameters = new HashMap();
@@ -261,8 +279,65 @@ public class AttenAction extends ActionSupport implements ModelDriven<AttenBean>
 //            ///end
 //				JasperExportManager.exportReportToPdfFile(jp, jasperPath + pdfName + ".pdf");
 //				fileInputStream = new FileInputStream(new File(jasperPath + pdfName + ".pdf"));
+                    
 
-            
+                    
+                    
+                    
+                      
+                    
+//                    inputBean.setBillList(billList);
+                  
+                 //   parameters.put("bill_id",inputBean.getHiddBillid());
+//                    inputBean.setParameters(parameters);
+                    
+//                    billList = new ArrayList<paymentBillBean>();
+//                    paymentBillBean bean = new paymentBillBean();
+//                    bean.setCOMPANY_NAME("11111111");
+//                    bean.setBATCH_ID("011");
+//                    bean.setRECEIVE_TIME(new Date().toString());
+//                    bean.setSTATUS("1");
+//                    bean.setCOMPANY_MID("1");
+//                    bean.setREG_DATE(new Date().toString());
+//                    bean.setS_id(1200);
+//                    billList.add(bean);
+//                
+//                    paymentBillBean bean1 = new paymentBillBean();
+//                    bean1.setCOMPANY_NAME("11111111");
+//                    bean1.setBATCH_ID("011");
+//                    bean1.setRECEIVE_TIME(new Date().toString());
+//                    bean1.setSTATUS("1");
+//                    bean1.setCOMPANY_MID("1");
+//                    bean1.setREG_DATE(new Date().toString());
+//                    bean1.setS_id(1300);
+//                    billList.add(bean1);
+                   
+                    JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(billList);
+                    File file = new File(ServletActionContext.getServletContext().getRealPath("/resources/jasper/batchTable.jasper"));  
+                    InputStream inputStream = new DataInputStream( new FileInputStream(file));
+                    
+                   
+                    JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parameters, beanCollectionDataSource);
+                    jasperPath = ServletActionContext.getServletContext().getRealPath("/resources/jasper/batchTable.jasper");  
+                    JasperExportManager.exportReportToPdfFile(jasperPrint, jasperPath + pdfName + ".pdf");
+                    System.out.println("jasperPath "+jasperPath);
+		    fileInputStream = new FileInputStream(new File(jasperPath + pdfName + ".pdf"));
+                    
+//                    paymentBillBean billBean = new paymentBillBean();
+//                    billBean.setBill_amount(100.00);
+//                    billBean.setBill_id(inputBean.getHiddBillid());
+//                    billBean.setCard_type("22");
+//                    billBean.setCourse_id("course");
+//                    billBean.setCreated_time(new Date().toString());
+//                    billBean.setIssued_by("hello");
+//                    billBean.setLine_id(1);
+//                    billBean.setPayment_month("jsj");
+//                    billBean.setS_id(11);
+//                    billList.add(billBean);
+                    
+                      inputBean.setReportdatalist(billList);
+                    
+
         } catch (Exception e) {
             e.printStackTrace();
         }

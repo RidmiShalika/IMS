@@ -6,13 +6,29 @@
 package Atten.bean;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import payment.bean.paymentBillBean;
 
 /**
  *
  * @author ridmi_g
  */
 public class AttenBean {
+
+    /**
+     * @return the billList
+     */
+    public List<paymentBillBean> getBillList() {
+        return billList;
+    }
+
+    /**
+     * @param billList the billList to set
+     */
+    public void setBillList(List<paymentBillBean> billList) {
+        this.billList = billList;
+    }
     //Table data
 
     private List<AttenBean> gridModel = new ArrayList<AttenBean>();
@@ -25,6 +41,9 @@ public class AttenBean {
     private long fullCount;
 
     private String attenid;
+    private List<paymentBillBean> billList = null;
+    List<paymentBillBean> reportdatalist = null;
+    private HashMap parameters = null;
 
 //    private String Id;
 //    private String courseid;
@@ -39,6 +58,15 @@ public class AttenBean {
     private String status;
     private String error;
 
+    public List<paymentBillBean> getReportdatalist() {
+        return reportdatalist;
+    }
+
+    public void setReportdatalist(List<paymentBillBean> reportdatalist) {
+        this.reportdatalist = reportdatalist;
+    }
+
+    
     public String getError() {
         return error;
     }
@@ -350,6 +378,20 @@ public class AttenBean {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    /**
+     * @return the parameters
+     */
+    public HashMap getParameters() {
+        return parameters;
+    }
+
+    /**
+     * @param parameters the parameters to set
+     */
+    public void setParameters(HashMap parameters) {
+        this.parameters = parameters;
     }
     
 
