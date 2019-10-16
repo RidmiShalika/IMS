@@ -228,52 +228,52 @@
                                         <s:form  id="addForm"  theme="simple" method="post" enctype="multipart/form-data" cssStyle="display:none">
                                             <table >
                                                 <tr>
-                                                    <td class="formLable">Name<span class="mandatory">*</span></td> <td >:</td>
+                                                    <td class="formLable">Name<span class="mandatory">*</span></td> <td >:</td><td width="25px;"></td>
                                                     <td><s:textfield id="name" name="name" cssClass="textField" /></td>                                    
-                                                    <td width="25px;"></td>
-                                                    <td class="formLable">First Name<span class="mandatory">*</span></td> <td>:</td>
+                                                    <td width="75px;"></td>
+                                                    <td class="formLable">First Name<span class="mandatory">*</span></td> <td>:</td><td width="25px;"></td>
                                                     <td><s:textfield id="firstname" name="firstname" cssClass="textField" /></td>
                                                 </tr> 
                                                 <tr>
-                                                    <td class="formLable">Address</td> <td >:</td>
+                                                    <td class="formLable">Address</td> <td >:</td><td width="25px;"></td>
                                                     <td><s:textfield id="address" name="address" cssClass="textField" /></td>                                    
-                                                    <td width="25px;"></td>
-                                                    <td class="formLable">Email</td> <td>:</td>
+                                                    <td width="75px;"></td>
+                                                    <td class="formLable">Email</td> <td>:</td><td width="25px;"></td>
                                                     <td><s:textfield id="email" name="email" cssClass="textField" /></td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="formLable">Gender<span class="mandatory">*</span></td> <td >:</td>
+                                                    <td class="formLable">Gender<span class="mandatory">*</span></td> <td >:</td><td width="25px;"></td>
                                                     <!--<td><s:textfield id="gender" name="gender" cssClass="textField" /></td>-->    
                                                    <td><s:select  name="gender" id="gender" list="%{genderlList}" 
                                                      listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
                                                     
                                                     
-                                                    <td width="25px;"></td>
-                                                    <td class="formLable">Year of Registration</td> <td>:</td>
+                                                    <td width="75px;"></td>
+                                                    <td class="formLable">Year of Registration</td> <td>:</td><td width="25px;"></td>
                                                     <!--<td><s:textfield id="yearOfRegistration" name="yearOfRegistration" cssClass="textField" /></td>-->
                                                     <td><sj:datepicker id="yearOfRegistration" name="yearOfRegistration"  value="today"   changeYear="true" buttonImageOnly="true" displayFormat="yy-mm-dd"  cssClass="textField"/></td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="formLable">Telephone</td> <td >:</td>
+                                                    <td class="formLable">Telephone</td> <td >:</td><td width="25px;"></td>
                                                     <td><s:textfield id="telephone" name="telephone" cssClass="textField" /></td>                                    
-                                                    <td width="25px;"></td>
-                                                    <td class="formLable">School<span class="mandatory">*</span></td> <td>:</td>
+                                                    <td width="75px;"></td>
+                                                    <td class="formLable">School<span class="mandatory">*</span></td> <td>:</td><td width="25px;"></td>
                                                     <!--<td><s:textfield id="school" name="school" cssClass="textField" /></td>-->
                                                      <td><s:select  name="school" id="school" list="%{schoolList}" 
                                                      listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
                                                 </tr>
                                                 <tr>
-                                                    <td class="formLable">Birth Day</td> <td >:</td>
+                                                    <td class="formLable">Birth Day</td> <td >:</td><td width="25px;"></td>
                                                     <!--<td><s:textfield id="birthday" name="birthday" cssClass="textField" /></td>-->  
                                                     <td><sj:datepicker id="birthday" name="birthday"  value="today"   changeYear="true" buttonImageOnly="true" displayFormat="yy-mm-dd"  cssClass="textField"/></td>
-                                                    <td width="25px;"></td>
-                                                    <td class="formLable">Parent Contact No</td> <td>:</td>
+                                                    <td width="75px;"></td>
+                                                    <td class="formLable">Parent Contact No</td> <td>:</td><td width="25px;"></td>
                                                     <td><s:textfield id="parentContactNo" name="parentContactNo" cssClass="textField" /></td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="formLable">Card No</td> <td >:</td>
+                                                    <td class="formLable">Card No</td> <td >:</td><td width="25px;"></td>
                                                     <td><s:textfield id="cardno" name="cardno" cssClass="textField" /></td>                                    
-                                                    <td width="25px;"></td>
+                                                    <td width="75px;"></td>
                                                     <td>
                                                         <s:file  id = "addimage" name="addimage" label="File" cssClass="fileField" cssStyle="font-size : 14px"/> 
                                                 </tr>
@@ -294,67 +294,65 @@
                             
                             <s:form  id="updateForm"  theme="simple" method="post" enctype="multipart/form-data" cssStyle="display:none">
                                 <table >
-                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                   
                                         <tr>
                                             <s:hidden id="upId" name="upId"/>
-                                            <td class="formLable">Name<span class="mandatory">*</span></td> <td >:</td>
+                                            <td class="formLable">Name<span class="mandatory">*</span></td> <td >:</td> <td width="25px;"></td>
+                                            
                                             <td><s:textfield id="upname" name="upname" cssClass="textField" /></td>                                    
-                                            <td width="25px;"></td>
-                                            <td class="formLable">First Name<span class="mandatory">*</span></td> <td>:</td>
+                                            <td width="75px;"></td>
+                                            <td class="formLable">First Name<span class="mandatory">*</span></td> <td>:</td> <td width="25px;"></td>
                                             <td><s:textfield id="upfirstname" name="upfirstname" cssClass="textField" /></td>
-                                            <td width="25px;"></td>
-                                            <td><img width="150" height="100" src="" id="viewImage" name="viewImage"></td>
+                                            <td width="75px;"></td>
+                                            <td rowspan="0"><img width="175" height="200" src="" id="viewImage" name="viewImage"></td>
 
                                         </tr> 
                                         <tr>
-                                            <td class="formLable">Address</td> <td >:</td>
+                                            <td class="formLable">Address</td> <td >:</td> <td width="25px;"></td>
                                             <td><s:textfield id="upaddress" name="upaddress" cssClass="textField" /></td>                                    
-                                            <td width="25px;"></td>
-                                            <td class="formLable">Email</td> <td>:</td>
+                                            <td width="75px;"></td>
+                                            <td class="formLable">Email</td> <td>:</td> <td width="25px;"></td>
                                             <td><s:textfield id="upemail" name="upemail" cssClass="textField" /></td>
                                         </tr>
                                         <tr>
-                                            <td class="formLable">Gender<span class="mandatory">*</span></td> <td >:</td>
+                                            <td class="formLable">Gender<span class="mandatory">*</span></td> <td >:</td> <td width="25px;"></td>
                                              <td><s:select  name="upgender" id="upgender" list="%{genderlList}" 
                                                          listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
-                                            <td width="25px;"></td>
-                                            <td class="formLable">Year of Registration</td> <td>:</td>
+                                            <td width="75px;"></td>
+                                            <td class="formLable">Year of Registration</td> <td>:</td> <td width="25px;"></td>
                                              <td><sj:datepicker id="upyearOfRegistration" name="upyearOfRegistration" changeYear="true" buttonImageOnly="true" displayFormat="yy-mm-dd"  cssClass="textField"/></td>
                                         </tr>
                                         <tr>
-                                            <td class="formLable">Telephone</td> <td >:</td>
+                                            <td class="formLable">Telephone</td> <td >:</td>  <td width="25px;"></td>
                                             <td><s:textfield id="uptelephone" name="uptelephone" cssClass="textField" /></td>                                    
-                                            <td width="25px;"></td>
-                                            <td class="formLable">School<span class="mandatory">*</span></td> <td>:</td>
+                                            <td width="75px;"></td>
+                                            <td class="formLable">School<span class="mandatory">*</span></td> <td>:</td>  <td width="25px;"></td>
                                             <td><s:select  name="upschool" id="upschool" list="%{schoolList}" 
                                                          listKey="key" listValue="value"  headerKey="-1"  headerValue="---Select---"     cssClass="dropdown" /></td> 
                                         </tr>
                                         <tr>
-                                            <td class="formLable">Birth Day</td> <td >:</td>
+                                            <td class="formLable">Birth Day</td> <td >:</td>  <td width="25px;"></td>
                                              <td><sj:datepicker id="upbirthday" name="upbirthday"  changeYear="true" buttonImageOnly="true" displayFormat="yy-mm-dd"  cssClass="textField"/></td>
-                                            <td width="25px;"></td>
-                                            <td class="formLable">Parent Contact No</td> <td>:</td>
+                                            <td width="75px;"></td>
+                                            <td class="formLable">Parent Contact No</td> <td>:</td>  <td width="25px;"></td>
                                             <td><s:textfield id="upparentContactNo" name="upparentContactNo" cssClass="textField" /></td>
                                         </tr>
                                         <tr>
-                                            <td class="formLable">Card No</td> <td >:</td>
+                                            <td class="formLable">Card No</td> <td >:</td>  <td width="25px;"></td>
                                             <td><s:textfield id="upcardno" name="upcardno" cssClass="textField" /></td>                                    
-                                            <td width="25px;"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="formLable">Image</td> <td >:</td>
+                                            <td width="75px;"></td>
+                                             <td class="formLable">Image</td> <td >:</td> <td width="25px;"></td>
                                             <td><s:file  id = "upimage" name="upimage" label="File" cssClass="fileField" cssStyle="font-size : 14px"/>
-                                            <td width="25px;"></td>
+                                            <td width="75px;"></td>
                                         </tr>
-                                    </div>
-                                        <tr>
-                                            <td width="25px;"></td>
-                                            <td><img width="150" height="100" src="" id="viewImage" name="viewImage"></td>
-                                        </tr> 
+                                        
+                                   
+                                       
 
                                 </table>
                                         
                                 <table>
+                                    <br><br>
                                     <tr>
                                         <td>
                                             <s:url var="updateurl" action="updatestudent" />
@@ -421,22 +419,22 @@
                                     viewrecords="true"
                                     >
 
-                                     <sjg:gridColumn name="sId" index="sId" title="Assign Course" formatter="assignformatter" align="center"/>
-                                    <sjg:gridColumn name="sId" index="sId" title="StudentId" hidden="show"/>
+                                    <sjg:gridColumn name="sId" index="sId" title="A/C" formatter="assignformatter" align="center" width="30"/>
+                                    <sjg:gridColumn name="sId" index="sId" title="E" formatter="editformatter" align="center" width="30"/>
+                                    <sjg:gridColumn name="sId" index="sId" title="Student Id" width="80" hidden="show"/>
                                     <sjg:gridColumn name="sName" index="sName" title="Name" />
+                                    <sjg:gridColumn name="sSchool" index="sSchool" title="School" />
+                                    <sjg:gridColumn name="sTelephone" index="sTelephone" title="Telephone No" />
+                                    <sjg:gridColumn name="sParentName" index="sParentName" title="Parent Name" />
+                                    <sjg:gridColumn name="sParentContactNo" index="sParentContactNo" title="Parent Con.No" />
+                                    <sjg:gridColumn name="cardNumber" index="cardNumber" title="Card No" />
                                     <sjg:gridColumn name="sDob" index="sDob" title="Birthday" />
                                     <sjg:gridColumn name="sAddress" index="sAddress" title="Address" />
                                     <sjg:gridColumn name="sEmail" index="sEmail" title="Email" />
                                     <sjg:gridColumn name="sGender" index="sGender" title="Gender" />
                                     <sjg:gridColumn name="sYor" index="sYor" title="Year" />
-                                    <sjg:gridColumn name="sTelephone" index="sTelephone" title="Telephone No" />
-                                    <sjg:gridColumn name="sSchool" index="sSchool" title="School" />
-                                    <sjg:gridColumn name="sParentContactNo" index="sParentContactNo" title="Parent Con.No" />
                                     <sjg:gridColumn name="sParentEmail" index="sParentEmail" title="Parent Email" /> 
-                                    <sjg:gridColumn name="sParentName" index="sParentName" title="Parent Name" />
                                     <sjg:gridColumn name="sNic" index="sNic" title="NIC" />
-                                    <sjg:gridColumn name="cardNumber" index="cardNumber" title="Card No" />
-                                    <sjg:gridColumn name="sId" index="sId" title="Edit" formatter="editformatter" align="center"/>
                                     <sjg:gridColumn name="sId" index="sId" title="Pay Admission" formatter="admissionformatter" align="center"/>
 
                                 </sjg:grid> 

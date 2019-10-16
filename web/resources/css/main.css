@@ -14,6 +14,12 @@ html,body,a,button,input,select,textarea,span:not(.fa),table,td,th,.button_aback
     margin-left: 10px;
     padding-top: 50px;
 }
+.button_aback_new {
+   
+    width: 300px;
+    height: 100px;
+    font-size: 50px;
+}
 
 #wrapper {
     width: 100%;
@@ -632,6 +638,27 @@ html,body,a,button,input,select,textarea,span:not(.fa),table,td,th,.button_aback
     border-radius: 4px;
 }
 
+.textFieldNEW {
+
+    background: #ffffff;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    color: #525252;
+    font-size: 50px;
+    -webkit-box-shadow: rgba(255,255,255,0.4) 0 0px 0, inset rgba(000,000,000,0.7) 0 0px 0px;
+    -moz-box-shadow: rgba(255,255,255,0.4) 0 0px 0, inset rgba(000,000,000,0.7) 0 0px 0px;
+    box-shadow: rgba(255,255,255,0.4) 0 0px 0, inset rgba(000,000,000,0.7) 0 0px 0px;
+    padding:3px;
+    margin-bottom:5px;
+    margin-top:5px;
+    margin-right: 2px;
+    width:500px;
+    border: 1px solid #acabab;
+    border-radius: 4px;
+    text-align: center;
+}
+
 .textFieldMsgs {
 
     background: #ffffff;
@@ -772,6 +799,13 @@ form{
     border: rgba(0, 0, 0, 0.13) solid 1px;
     margin-right: 10px;
     background-color: rgba(190, 188, 188, 0.16);
+    border-radius: 4px;
+}
+
+.form_new{    
+    border: rgba(0, 0, 0, 0.13) solid 1px;
+    margin-right: 1px;
+    background-color: rgba(50, 115, 220, 0.2);
     border-radius: 4px;
 }
 
@@ -1350,11 +1384,13 @@ table td:not(.homeLable):not(.homeLable1) ,table th{
 /*----*/
 .tree-style,
 .tree-style ul {
-  margin:0 0 0 2em; 
+  margin:0 0 0 30px; 
   /*padding:0;*/
   /*list-style:none;*/
   color:#369;
   position:relative;
+  font-size: 18px;
+  line-height: 5.6;
 }
 
 /*.tree-style ul {margin-left:25px}*/

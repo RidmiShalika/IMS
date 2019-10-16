@@ -143,7 +143,7 @@
 
                             </s:form>
                         </div>
-                        <div style="width: 40%; float:right">
+                        <div style="width: 50%; float:right">
                             <s:form id="lectureDetailsForm"  theme="simple" >
                                 <table>
                                     <tr>
@@ -184,15 +184,9 @@
                           
                         </div>
                           
-                        <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-                        <div style="width: 50%; float:left">  
-                            <table>
-                                <tr>
-                                    <td>
-                                        <sj:submit  id="stopbtn" button="true" onclick="test()" value="PAY"  cssClass="button_aback"/> 
-                                    </td>
-                                </tr>
-                            </table>
+                        <br><br><br><br><br><br><br><br><br><br>
+                        <div style="width: 58%; float:left">  
+                            
                             <div class="viewuser_tbl">
                                 <div id="tablediv">
                                     <s:url var="listurl" action="liststatt"/>
@@ -217,10 +211,10 @@
 
                                         <sjg:gridColumn name="id" index="id" title="id" hidden="true" width="10"/>
                                         <sjg:gridColumn name="id" index="id" title="His" width="50" formatter="paymentformatter"/>
-                                        <sjg:gridColumn name="sid" index="sid" title="Student Id" width="80"/>
-                                        <sjg:gridColumn name="cid" index="cid" title="Course Id" width="80"/>
-                                        <sjg:gridColumn name="year" index="v" title="Year" width="100"/>
-                                        <sjg:gridColumn name="month" index="month" title="Month" width="130"/>
+                                        <sjg:gridColumn name="sid" index="sid" title="Student Id" width="50"/>
+                                        <sjg:gridColumn name="cid" index="cid" title="Course Id" width="100"/>
+                                        <sjg:gridColumn name="year" index="v" title="Year" width="40"/>
+                                        <sjg:gridColumn name="month" index="month" title="Month" width="70"/>
                                         <sjg:gridColumn name="status" index="status" title="Status" width="100"/>
 
 
@@ -228,6 +222,14 @@
                                     </sjg:grid> 
                                 </div>
                             </div>
+                            <table>
+                                <tr>
+                                    <br>
+                                    <td>
+                                        <sj:submit  id="stopbtn" button="true" onclick="test()" value="PAY"  cssClass="button_aback"/> 
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
 
                         <div style="width: 40%; float:right">
@@ -242,28 +244,40 @@
                                 </table>-->
 
                             </s:form>
-                        </div>            
-                        <div style="width: 40%; float:right">
-                            <s:form id="attHistory"  theme="simple" >
+                        </div>   
+                         
+                        <div style="width: 40%; float:right;margin-top: 6px">
+                            
+                         <div  class="form_new" theme="simple" >
+                                
                                 <table>
                                     <tr>
                                         <td class="formLable" >Attendance History</td> 
-                                        <td><s:textarea id="testid" cssStyle="width : 250px"/>
+                                    </tr>
+                                   
+                                    <tr>
+                                        
+                                        <td><s:textarea id="testid" cssStyle="width : 280px;height: 110px"/>
                                     </tr>
                                 </table>
 
-                            </s:form>
-                        </div><div style="width: 40%; float:right">
-                            <s:form id="payHistory"  theme="simple" >
+                            </div>
+                        </div><div style="width: 40%; float:right;margin-top: 6px">
+                            <div  class="form_new" theme="simple" >
                                 <table>
                                     <tr>
-                                        <td class="formLable">Payment History</td> 
-                                        <td><s:textarea id="phisid" cssStyle="width : 290px"/>
+                                        <td class="formLable">Payment History &nbsp&nbsp&nbsp;</td> 
+                                        
+                                    </tr>
+                                    <tr>
+                                      
+                                        <td ><s:textarea id="phisid" cssStyle="width : 280px;height: 110px"/>
                                     </tr>
                                 </table>
 
-                            </s:form>
+                            </div>
                         </div>
+                      
                     </div>
                     </section>
 

@@ -60,21 +60,18 @@
 
 
                             <s:form id="mainForm"  theme="simple" >
-                                <table class="form_table">
-
-                                    <tr>
-                                        <td class="formLable">ID</td> <td >:</td>
-                                        <td><s:textfield id="attenid" name="attenid" cssClass="textField"/></td>
-                                    </tr>
-
-
-                                    <tr>
-                                        <td>
-                                            <sj:submit button="true" value="Confirm"  onclick="keyPress()" cssClass="button_aback"/>
+                           
+                                         <h4 style="text-align: center"><span class="label label-primary">Registration Number</span></h4>
+                                        
+                                         <div style="text-align: center">
+                                            <s:textfield id="attenid" name="attenid" cssClass="textFieldNEW"/>
+                                        </div>
+                                        
+                                         <div style="text-align:right;margin-right: 100px;">
+                                            <sj:submit button="true" value="Confirm"  onclick="keyPress()" cssClass="button_aback_new"/>
+                                        </div>
                                             <%--<sj:submit button="true" value="Reset"  onclick="ResetForm()" cssClass="button_aback"/>--%>
-                                        </td>
-                                    </tr>
-                                </table>
+                                       
 
                             </s:form>
 

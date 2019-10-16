@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="txnTable" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="66519d71-4f27-4833-9a1d-c9b72e811f0c">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="txnTable" pageWidth="229" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="189" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="66519d71-4f27-4833-9a1d-c9b72e811f0c">
 	<property name="template.engine" value="tabular_template"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="ireport.zoom" value="1.6076916075000025"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="347"/>
+	<property name="ireport.y" value="149"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true"/>
 	<style name="SubTitle" forecolor="#736343" fontName="SansSerif" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="SansSerif" fontSize="12" isBold="true"/>
@@ -80,293 +80,62 @@
 			<![CDATA[]]>
 		</queryString>
 	</subDataset>
-	<parameter name="Bat_From" class="java.lang.String"/>
-	<parameter name="Bat_To" class="java.lang.String"/>
-	<parameter name="Com_Name" class="java.lang.String"/>
-	<parameter name="Re_Status" class="java.lang.String"/>
-	<parameter name="Batch_ID" class="java.lang.String"/>
+	<parameter name="bill_id" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<field name="BATCH_ID" class="java.lang.String"/>
-	<field name="ACC_NO" class="java.lang.String"/>
-	<field name="AMOUNT" class="java.lang.String"/>
-	<field name="TRA_FEE" class="java.lang.String"/>
-	<field name="NAME" class="java.lang.String"/>
-	<field name="NIC" class="java.lang.String"/>
-	<field name="DUE_DATE" class="java.lang.String"/>
-	<field name="P1_STATUS" class="java.lang.String"/>
-	<field name="P2_STATUS" class="java.lang.String"/>
-	<field name="TRACE_NO" class="java.lang.String"/>
+	<field name="line_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="course_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="student_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bill_id" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bill_amount" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="payment_month" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="comments" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="card_type" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="created_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="issued_by" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="s_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="course_dis" class="java.lang.String"/>
 	<title>
-		<band height="210" splitType="Stretch">
-			<staticText>
-				<reportElement style="Title" x="117" y="8" width="585" height="62" uuid="a080d2ca-6207-4d8e-87c9-d3b61fb495a9"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Automatic Bill Settlement]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="SubTitle" x="266" y="70" width="287" height="49" uuid="0d849401-f944-4163-9df0-f69408a0618a"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Times New Roman" size="22"/>
-				</textElement>
-				<text><![CDATA[Batch Data Monitor Report]]></text>
-			</staticText>
-			<frame>
-				<reportElement style="Table" mode="Opaque" x="0" y="69" width="195" height="113" backcolor="#CCCCCC" uuid="696d10f4-ccff-4d9b-b181-ef3f6dfd725f"/>
-				<textField>
-					<reportElement x="63" y="47" width="116" height="15" uuid="d27cd4c8-b955-41b8-92b4-2b32588797ca"/>
-					<textElement>
-						<font size="9"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$P{Com_Name}]]></textFieldExpression>
-				</textField>
-				<staticText>
-					<reportElement x="1" y="62" width="58" height="19" uuid="a3244759-dcb6-4540-8977-2041144acce7"/>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<text><![CDATA[ Status :]]></text>
-				</staticText>
-				<textField>
-					<reportElement x="63" y="66" width="116" height="15" uuid="3c6a906e-c8d6-4846-afb3-8366a88ccba2"/>
-					<textElement>
-						<font size="9"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$P{Re_Status}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="63" y="85" width="116" height="15" uuid="25a301f2-1a27-4e02-90ca-1b0fa6aa58cd"/>
-					<textElement>
-						<font size="9"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$P{Batch_ID}]]></textFieldExpression>
-				</textField>
-			</frame>
-			<staticText>
-				<reportElement x="1" y="71" width="60" height="18" uuid="367a851f-0fc9-4aaf-91de-0f33e7b7cde7"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<text><![CDATA[From Date : ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="1" y="91" width="60" height="18" uuid="ea883f29-719e-4ecc-8adf-bde1b5a0b308"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<text><![CDATA[To Date : ]]></text>
-			</staticText>
+		<band height="170" splitType="Stretch">
 			<textField>
-				<reportElement x="63" y="70" width="116" height="20" uuid="af9ac5b0-bf09-444c-b4ac-b83c5d7ca779"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{Bat_From}]]></textFieldExpression>
+				<reportElement x="42" y="32" width="100" height="20" uuid="a7333b9c-569b-410c-906e-da8902cd0910"/>
+				<textFieldExpression><![CDATA[$P{bill_id}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="63" y="90" width="116" height="20" uuid="404417d0-7c0d-413b-9c3e-2be5dfe6394c"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{Bat_To}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="0" y="111" width="59" height="18" uuid="6db9f2da-b255-4de2-bf23-fe43cd8006e4"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<text><![CDATA[Company :]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="1" y="150" width="58" height="19" uuid="bceff2ea-c41c-425a-a850-7e4769a88811"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<text><![CDATA[Batch ID :]]></text>
-			</staticText>
 		</band>
 	</title>
-	<columnHeader>
-		<band height="50">
-			<frame>
-				<reportElement mode="Opaque" x="0" y="0" width="802" height="50" forecolor="#000000" backcolor="#006EB9" uuid="de7cf2c2-2537-4c18-aae5-4cd145161161">
-					<property name="net.sf.jasperreports.export.pdf.tag.h1"/>
-				</reportElement>
-				<staticText>
-					<reportElement style="Table" x="470" y="0" width="48" height="50" forecolor="#000000" uuid="1b8ef5a2-08e5-40e5-afa4-22db0f44123a"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="10"/>
-					</textElement>
-					<text><![CDATA[Due Date]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="Table" x="644" y="0" width="108" height="50" forecolor="#000000" uuid="dd633a84-d845-4bcf-8c20-797310863b35"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="10"/>
-					</textElement>
-					<text><![CDATA[Process 2 Status]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="Table" x="1" y="0" width="60" height="50" uuid="83e83d76-1dd6-436e-83dd-b1c157766352"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="10"/>
-					</textElement>
-					<text><![CDATA[Company Name]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="Table" x="195" y="0" width="71" height="50" uuid="444a8dfe-4246-4af4-a1db-5d298d478567"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="10"/>
-					</textElement>
-					<text><![CDATA[Transaction Fee]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="Table" x="129" y="0" width="66" height="50" uuid="e5f4a961-d2c0-4187-9417-b0b14c932e2b"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="10"/>
-					</textElement>
-					<text><![CDATA[Amount]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="Table" x="266" y="0" width="136" height="50" uuid="35cdfc15-ba7a-4bc2-8239-f11ed8ba807c"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="10"/>
-					</textElement>
-					<text><![CDATA[Name]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="Table" x="61" y="0" width="68" height="50" uuid="759aa0fc-d7cf-4697-a79f-f4c66caa691f"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="10"/>
-					</textElement>
-					<text><![CDATA[Account No]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="Table" x="402" y="0" width="68" height="50" forecolor="#000000" uuid="79999537-9fe6-4efe-8466-262d5f631d7f"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="10"/>
-					</textElement>
-					<text><![CDATA[NIC]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="Table" x="752" y="0" width="49" height="50" uuid="9b40c2a0-2f2c-4347-a3f8-e180add36abf"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="10"/>
-					</textElement>
-					<text><![CDATA[Trace Number]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="Table" x="518" y="0" width="126" height="50" uuid="9bb0c4cf-db38-44fc-b56f-c324aeedb612"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="10"/>
-					</textElement>
-					<text><![CDATA[Process 1 Status]]></text>
-				</staticText>
-				<elementGroup/>
-			</frame>
-		</band>
-	</columnHeader>
 	<detail>
-		<band height="26">
-			<frame>
-				<reportElement mode="Opaque" x="0" y="0" width="801" height="25" forecolor="#000000" backcolor="#FFFFFF" uuid="18258fcd-bf14-40cf-bc55-e3cecfb0fcd0"/>
-				<textField>
-					<reportElement style="Table" x="61" y="0" width="68" height="25" uuid="f60abebb-4935-43a8-9ea5-07c3c0b57a94"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="9"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{ACC_NO}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement style="Table" x="195" y="0" width="71" height="25" uuid="6dddb6db-65cd-44e8-931c-10236c175b40"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="9"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{TRA_FEE}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement style="Table" x="266" y="0" width="136" height="25" uuid="d2b7d401-8ba6-4300-9186-728504ba9297"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="9"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement style="Table" x="402" y="0" width="68" height="25" uuid="216a3df5-429d-4e2f-9e90-dbc76b91df25"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="9"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{NIC}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement style="Table" x="470" y="0" width="48" height="25" uuid="ca06987c-8144-4504-90e6-99070a0fda2d"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="9"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{DUE_DATE}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement style="Table" x="518" y="0" width="126" height="25" uuid="85b8595e-5380-42b7-ac65-055612c8fc7d"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="9"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{P1_STATUS}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement style="Table" x="644" y="0" width="108" height="25" uuid="dc09af72-55b4-4260-8d5d-275d1670631d"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="9"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{P2_STATUS}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement style="Table" x="752" y="0" width="49" height="25" uuid="bd6efae4-9a0c-4423-ae28-6b306eddda5b"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="9"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{TRACE_NO}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement style="Table" x="1" y="0" width="60" height="25" uuid="d0049962-58ba-4dc4-a6b6-f6e3877dbfd0"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="9"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{BATCH_ID}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement style="Table" x="129" y="0" width="66" height="25" uuid="66e5845d-39aa-4744-98da-051aa0d68fc6"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="9"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{AMOUNT}]]></textFieldExpression>
-				</textField>
-			</frame>
+		<band height="55">
+			<textField evaluationTime="Report">
+				<reportElement x="42" y="15" width="100" height="20" uuid="66f77d1f-4d75-4ca6-8f32-0da52d5b0e90"/>
+				<textFieldExpression><![CDATA[$F{issued_by}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="54"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="25" splitType="Stretch">
-			<frame>
-				<reportElement mode="Opaque" x="1" y="1" width="801" height="24" forecolor="#FFFFFF" backcolor="#006EB9" uuid="f2324113-3563-4f48-b688-ed82b3098434"/>
-				<textField evaluationTime="Report">
-					<reportElement style="Column header" x="751" y="1" width="40" height="20" forecolor="#000000" uuid="9f676d3f-1486-4a48-96ce-fa0a2b7a1577"/>
-					<textElement verticalAlignment="Middle">
-						<font size="10" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement style="Column header" x="671" y="0" width="80" height="20" forecolor="#000000" uuid="7415bd49-92ea-42ab-bbad-d370dba3cd03"/>
-					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font size="10" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
-				</textField>
-				<textField pattern="EEEEE dd MMMMM yyyy">
-					<reportElement style="Column header" x="22" y="1" width="178" height="20" forecolor="#000000" uuid="8bf88488-fb5e-4676-a772-33cfbcf173cd"/>
-					<textElement verticalAlignment="Middle">
-						<font size="10" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-				</textField>
-			</frame>
-		</band>
-	</pageFooter>
 	<summary>
-		<band height="24" splitType="Stretch">
+		<band height="48" splitType="Stretch">
 			<property name="local_mesure_unitheight" value="pixel"/>
 		</band>
 	</summary>

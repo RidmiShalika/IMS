@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="txnTable" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="66519d71-4f27-4833-9a1d-c9b72e811f0c">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="txnTable" pageWidth="229" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="189" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="66519d71-4f27-4833-9a1d-c9b72e811f0c">
 	<property name="template.engine" value="tabular_template"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="398"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="4.707642565081514"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="739"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true"/>
 	<style name="SubTitle" forecolor="#736343" fontName="SansSerif" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="SansSerif" fontSize="12" isBold="true"/>
@@ -87,15 +87,23 @@
 	<field name="COMPANY_NAME" class="java.lang.String"/>
 	<field name="RECEIVE_TIME" class="java.lang.String"/>
 	<field name="STATUS" class="java.lang.String"/>
+	<field name="s_id" class="java.lang.Integer"/>
+	<field name="course_id" class="java.lang.String"/>
+	<field name="bill_amount" class="java.lang.Double"/>
+	<field name="payment_month" class="java.lang.String"/>
+	<field name="card_type" class="java.lang.String"/>
+	<field name="created_time" class="java.lang.String"/>
+	<field name="issued_by" class="java.lang.String"/>
+	<field name="s_name" class="java.lang.String"/>
+	<field name="course_dis" class="java.lang.String"/>
 	<title>
-		<band height="208" splitType="Stretch">
-			<staticText>
-				<reportElement style="Title" x="120" y="62" width="606" height="62" uuid="a080d2ca-6207-4d8e-87c9-d3b61fb495a9"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="32"/>
-				</textElement>
-				<text><![CDATA[Operation Report]]></text>
-			</staticText>
+		<band height="120" splitType="Stretch">
+			<rectangle>
+				<reportElement x="-1" y="66" width="190" height="49" uuid="e7b1700a-d48f-4ffd-84f4-3c9755f114ac"/>
+				<graphicElement>
+					<pen lineWidth="0.75" lineStyle="Dashed"/>
+				</graphicElement>
+			</rectangle>
 			<staticText>
 				<reportElement style="Title" x="-83" y="-110" width="802" height="62" uuid="2ed0304b-326b-4d78-8ac0-90f4220517c7"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -103,83 +111,192 @@
 				</textElement>
 				<text><![CDATA[Batch Report-Automatic Bill Settlement]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="1" y="0" width="188" height="38" forecolor="#000000" uuid="4ec61308-3040-4513-b260-75652ffa167d"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="28" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nikasha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="47" width="187" height="19" forecolor="#000000" uuid="0b68ebda-f03d-44cc-97bc-48ee2bd73083"/>
+				<textElement textAlignment="Center">
+					<font fontName="Cambria" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Payment Receipt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="27" width="187" height="15" forecolor="#000000" uuid="e66a79cf-4a27-4505-b1c4-2530c3cb4e50"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Higher Educational Institute]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="75" width="46" height="11" uuid="16261889-4ce0-4a1d-b975-ffc331e6d937"/>
+				<textElement>
+					<font fontName="Cambria" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reg ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="86" width="46" height="11" uuid="2c806717-e6e2-449c-9e4d-e5ffc8d72e44"/>
+				<textElement>
+					<font fontName="Cambria" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="54" y="86" width="8" height="11" uuid="6a49a5b3-9ed2-4ff2-972b-9ac0cf4b5b1e"/>
+				<textElement textAlignment="Left">
+					<font fontName="Cambria" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="97" width="46" height="11" uuid="153c34d4-36a7-4236-aab9-be598f9f284f"/>
+				<textElement>
+					<font fontName="Cambria" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bill Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="54" y="75" width="8" height="11" uuid="15aa7378-7597-4474-92ca-48fed63fb707"/>
+				<textElement textAlignment="Left">
+					<font fontName="Cambria" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="54" y="97" width="8" height="11" uuid="8d1c200b-3383-4c52-b2e0-04311f2fd731"/>
+				<textElement textAlignment="Left">
+					<font fontName="Cambria" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="62" y="75" width="100" height="11" uuid="507463ac-55df-4be4-a82e-e405dc19b1db"/>
+				<textElement>
+					<font fontName="Calibri" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{s_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="62" y="86" width="117" height="11" uuid="c5784fbb-8395-4942-bea1-f652c33cbe94"/>
+				<textElement>
+					<font fontName="Cambria" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{s_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="62" y="97" width="100" height="11" uuid="20c0b2e4-871d-404b-8edc-280f83903ceb"/>
+				<textElement>
+					<font fontName="Calibri" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{created_time}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
-	<columnHeader>
-		<band height="51">
-			<frame>
-				<reportElement mode="Opaque" x="0" y="0" width="802" height="50" forecolor="#000000" backcolor="#006EB9" uuid="de7cf2c2-2537-4c18-aae5-4cd145161161"/>
-				<staticText>
-					<reportElement style="Table" x="2" y="0" width="201" height="50" uuid="83e83d76-1dd6-436e-83dd-b1c157766352"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="9"/>
-					</textElement>
-					<text><![CDATA[Batch ID]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="Table" x="593" y="1" width="209" height="49" uuid="444a8dfe-4246-4af4-a1db-5d298d478567"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="9"/>
-					</textElement>
-					<text><![CDATA[Status]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="Table" x="426" y="0" width="167" height="50" uuid="e5f4a961-d2c0-4187-9417-b0b14c932e2b"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="9"/>
-					</textElement>
-					<text><![CDATA[Receive Time]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="Table" x="203" y="0" width="223" height="50" uuid="759aa0fc-d7cf-4697-a79f-f4c66caa691f"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="9"/>
-					</textElement>
-					<text><![CDATA[Company Name]]></text>
-				</staticText>
-			</frame>
-		</band>
-	</columnHeader>
 	<detail>
-		<band height="26">
+		<band height="46">
 			<frame>
-				<reportElement mode="Opaque" x="1" y="0" width="801" height="25" forecolor="#000000" backcolor="#FFFFFF" uuid="18258fcd-bf14-40cf-bc55-e3cecfb0fcd0"/>
+				<reportElement mode="Opaque" x="2" y="0" width="188" height="43" forecolor="#000000" backcolor="#FFFFFF" uuid="18258fcd-bf14-40cf-bc55-e3cecfb0fcd0"/>
+				<staticText>
+					<reportElement x="0" y="18" width="33" height="11" uuid="946849f9-7828-4d5e-a55d-3673fd67c591"/>
+					<textElement textAlignment="Right">
+						<font fontName="Cambria" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Month]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="7" width="33" height="11" uuid="6e6ba2e5-1532-4513-ad08-9c7b923fc388"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font fontName="Cambria" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Course]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="29" width="33" height="11" uuid="7eace13b-a7e5-436c-b13b-8376ac927dc5"/>
+					<textElement textAlignment="Right">
+						<font fontName="Cambria" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Amount]]></text>
+				</staticText>
 				<textField>
-					<reportElement style="Table" x="202" y="0" width="223" height="25" uuid="a77d42a3-dea5-4e23-9844-0d305ee8af2b"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$F{COMPANY_NAME}]]></textFieldExpression>
+					<reportElement x="49" y="18" width="100" height="11" uuid="8bd93163-441d-421e-bc93-1b660edad065"/>
+					<textElement>
+						<font fontName="Cambria" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{payment_month}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="Table" x="425" y="0" width="167" height="25" uuid="aeb9bcae-17e5-47bc-bfd5-148f14c94943"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$F{RECEIVE_TIME}]]></textFieldExpression>
+					<reportElement x="49" y="29" width="100" height="11" uuid="d1e9f456-65a9-4df5-a446-19cbcf02c56a"/>
+					<textElement>
+						<font fontName="Cambria" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bill_amount}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="Table" x="1" y="0" width="201" height="25" uuid="0cc52248-03a0-443b-92a0-83f6376d9c31"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$F{BATCH_ID}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement style="Table" x="592" y="0" width="209" height="25" uuid="fb0e1960-9b3e-438f-99fe-6f9588632a9a"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$F{STATUS}]]></textFieldExpression>
+					<reportElement x="49" y="7" width="138" height="11" uuid="32a73ca1-467b-42b1-81b5-bc10797c6c8d"/>
+					<textElement>
+						<font fontName="Calibri" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{course_dis}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="127"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="25" splitType="Stretch">
-			<frame>
-				<reportElement mode="Opaque" x="1" y="1" width="801" height="24" forecolor="#D0B48E" backcolor="#006EB9" uuid="f2324113-3563-4f48-b688-ed82b3098434"/>
-			</frame>
-		</band>
-	</pageFooter>
 	<summary>
-		<band height="19" splitType="Stretch">
-			<property name="local_mesure_unitheight" value="pixel"/>
+		<band height="43">
+			<staticText>
+				<reportElement x="2" y="17" width="187" height="11" uuid="323d6abd-83c1-4b0d-a953-95c01b49d5bc"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Cambria" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Please Settle the Class fee within first two weeks]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="29" width="187" height="11" uuid="7a225b9e-f1b9-4695-ade2-6acee8c722bb"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Cambria" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[~Thank You~]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="6" width="44" height="11" uuid="9e2c1223-ae70-4cc5-9c67-3ee69402caa5"/>
+				<textElement textAlignment="Left">
+					<font fontName="Cambria" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Issued By]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="51" y="6" width="100" height="11" uuid="d505abee-f750-4133-b7f7-2f63763a2a94"/>
+				<textElement>
+					<font fontName="Calibri" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{issued_by}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>

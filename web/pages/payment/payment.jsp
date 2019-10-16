@@ -76,8 +76,8 @@
                         jQuery("#gridtable").trigger("reloadGrid");
 //                        alert("data.hiddBillid "+data.hiddBillid);
                         
-                        $('#hiddBillid').val(data.hiddBillid);
-                        $('#downloadbut').click();
+//                        $('#hiddBillid').val(data.hiddBillid);
+//                        $('#downloadbut').click();
                         
 
                     },
@@ -107,7 +107,7 @@
                                 <i style="color: green"> <s:actionmessage theme="jquery"/></i>
                             </s:div>         
                         </div>
-                        <div style="width: 50%; float:left">
+                        <div class="col-sm-6 col-md-6">
                             <s:form id="studentDetailsForm"  theme="simple" >
                                 <table>
                                     <tr>
@@ -145,18 +145,9 @@
                                 </table>
 
                             </s:form>
-                        </div>
-
-
-                        <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-                        <div style="width: 50%; float:left">  
-                            <table>
-                                <tr>
-                                    <td>
-                                        <sj:submit  id="stopbtn" button="true" onclick="test()" value="PAY"  cssClass="button_aback"/> 
-                                    </td>
-                                </tr>
-                            </table>
+                            
+                            <br><br>
+                           
                             <div class="viewuser_tbl">
                                 <div id="tablediv">
                                     <s:url var="listurl" action="liststatt"/>
@@ -191,8 +182,15 @@
 
                                     </sjg:grid> 
                                 </div>
+                                     <table>
+                                <tr>
+                                    <td>
+                                        <sj:submit  id="stopbtn" button="true" onclick="test()" value="PAY"  cssClass="button_aback"/> 
+                                    </td>
+                                </tr>
+                            </table>
                             </div>
-                        </div>
+                       
 
                         <div style="width: 40%; float:right">
                             <s:form id="payList"  theme="simple" >
@@ -206,28 +204,46 @@
                         </table>-->
 
                             </s:form>
-                        </div>            
-                        <div style="width: 40%; float:right">
-                            <s:form id="attHistory"  theme="simple" >
+                        </div> 
+                                    
+                        </div>
+                                    
+                        <div class="col-sm-6 col-md-6">
+                            <div>
+                            <div  class="form_new" theme="simple" >
                                 <table>
                                     <tr>
                                         <td class="formLable" >Attendance History</td> 
-                                        <td><s:textarea id="testid" cssStyle="width : 250px"/>
+                                        
+                                    </tr>
+                                    <tr>
+                                        
+                                        <td><s:textarea id="testid" cssStyle="width : 280px;height: 210px"/>
                                     </tr>
                                 </table>
 
-                            </s:form>
-                        </div><div style="width: 40%; float:right">
-                            <s:form id="payHistory"  theme="simple" >
+                            </div>
+                            </div>
+                            <div>
+                            <div  class="form_new" theme="simple" >
                                 <table>
                                     <tr>
-                                        <td class="formLable">Payment History</td> 
-                                        <td><s:textarea id="phisid" cssStyle="width : 290px"/>
+                                        <td class="formLable">Payment History &nbsp&nbsp&nbsp;</td> 
+                                       
+                                    </tr>
+                                    <tr>
+                                        
+                                        <td><s:textarea id="phisid" cssStyle="width : 280px;height: 210px"/>
                                     </tr>
                                 </table>
 
-                            </s:form>
+                            </div>
+                        </div>       
                         </div>
+
+
+                                   
+                        
                     </div>
 
                     <s:form action="downloadBillpdf" theme="simple" method="post">
